@@ -12,10 +12,22 @@
     <a href="#blog" class="hover:underline nav-link" data-section="blog">blog</a>
     <a href="#contact" class="hover:underline nav-link" data-section="contact">contact</a>
   </nav>
-  <button id="theme-toggle" class="ml-4 p-2 rounded bg-gray-100 dark:bg-gray-800">
-    <!-- トグル用アイコン（仮） -->
-    <span>🌓</span>
+
+  <!-- ダークモード,ライトモード切り替えボタン -->
+  <button id="theme-toggle" aria-label="Toggle Dark Mode"
+  class="relative w-16 h-9 rounded-full bg-gray-300 dark:bg-gray-700 transition-colors duration-300 focus:outline-none">
+
+    <!-- 内側のアイコンと丸 -->
+    <div id="toggle-circle"
+        class="absolute left-1 top-1 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center transition-all duration-300">
+      <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-500" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m8.66-8.66h-1M4.34 12H3m15.36 6.36l-.7-.7M6.34 6.34l-.7-.7m12.02 0l-.7.7M6.34 17.66l-.7.7M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+      </svg>
+    </div>
   </button>
+  
 
    <script is:inline>
     window.addEventListener("DOMContentLoaded", () => {
