@@ -1,18 +1,75 @@
 ---
 // ヘッダー用のスクリプトやpropsは現時点では不要
 ---
-<header class="w-full flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+<header class="w-full flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 sticky top-0 z-50">
   <div class="font-bold text-xl text-indigo-600 dark:text-indigo-400">Taiga</div>
   <nav class="space-x-6 hidden md:block">
-    <a href="/" class="hover:underline">home</a>
-    <a href="#about" class="hover:underline">about</a>
-    <a href="#experience" class="hover:underline">experience</a>
-    <a href="#projects" class="hover:underline">projects</a>
-    <a href="#skills" class="hover:underline">skills</a>
-    <a href="#contact" class="hover:underline">contact</a>
+    <a href="#home" class="hover:underline nav-link" data-section="home">home</a>
+    <a href="#about" class="hover:underline nav-link" data-section="about">about</a>
+    <a href="#experience" class="hover:underline nav-link" data-section="experience">experience</a>
+    <a href="#projects" class="hover:underline nav-link" data-section="projects">projects</a>
+    <a href="#skills" class="hover:underline nav-link" data-section="skills">skills</a>
+    <a href="#blog" class="hover:underline nav-link" data-section="blog">blog</a>
+    <a href="#contact" class="hover:underline nav-link" data-section="contact">contact</a>
   </nav>
   <button id="theme-toggle" class="ml-4 p-2 rounded bg-gray-100 dark:bg-gray-800">
     <!-- トグル用アイコン（仮） -->
     <span>🌓</span>
   </button>
+
+   <script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+      const links = document.querySelectorAll(".nav-link");
+      const sections = Array.from(links).map(link =>
+        document.querySelector(`#${link.dataset.section}`)
+      );
+  
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            links.forEach(link => {
+              link.classList.toggle("active", link.dataset.section === id);
+            });
+          }
+        });
+      }, {
+        threshold: 0.1, // ← 少し小さめに
+        rootMargin: "0px" // ← トップ寄りで検出
+      });
+  
+      sections.forEach(section => {
+        if (section) observer.observe(section);
+      });
+    });
+  </script>
+  
+
+<style>
+  .nav-link {
+    position: relative;
+    padding-bottom: 4px;
+    color: #cbd5e1; /* text-slate-300 相当 */
+    transition: all 0.3s;
+  }
+  
+  .nav-link.active {
+    color: #3b82f6; /* text-blue-500 */
+    font-weight: 600;
+  }
+  
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    border-radius: 9999px;
+  }
+  </style>
+  
+  
+
 </header> 
