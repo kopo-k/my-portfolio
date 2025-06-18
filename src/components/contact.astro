@@ -1,0 +1,89 @@
+---
+// Contact.astro
+---
+<section id="contact" class="py-20 px-4 bg-gray-900 text-white">
+  <h2 class="text-4xl font-bold text-center">Get In Touch</h2>
+  <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
+
+  <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+    <!-- Left: Contact Info -->
+    <div>
+      <h3 class="text-2xl font-semibold mb-4">Let's Connect</h3>
+      <p class="text-gray-300 mb-6">
+        I'm always interested in new opportunities and collaborations. Feel free to reach out if you'd like to discuss a project or just say hello!
+      </p>
+
+      <div class="space-y-4">
+        <!-- Email -->
+        <div class="flex items-center bg-[#1f2937] p-4 rounded-md">
+          <div class="bg-purple-600 p-2 rounded-lg mr-4">
+            <i data-lucide="mail" class="text-white w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="font-semibold">Email</p>
+            <p class="text-sm text-gray-300">taiga@example.com</p>
+          </div>
+        </div>
+
+        <!-- GitHub -->
+        <div class="flex items-center bg-[#1f2937] p-4 rounded-md">
+          <div class="bg-pink-600 p-2 rounded-lg mr-4">
+            <i data-lucide="github" class="text-white w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="font-semibold">GitHub</p>
+            <p class="text-sm text-gray-300">github.com/taiga</p>
+          </div>
+        </div>
+
+        <!-- Twitter -->
+        <div class="flex items-center bg-[#1f2937] p-4 rounded-md">
+          <div class="bg-blue-600 p-2 rounded-lg mr-4">
+            <i data-lucide="twitter" class="text-white w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="font-semibold">Twitter</p>
+            <p class="text-sm text-gray-300">@taiga_dev</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Contact Form -->
+    <div class="bg-[#1f2937] p-6 rounded-md">
+      <h3 class="text-2xl font-semibold mb-2">Send a Message</h3>
+      <p class="text-gray-300 mb-6">Fill out the form below and I'll get back to you soon</p>
+      <form class="space-y-4">
+        <input
+          type="text"
+          placeholder="Your Name"
+          class="w-full p-3 bg-gray-800 rounded-md text-white placeholder-gray-400 ring-2 ring-purple-600 outline-none"
+        />
+        <input
+          type="email"
+          placeholder="Your Email"
+          class="w-full p-3 bg-gray-800 rounded-md text-white placeholder-gray-400 outline-none ring-2 ring-purple-600 "
+        />
+        <textarea
+          rows="4"
+          placeholder="Your Message"
+          class="w-full p-3 bg-gray-800 rounded-md text-white placeholder-gray-400 outline-none ring-2 ring-purple-600"
+        ></textarea>
+        <button
+          type="submit"
+          class="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-md hover:opacity-90 transition"
+        >
+          Send Message →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script is:inline>
+    window.onload = () => {
+      if (window.lucide) window.lucide.createIcons();
+    };
+  </script>
+</section>
