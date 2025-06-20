@@ -1,41 +1,59 @@
+---
+// About.astro
+---
 
-  <section id="about" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-10">About Me
-        <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
-      </h2>
-      <div class="grid md:grid-cols-2 gap-8">
+<section id="about" class="py-20 px-6 bg-white dark:bg-gray-900 transition-colors duration-300">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white">About Me</h2>
+      <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <!-- Left: About Text -->
+      <div class="space-y-10">
+        <!-- Currently Learning -->
         <div>
-          <ul class="space-y-6">
-            <li>
-              <span class="inline-flex items-center text-indigo-500 dark:text-purple-400 font-semibold"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"/></svg>Currently Learning</span><br>
-              <span class="text-gray-700 dark:text-gray-300 text-sm">React・TypeScript・クラウドインフラ・英語学習など。AWSや最新Web技術をキャッチアップ中。</span>
-            </li>
-            <li>
-              <span class="inline-block bg-indigo-100 text-indigo-700 dark:bg-purple-900 dark:text-purple-200 rounded px-2 py-1 text-xs font-semibold mr-2">Favorite Technologies</span>
-              <span class="inline-block bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded px-2 py-1 text-xs font-semibold">React</span>
-              <span class="inline-block bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded px-2 py-1 text-xs font-semibold">TypeScript</span>
-              <span class="inline-block bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded px-2 py-1 text-xs font-semibold">Go</span>
-            </li>
-            <li>
-              <span class="inline-flex items-center text-yellow-500 font-semibold"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/></svg>Future Goals</span><br>
-              <span class="text-gray-700 dark:text-gray-300 text-sm">フルスタックエンジニアとしてスケーラブルなサービス開発・技術発信・英語力向上を目指しています。</span>
-            </li>
-          </ul>
+          <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300  "><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
+            </svg>
+            <span class="group-hover:text-blue-600 transition-colors duration-300">Currently Learning</span>
+          </h3>
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed ">
+            I'm constantly expanding my knowledge in modern web development, focusing on React ecosystem, backend technologies, and cloud infrastructure. Currently diving deep into Go for backend development and exploring AWS services for scalable applications.
+          </p>
         </div>
+
+        <!-- Favorite Technologies -->
         <div>
-          <div class="bg-indigo-50 dark:bg-gray-800 rounded-xl p-6 shadow flex items-center">
-            <div class="mr-4">
-              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-400 via-purple-400 to-pink-300 flex items-center justify-center">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12h.01M12 12h.01M9 12h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8z"/></svg>
-              </div>
-            </div>
-            <div>
-              <div class="text-sm font-bold text-indigo-600 dark:text-purple-400 mb-1">Software Engineer</div>
-              <div class="text-gray-700 dark:text-gray-300 text-sm">効率的で拡張性のあるソリューションを追求し、最新技術を積極的に取り入れることを大切にしています。</div>
-            </div>
+          <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-3 ">Favorite Technologies</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-xs font-medium px-3 py-1 rounded-full">React</span>
+            <span class="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300 text-xs font-medium px-3 py-1 rounded-full">TypeScript</span>
+            <span class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 text-xs font-medium px-3 py-1 rounded-full">Go</span>
+            <span class="bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300 text-xs font-medium px-3 py-1 rounded-full">Docker</span>
           </div>
         </div>
+
+        <!-- Future Goals -->
+        <div>
+          <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-3">Future Goals</h3>
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+            My goal is to become a full-stack engineer capable of building scalable, user-friendly applications that solve real-world problems. I'm particularly interested in contributing to open-source projects and building products that make a positive impact.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Role Card -->
+      <div class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 mt-24">
+        <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-icon lucide-code"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
+        </div>
+        <h4 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Software Engineer</h4>
+        <p class="text-gray-700 dark:text-gray-300">
+          Passionate about creating efficient, scalable solutions and staying up-to-date with the latest technologies in the ever-evolving world of software development.
+        </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
