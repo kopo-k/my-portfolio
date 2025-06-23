@@ -46,14 +46,15 @@ const experienceItems = [
     </h2>
 
     <div class="relative max-w-5xl mx-auto">
-      <div class="absolute left-1/2 transform -translate-x-1 w-0.5 h-full bg-gradient-to-b from-[#2563EB] to-[#9333EA]"></div>
-
-      <div class="space-y-16">
+      <!-- 中央縦線 -->
+      <div class="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-[#2563EB] to-[#9333EA]"></div>
+    
+      <div class="space-y-32 relative">
         {experienceItems.map((exp, i) => (
-          <div class={`flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}`}>
-
-            <!-- 内容カード -->
-            <div class={`w-1/2 px-4`}>
+          <div class={`relative flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}`}>
+            
+            {/* 内容カード */}
+            <div class="w-1/2 px-4">
               <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
                 <h3 class="text-lg font-semibold">{exp.title}</h3>
                 <p class="text-blue-400 text-sm mb-1">{exp.org}</p>
@@ -63,14 +64,15 @@ const experienceItems = [
                 </ul>
               </div>
             </div>
-
-            <!-- タイムラインノード -->
-            <div class="w-1/2 relative flex justify-center items-center">
-              <div class="w-4 h-4 rounded-full bg-gradient-to-br from-[#2563EB] to-[#9333EA] border-4 border-gray-900 z-10"></div>
+    
+            {/* タイムラインノードを線の上に絶対配置 */}
+            <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+              <div class="w-4 h-4 rounded-full bg-gradient-to-br from-[#2563EB] to-[#9333EA] border-4 border-gray-900"></div>
             </div>
           </div>
         ))}
       </div>
     </div>
+    
   </div>
 </section>
