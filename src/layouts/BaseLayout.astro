@@ -10,6 +10,7 @@ import "../styles/global.css";
       if (
         localStorage.theme === 'dark' ||
         (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        //未指定なら、ユーザーのデバイスの好みに従う
       ) {
         document.documentElement.classList.add('dark');
       } else {
@@ -22,6 +23,7 @@ import "../styles/global.css";
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
     <slot />
     <script src="/js/themeToggle.js" type="module"></script>
+    <!-- 別ファイルにせず、HTMLの中に直接埋め込む -->
     <script is:inline>
       window.addEventListener("DOMContentLoaded", () => {
         import('/js/themeToggle.js').then(mod => {
