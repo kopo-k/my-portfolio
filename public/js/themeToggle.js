@@ -11,21 +11,25 @@ export function initThemeToggle() {
   const toggleCircle = document.getElementById('toggle-circle');
 
 // ライト or ダークモードの切り替え
-  const setTheme = (mode) => {
-    // mode に 'dark' か 'light' を指定
-    if (mode === 'dark') {
-      document.documentElement.classList.add('dark');
-      // dark: クラスが適用
-      localStorage.theme = 'dark';
-      if (themeIcon) themeIcon.innerHTML = moonIcon;
-      if (toggleCircle) toggleCircle.classList.add('translate-x-7');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.theme = 'light';
-      if (themeIcon) themeIcon.innerHTML = sunIcon;
-      if (toggleCircle) toggleCircle.classList.remove('translate-x-7');
+const setTheme = (mode) => {
+  if (mode === 'dark') {
+    document.documentElement.classList.add('dark');
+    localStorage.theme = 'dark';
+    if (themeIcon) themeIcon.innerHTML = moonIcon;
+    if (toggleCircle) {
+      toggleCircle.classList.remove('translate-x-0');
+      toggleCircle.classList.add('translate-x-7');
     }
-  };
+  } else {
+    document.documentElement.classList.remove('dark');
+    localStorage.theme = 'light';
+    if (themeIcon) themeIcon.innerHTML = sunIcon;
+    if (toggleCircle) {
+      toggleCircle.classList.remove('translate-x-7');
+      toggleCircle.classList.add('translate-x-0');
+    }
+  }
+};
   // ダークモードかどうか
   toggleButton?.addEventListener('click', () => {
     const isDark = document.documentElement.classList.contains('dark');
