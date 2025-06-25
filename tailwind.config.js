@@ -19,6 +19,10 @@ module.exports = {
           'sans-serif',
         ],
       },
+      colors: {
+        'taiga-blue': '#3b82f6',
+        'taiga-purple': '#8b5cf6',
+      }
     },
   },
   plugins: [],
