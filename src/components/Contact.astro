@@ -66,14 +66,14 @@
     </div>
 
     <!-- Right: Contact Form -->
-    <div class="relative">
+    <div class="relative h-full">
       <!-- 背景のグラデーション装飾 -->
       <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10 rounded-2xl blur-xl"></div>
       
-      <div class="relative dark:bg-gray-800/50 dark:backdrop-blur-sm p-8 rounded-2xl dark:border border-gray-700/50 shadow-2xl bg-[#f7f8f9]">
-        <h3 class="text-2xl font-semibold mb-2 group-hover:text-blue-600 transition-colors duration-300">Send a Message</h3>
+      <div class="relative dark:bg-gray-800/50 dark:backdrop-blur-sm p-8 rounded-2xl dark:border border-gray-700/50 shadow-2xl bg-[#f7f8f9] h-full flex flex-col">
+        <h3 class="text-2xl font-semibold mb-2 group-hover:text-blue-600 transition-colors duration-300 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent text-3xl">Send a Message</h3>
         <p class="dark:text-gray-300 text-[#4c5664] mb-6">Fill out the form below and I'll get back to you soon</p>
-        <form class="space-y-4">
+        <form class="space-y-4 flex-grow flex flex-col">
           <input
             type="text"
             placeholder="Your Name"
@@ -87,7 +87,7 @@
           <textarea
             rows="4"
             placeholder="Your Message"
-            class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-400 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-2"
+            class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-400 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-2 flex-grow"
           ></textarea>
           <button
             type="submit"
