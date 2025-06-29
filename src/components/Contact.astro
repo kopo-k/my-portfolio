@@ -1,5 +1,8 @@
 ---
 // Contact.astro
+const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
+const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
+const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
 ---
 <section id="contact" class="py-20 px-4 dark:bg-gray-900 dark:text-white text-black">
   <h2 class="text-4xl font-bold text-center">Get In Touch</h2>
@@ -81,13 +84,13 @@
 
   <!-- EmailJS Integration -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script is:inline>
+  <script define:vars={{ serviceId, templateId, publicKey }}>
     window.addEventListener("DOMContentLoaded", () => {
-      emailjs.init("iKDrHxsiwzUuP3U3f");
+      emailjs.init(publicKey);
       const form = document.getElementById("contact-form");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        emailjs.sendForm("service_kmmvdgy", "template_fun8ic9", form).then(() => {
+        emailjs.sendForm(serviceId, templateId, form).then(() => {
           alert("Message sent successfully!");
           form.reset();
         }, (error) => {
