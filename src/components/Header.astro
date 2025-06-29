@@ -6,6 +6,7 @@
     Taiga
   </div>
   
+  <!-- デスクトップナビゲーション -->
   <nav class="space-x-6 hidden md:block">
     <a href="#home" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="home">home</a>
     <a href="#about" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="about">about</a>
@@ -16,24 +17,83 @@
     <a href="#contact" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="contact">contact</a>
   </nav>
 
-  <!-- ダークモード,ライトモード切り替えボタン -->
-  <!-- ダークモード,ライトモード切り替えボタン -->
-  <button id="theme-toggle"
-  aria-label="Toggle Dark Mode"
-  class="relative w-14 h-7 rounded-full cursor-pointer transition-all duration-300 hover:scale-105 bg-yellow-500 dark:bg-blue-600">
-    <div id="toggle-circle"
-      class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center transition-all duration-700 overflow-hidden p-0.5 translate-x-0 dark:translate-x-7">
+  <!-- 右側のコントロールエリア -->
+  <div class="flex items-center space-x-4">
+    <!-- ダークモード,ライトモード切り替えボタン -->
+    <button id="theme-toggle"
+    aria-label="Toggle Dark Mode"
+    class="relative w-14 h-7 rounded-full cursor-pointer transition-all duration-300 hover:scale-105 bg-yellow-500 dark:bg-blue-600">
+      <div id="toggle-circle"
+        class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center transition-all duration-700 overflow-hidden p-0.5 translate-x-0 dark:translate-x-7">
+        
+        <!-- SVGアイコン -->
+        <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-yellow-500 dark:text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 4.5V2m0 20v-2.5m7.07-14.07l1.77-1.77m-1.77 17.66l1.77 1.77M4.5 12H2m20 0h-2.5m-14.07-7.07L4.66 3.16m0 17.66l-1.77 1.77M12 7a5 5 0 100 10 5 5 0 000-10z"/>
+        </svg>
+      </div>
+    </button>
+
+    <!-- ハンバーガーメニューボタン（モバイルのみ表示） -->
+    <button id="mobile-menu-button" 
+            class="md:hidden relative w-8 h-8 flex flex-col justify-center items-center space-y-1 group"
+            aria-label="Toggle mobile menu">
+      <span class="hamburger-line w-6 h-0.5 bg-gray-900 dark:bg-slate-300 transition-all duration-300 origin-center"></span>
+      <span class="hamburger-line w-6 h-0.5 bg-gray-900 dark:bg-slate-300 transition-all duration-300 origin-center"></span>
+      <span class="hamburger-line w-6 h-0.5 bg-gray-900 dark:bg-slate-300 transition-all duration-300 origin-center"></span>
+    </button>
+  </div>
+
+  <!-- モバイルメニューオーバーレイ -->
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden opacity-0 invisible transition-all duration-300"></div>
+
+  <!-- モバイルナビゲーションメニュー -->
+  <nav id="mobile-menu" class="fixed top-0 right-0 h-full w-80 bg-white dark:bg-gray-900 shadow-2xl z-50 md:hidden transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div class="flex flex-col h-full">
+      <!-- モバイルメニューヘッダー -->
+      <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+        <div class="text-xl font-bold bg-gradient-to-r from-taiga-blue to-taiga-purple bg-clip-text text-transparent">
+          Menu
+        </div>
+        <button id="mobile-menu-close" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
       
-      <!-- SVGアイコン -->
-      <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-yellow-500 dark:text-blue-600" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 4.5V2m0 20v-2.5m7.07-14.07l1.77-1.77m-1.77 17.66l1.77 1.77M4.5 12H2m20 0h-2.5m-14.07-7.07L4.66 3.16m0 17.66l-1.77 1.77M12 7a5 5 0 100 10 5 5 0 000-10z"/>
-      </svg>
+      <!-- モバイルメニューアイテム -->
+      <div class="flex-1 py-6">
+        <a href="#home" class="mobile-nav-link block px-6 py-4 text-lg font-medium text-gray-900 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-l-4 border-transparent hover:border-blue-500" data-section="home">
+          Home
+        </a>
+        <a href="#about" class="mobile-nav-link block px-6 py-4 text-lg font-medium text-gray-900 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-l-4 border-transparent hover:border-blue-500" data-section="about">
+          About
+        </a>
+        <a href="#experience" class="mobile-nav-link block px-6 py-4 text-lg font-medium text-gray-900 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-l-4 border-transparent hover:border-blue-500" data-section="experience">
+          Experience
+        </a>
+        <a href="#projects" class="mobile-nav-link block px-6 py-4 text-lg font-medium text-gray-900 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-l-4 border-transparent hover:border-blue-500" data-section="projects">
+          Projects
+        </a>
+        <a href="#skills" class="mobile-nav-link block px-6 py-4 text-lg font-medium text-gray-900 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-l-4 border-transparent hover:border-blue-500" data-section="skills">
+          Skills
+        </a>
+        <a href="#blog" class="mobile-nav-link block px-6 py-4 text-lg font-medium text-gray-900 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-l-4 border-transparent hover:border-blue-500" data-section="blog">
+          Blog
+        </a>
+        <a href="#contact" class="mobile-nav-link block px-6 py-4 text-lg font-medium text-gray-900 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-l-4 border-transparent hover:border-blue-500" data-section="contact">
+          Contact
+        </a>
+      </div>
     </div>
-  </button>
+  </nav>
   
-   <script is:inline>
+  <script is:inline>
     window.addEventListener("DOMContentLoaded", () => {
+      // ナビゲーションのアクティブ状態管理
       const links = document.querySelectorAll(".nav-link");
+      const mobileLinks = document.querySelectorAll(".mobile-nav-link");
+      const allLinks = [...links, ...mobileLinks];
       const sections = Array.from(links).map(link =>
         document.querySelector(`#${link.dataset.section}`)
       );
@@ -42,32 +102,89 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const id = entry.target.id;
-            links.forEach(link => {
+            allLinks.forEach(link => {
               link.classList.toggle("active", link.dataset.section === id);
             });
           }
         });
       }, {
-        threshold: 0.2, // ← 少し小さめに
-        rootMargin: "0px" // ← トップ寄りで検出
+        threshold: 0.2,
+        rootMargin: "0px"
       });
   
       sections.forEach(section => {
         if (section) observer.observe(section);
+      });
+
+      // モバイルメニューの制御
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
+      const mobileMenuClose = document.getElementById("mobile-menu-close");
+      const hamburgerLines = document.querySelectorAll(".hamburger-line");
+
+      // メニューを開く関数
+      function openMobileMenu() {
+        mobileMenu.classList.remove("translate-x-full");
+        mobileMenuOverlay.classList.remove("opacity-0", "invisible");
+        document.body.style.overflow = "hidden";
+        
+        // ハンバーガーアイコンをXに変換
+        hamburgerLines[0].style.transform = "rotate(45deg) translate(6px, 6px)";
+        hamburgerLines[1].style.opacity = "0";
+        hamburgerLines[2].style.transform = "rotate(-45deg) translate(6px, -6px)";
+      }
+
+      // メニューを閉じる関数
+      function closeMobileMenu() {
+        mobileMenu.classList.add("translate-x-full");
+        mobileMenuOverlay.classList.add("opacity-0", "invisible");
+        document.body.style.overflow = "";
+        
+        // ハンバーガーアイコンを元に戻す
+        hamburgerLines[0].style.transform = "";
+        hamburgerLines[1].style.opacity = "";
+        hamburgerLines[2].style.transform = "";
+      }
+
+      // イベントリスナー
+      mobileMenuButton.addEventListener("click", openMobileMenu);
+      mobileMenuClose.addEventListener("click", closeMobileMenu);
+      mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+
+      // モバイルメニューのリンクをクリックした時にメニューを閉じる
+      mobileLinks.forEach(link => {
+        link.addEventListener("click", () => {
+          closeMobileMenu();
+        });
+      });
+
+      // ESCキーでメニューを閉じる
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeMobileMenu();
+        }
+      });
+
+      // ウィンドウサイズ変更時の処理（デスクトップに戻った時にメニューを閉じる）
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) { // md breakpoint
+          closeMobileMenu();
+        }
       });
     });
   </script>
   
 
 <style>
-  .nav-link {
+  .nav-link, .mobile-nav-link {
     position: relative;
     padding-bottom: 4px;
     @apply text-gray-900 dark:text-slate-300;
     transition: all 0.3s;
   }
   
-  .nav-link.active {
+  .nav-link.active, .mobile-nav-link.active {
     color: #3b82f6; /* text-blue-500 */
     font-weight: 600;
   }
@@ -82,8 +199,38 @@
     background: linear-gradient(to right, #3b82f6, #8b5cf6);
     border-radius: 9999px;
   }
-  </style>
-  
-  
 
-</header> 
+  .mobile-nav-link.active {
+    @apply border-l-blue-500 bg-blue-50 dark:bg-blue-900/20;
+  }
+
+  /* ハンバーガーメニューのアニメーション */
+  .hamburger-line {
+    transform-origin: center;
+  }
+
+  /* モバイルメニューのスクロールバーをカスタマイズ */
+  #mobile-menu {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+
+  #mobile-menu::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #mobile-menu::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #mobile-menu::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 3px;
+  }
+
+  #mobile-menu::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8;
+  }
+</style>
+
+</header>
