@@ -31,7 +31,7 @@ import "../styles/global.css";
     <!-- 別ファイルにせず、HTMLの中に直接埋め込む -->
     <script is:inline>
       window.addEventListener("DOMContentLoaded", () => {
-        import('/my-portfolio/js/themeToggle.js').then(mod => {
+        import(`${import.meta.env.BASE_URL}js/themeToggle.js`).then(mod => {
           mod.initThemeToggle();
         });
       });
