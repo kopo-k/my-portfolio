@@ -186,7 +186,7 @@ const publicKey = undefined;
     });
   })();</script> </section>  <script src="/my-portfolio/js/themeToggle.js" type="module"></script> <!-- 別ファイルにせず、HTMLの中に直接埋め込む --> <script>
       window.addEventListener("DOMContentLoaded", () => {
-        import('/my-portfolio/js/themeToggle.js').then(mod => {
+        import(`${import.meta.env.BASE_URL}js/themeToggle.js`).then(mod => {
           mod.initThemeToggle();
         });
       });
