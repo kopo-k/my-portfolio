@@ -8,7 +8,7 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content={Astro.props.title || "Taiga's Portfolio"} />
     <meta property="og:description" content={Astro.props.description || "Welcome to my portfolio site!"} />
-    <meta property="og:image" content="/images/opg.png" />
+    <meta property="og:image" content="/my-portfolio/images/opg.png" />
     <meta property="og:url" content="https://kopo-k.github.io/my-portfolio/" />
     <meta property="og:type" content="website" />
     <script>
@@ -27,7 +27,7 @@ import "../styles/global.css";
   </head>
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
     <slot />
-    <script src="/js/themeToggle.js" type="module"></script>
+    <script src="/my-portfolio/js/themeToggle.js" type="module"></script>
     <!-- 別ファイルにせず、HTMLの中に直接埋め込む -->
     <script is:inline>
       window.addEventListener("DOMContentLoaded", () => {
