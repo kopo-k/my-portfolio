@@ -9,3 +9,4 @@ export default defineConfig({
   integrations: [tailwind()], // ← 必要な統合
   outDir: "dist", // デフォルトだが明示してもOK
 });
+
