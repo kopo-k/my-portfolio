@@ -1,0 +1,68 @@
+---
+// src/components/DualCircleLoader.astro
+export interface Props {
+  size?: 'sm' | 'md' | 'lg';
+  title?: string;
+  showTitle?: boolean;
+  className?: string;
+}
+
+const { 
+  size = 'md', 
+  title = 'Sending your message...', 
+  showTitle = true,
+  className = '' 
+} = Astro.props;
+
+const sizeClasses = {
+  sm: { container: 'w-16 h-16', outer: 'w-16 h-16', inner: 'w-10 h-10 top-3 left-3', title: 'text-lg' },
+  md: { container: 'w-24 h-24', outer: 'w-24 h-24', inner: 'w-16 h-16 top-4 left-4', title: 'text-2xl' },
+  lg: { container: 'w-32 h-32', outer: 'w-32 h-32', inner: 'w-20 h-20 top-6 left-6', title: 'text-3xl' }
+};
+
+const currentSize = sizeClasses[size];
+---
+
+<div class={`text-center ${className}`}>
+  {showTitle && (
+    <h2 class={`${currentSize.title} font-light mb-8 tracking-wider text-white/90`}>
+      {title}
+    </h2>
+  )}
+  
+  <div class={`dual-circle-loader relative mx-auto ${currentSize.container}`}>
+    <div class={`absolute rounded-full border-2 border-transparent ${currentSize.outer} circle-outer`}></div>
+    <div class={`absolute rounded-full border-2 border-transparent ${currentSize.inner} circle-inner`}></div>
+  </div>
+</div>
+
+<style>
+  .circle-outer {
+    border-top-color: #4facfe;
+    border-right-color: #00f2fe;
+    animation: rotate-outer 1.5s ease-in-out infinite;
+  }
+
+  .circle-inner {
+    border-top-color: #ff6b9d;
+    border-right-color: #c44569;
+    animation: rotate-inner 1.2s ease-in-out infinite reverse;
+  }
+
+  @keyframes rotate-outer {
+    0% { transform: rotate(0deg); border-top-color: #4facfe; border-right-color: #00f2fe; }
+    50% { transform: rotate(180deg); border-top-color: #4facfe; border-right-color: #00f2fe; }
+    100% { transform: rotate(360deg); border-top-color: #4facfe; border-right-color: #00f2fe; }
+  }
+
+  @keyframes rotate-inner {
+    0% { transform: rotate(0deg); border-top-color: #ff6b9d; border-right-color: #c44569; }
+    50% { transform: rotate(-180deg); border-top-color: #ff6b9d; border-right-color: #c44569; }
+    100% { transform: rotate(-360deg); border-top-color: #ff6b9d; border-right-color: #c44569; }
+  }
+
+  .dual-circle-loader:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+</style>

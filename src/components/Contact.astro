@@ -1,5 +1,6 @@
 ---
 // Contact.astro
+import DualCircleLoader from "./DualCircleLoader.astro";
 const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
 const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
@@ -64,7 +65,10 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
       <div class="relative dark:bg-gray-800/50 dark:backdrop-blur-sm p-8 rounded-2xl dark:border border-gray-700/50 shadow-2xl bg-[#f7f8f9] h-full flex flex-col">
         <h3 class="text-2xl font-semibold mb-2 group-hover:text-blue-600 transition-colors duration-300 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent text-3xl">Send a Message</h3>
         <p class="dark:text-gray-300 text-[#4c5664] mb-6">Fill out the form below and I'll get back to you soon</p>
-        <form id="contact-form" class="space-y-4 flex-grow flex flex-col">
+        <form id="contact-form" class="space-y-4 flex-grow flex flex-col relative">
+          <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-white/70 dark:bg-gray-900/70 z-50">
+            <DualCircleLoader />
+          </div>
           <input name="user_name" type="text" placeholder="Your Name" required class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-400 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-2 dark:focus-visible:ring-offset-gray-700" />
           <input name="user_email" type="email" placeholder="Your Email" required class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-400 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-2 dark:focus-visible:ring-offset-gray-700" />
           <textarea name="message" rows="4" placeholder="Your Message" required class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-400 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-2 flex-grow dark:focus-visible:ring-offset-gray-700"></textarea>
@@ -88,13 +92,17 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
     window.addEventListener("DOMContentLoaded", () => {
       emailjs.init(publicKey);
       const form = document.getElementById("contact-form");
+      const loader = document.getElementById("loader");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        loader.classList.remove("hidden");
         emailjs.sendForm(serviceId, templateId, form).then(() => {
           alert("Message sent successfully!");
           form.reset();
         }, (error) => {
           alert("Failed to send message: " + error.text);
+        }).finally(() => {
+          loader.classList.add("hidden");
         });
       });
     });
