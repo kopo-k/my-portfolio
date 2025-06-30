@@ -2,6 +2,7 @@
 
 export function initEmailForm({ serviceId, templateId, publicKey }) {
   emailjs.init(publicKey);
+  console.log(serviceId, templateId, publicKey);
 
   const form = document.querySelector("#contact-form");
   if (form) {

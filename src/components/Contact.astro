@@ -88,13 +88,23 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
 
   <!-- EmailJS Integration -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script src="/my-portfolio/js/sendMail.js" is:inline></script>
+  
   <script define:vars={{ serviceId, templateId, publicKey }}>
     window.addEventListener("DOMContentLoaded", () => {
-      initEmailForm({
-        serviceId,
-        templateId,
-        publicKey
+      emailjs.init(publicKey);
+      const form = document.getElementById("contact-form");
+      const loader = document.getElementById("loader");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        loader.classList.remove("hidden");
+        emailjs.sendForm(serviceId, templateId, form).then(() => {
+          alert("Message sent successfully!");
+          form.reset();
+        }, (error) => {
+          alert("Failed to send message: " + error.text);
+        }).finally(() => {
+          loader.classList.add("hidden");
+        });
       });
     });
   </script>
