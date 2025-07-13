@@ -6,7 +6,7 @@ import "../styles/global.css";
   <head>
     <meta charset="UTF-8" /> <!--文字化け対策-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:title" content={Astro.props.title || "Taiga's Portfolio"} />
+    <meta property="og:title" content={Astro.props.title || "kopo-k's Portfolio"} />
     <meta property="og:description" content={Astro.props.description || "Welcome to my portfolio site!"} />
     <meta property="og:image" content="/my-portfolio/images/opg.png" />
     <meta property="og:url" content="https://kopo-k.github.io/my-portfolio/" />
@@ -16,11 +16,11 @@ import "../styles/global.css";
       if (
         localStorage.theme === 'dark' ||
         (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        //未指定なら、ユーザーのデバイスの好みに従う
+        //未指定なら、ユーザーのデバイスの好みに従う 
       ) {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.add('dark'); //ダークモードを有効化
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove('dark'); //ダークモードを解除
       }
     </script>
     
