@@ -6,6 +6,9 @@ import "../styles/global.css";
   <head>
     <meta charset="UTF-8" /> <!--文字化け対策-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{Astro.props.title || "kopo-k's Portfolio"}</title>
+    <meta name="description" content={Astro.props.description || "Welcome to my portfolio site!"} />
+    <!-- OGP -->
     <meta property="og:title" content={Astro.props.title || "kopo-k's Portfolio"} />
     <meta property="og:description" content={Astro.props.description || "Welcome to my portfolio site!"} />
     <meta property="og:image" content="/my-portfolio/images/opg.png" />
