@@ -1,47 +1,45 @@
 ---
 const experienceItems = [
   {
-    title: "Department of Information Science",
-    org: "Aichi Institute of Technology",
+    titleKey: "experience.dept-info-science",
+    orgKey: "experience.aichi-institute",
     period: "2024.4 - Present",
-    details: [
-      "Studying Java programming, C programming",
-      "Passed the Fundamental Information Technology Engineer Examination (FE) in May 2023 during my final year of high school"
+    detailKeys: [
+      "experience.study-java",
+      "experience.passed-fe"
     ],
   },
   {
-    title: "GEEKCAMP Hackathon Vol.19",
-    org: "Supporterz Inc.",
+    titleKey: "experience.geekcamp-title",
+    orgKey: "experience.supporterz",
     period: "2024.12",
-    details: [
-      "Joined individually and formed a team with first-time collaborators",
-      "Built a working prototype in just two days using React for the frontend",
-      "Took charge of frontend development and gained hands-on experience in team-based software development",
+    detailKeys: [
+      "experience.joined-individual",
+      "experience.built-prototype",
+      "experience.frontend-dev",
     ],
   },
   {
-  title: "Member of a Student Engineering Community",
-  org: "MaTech",
-  period: "2025.5 - Present",
-  details: [
-      "Joined MaTech, a student-run engineering community with around 20 members",
-      "Participate in weekly presentation sessions to share what we've learned",
-      "Engage in hackathons, study groups, and meetups through platforms like connpass",
-      "Improving communication and collaboration skills through team-based activities"
+    titleKey: "experience.matech-member",
+    orgKey: "experience.matech-org",
+    period: "2025.5 - Present",
+    detailKeys: [
+      "experience.joined-matech",
+      "experience.weekly-presentations",
+      "experience.hackathons-study",
+      "experience.communication-skills"
     ],
   },
-
   {
-    title: "U-22 Programming Contest Project",
-    org: "Supported by IPA Japan",
+    titleKey: "experience.u22-project",
+    orgKey: "experience.ipa-support",
     period: "June 2025 – Present",
-    details: [
-      "Developing a cross-platform desktop application using React, Electron, and TypeScript",
-      "Focusing on intuitive UI/UX and efficient clipboard data management",
-      "Aiming to submit the final product to the U-22 Programming Contest in summer 2025"
+    detailKeys: [
+      "experience.desktop-app",
+      "experience.ui-ux-focus",
+      "experience.contest-submission"
     ]
   }
-
 ];
 ---
 
@@ -50,7 +48,7 @@ const experienceItems = [
   class="animate-fade-in-up py-32 min-h-screen bg-gradient-to-b from-white via-slate-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-white scroll-mt-24 transition-colors duration-300"
 >
   <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-12">
+    <h2 class="text-3xl font-bold text-center mb-12" data-translate="experience.title">
       Experience
       <div class="w-20 h-1 mt-2 mx-auto bg-gradient-to-r from-[#2563EB] to-[#9333EA] rounded-full"></div>
     </h2>
@@ -66,11 +64,11 @@ const experienceItems = [
             <!-- カード -->
             <div class="w-full md:w-1/2 px-4">
               <div class="dark:bg-gray-800 bg-white rounded-lg p-6 shadow-lg">
-                <h3 class="text-lg font-semibold">{exp.title}</h3>
-                <p class="text-blue-400 text-sm mb-1">{exp.org}</p>
+                <h3 class="text-lg font-semibold" data-translate={exp.titleKey}>Title</h3>
+                <p class="text-blue-400 text-sm mb-1" data-translate={exp.orgKey}>Organization</p>
                 <p class="text-gray-400 text-sm mb-4">{exp.period}</p>
                 <ul class="list-disc list-inside text-sm space-y-1 text-[#4b5563] dark:text-gray-300 marker:text-blue-500">
-                  {exp.details.map(d => <li>{d}</li>)}
+                  {exp.detailKeys.map(detailKey => <li data-translate={detailKey}>Detail</li>)}
                 </ul>
               </div>
             </div>
