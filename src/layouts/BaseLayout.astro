@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import LanguageToggle from "../components/LanguageToggle.astro";
 ---
 
 <html lang="ja" class="dark scroll-smooth">
@@ -31,6 +32,7 @@ import "../styles/global.css";
   </head>
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
     <slot />
+    <LanguageToggle />
     <script src="/my-portfolio/js/themeToggle.js" type="module"></script>
     <!-- 別ファイルにせず、HTMLの中に直接埋め込む -->
     <script is:inline>
