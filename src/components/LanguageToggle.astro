@@ -1,222 +1,16 @@
 ---
-// LanguageToggle.astro - 言語切り替えコンポーネント
+// LanguageToggle.astro - 言語切り替えコンポーネント統合役
+import LanguageButton from './language-toggle/LanguageButton.astro';
 ---
 
-<!-- 右下固定の言語切り替えボタン -->
-<div class="language-toggle-floating">
-  <button 
-    id="language-toggle" 
-    class="language-toggle-btn group"
-    aria-label="言語を切り替える / Toggle Language"
-  >
-    <div class="flag-container">
-      <span id="current-flag" class="flag">🇺🇸</span>
-    </div>
-    <div class="lang-text-container">
-      <span id="current-lang-text" class="lang-text">EN</span>
-      <div class="lang-switch-indicator">
-        <svg class="switch-icon" viewBox="0 0 12 12" fill="none">
-          <path d="M4 5L6 7L8 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </div>
-  </button>
-</div>
+<!-- UI表示コンポーネントを読み込み -->
+<LanguageButton />
 
-<style>
-  .language-toggle-floating {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 9999;
-    transition: all 0.3s ease;
-  }
-
-  /* モバイル対応 */
-  @media (max-width: 768px) {
-    .language-toggle-floating {
-      bottom: 1.5rem;
-      right: 1.5rem;
-    }
-  }
-
-  /* 超小画面対応 */
-  @media (max-width: 480px) {
-    .language-toggle-floating {
-      bottom: 1rem;
-      right: 1rem;
-    }
-  }
-
-  .language-toggle-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    border: 2px solid #e2e8f0;
-    border-radius: 2rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #475569;
-    box-shadow: 
-      0 10px 25px -5px rgb(0 0 0 / 0.1), 
-      0 4px 6px -2px rgb(0 0 0 / 0.05),
-      0 0 0 1px rgb(255 255 255 / 0.05);
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  /* モバイルでのボタンサイズ調整 */
-  @media (max-width: 768px) {
-    .language-toggle-btn {
-      padding: 0.625rem 0.875rem;
-      font-size: 0.8125rem;
-      gap: 0.4rem;
-    }
-  }
-
-  .language-toggle-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.1) 50%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .language-toggle-btn:hover::before {
-    opacity: 1;
-  }
-
-  .language-toggle-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px 0 rgb(0 0 0 / 0.15), 0 2px 4px -1px rgb(0 0 0 / 0.1);
-    border-color: #3b82f6;
-  }
-
-  .language-toggle-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-  }
-
-  .flag-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-    transition: transform 0.3s ease;
-  }
-
-  .group:hover .flag-container {
-    transform: scale(1.1);
-  }
-
-  .flag {
-    font-size: 1rem;
-    line-height: 1;
-  }
-
-  .lang-text-container {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .lang-text {
-    font-weight: 600;
-    letter-spacing: 0.025em;
-    transition: color 0.3s ease;
-  }
-
-  .group:hover .lang-text {
-    color: #3b82f6;
-  }
-
-  .lang-switch-indicator {
-    display: flex;
-    align-items: center;
-    opacity: 0.6;
-    transition: all 0.3s ease;
-  }
-
-  .group:hover .lang-switch-indicator {
-    opacity: 1;
-    transform: translateY(1px);
-  }
-
-  .switch-icon {
-    width: 0.75rem;
-    height: 0.75rem;
-    transition: transform 0.3s ease;
-  }
-
-  .group:hover .switch-icon {
-    transform: rotate(180deg);
-  }
-
-  /* ダークモード対応 */
-  :global(.dark) .language-toggle-btn {
-    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-    border-color: #475569;
-    color: #cbd5e1;
-  }
-
-  :global(.dark) .language-toggle-btn::before {
-    background: linear-gradient(135deg, transparent 0%, rgba(147, 197, 253, 0.1) 50%, transparent 100%);
-  }
-
-  :global(.dark) .language-toggle-btn:hover {
-    border-color: #60a5fa;
-  }
-
-  :global(.dark) .flag-container {
-    background: #0f172a;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
-  }
-
-  :global(.dark) .group:hover .lang-text {
-    color: #60a5fa;
-  }
-
-  /* アニメーション効果 */
-  @keyframes flagSwap {
-    0% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(0.8) rotate(180deg); }
-    100% { transform: scale(1) rotate(360deg); }
-  }
-
-  .flag-swap {
-    animation: flagSwap 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @keyframes textSlide {
-    0% { transform: translateX(0); opacity: 1; }
-    50% { transform: translateX(-10px); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
-  }
-
-  .text-slide {
-    animation: textSlide 0.4s ease-in-out;
-  }
-</style>
-
+<!-- ロジック部分を直接埋め込み -->
 <script is:inline>
   // 翻訳データ
   const translations = {
     en: {
-      // Header
       'nav.home': 'home',
       'nav.about': 'about',
       'nav.experience': 'experience', 
@@ -224,14 +18,10 @@
       'nav.blog': 'blog',
       'nav.contact': 'contact',
       'menu.title': 'Menu',
-      
-      // Hero Section
       'hero.greeting': "Hi, I'm",
       'hero.description': "I'm a university student in Aichi, studying programming.",
       'hero.contact-btn': 'Get In Touch',
       'hero.github-btn': 'View GitHub',
-      
-      // About Section
       'about.title': 'About Me',
       'about.currently-learning': 'Currently Learning',
       'about.currently-learning-desc': "I'm currently working on a desktop application using React, Electron, and TypeScript for the U-22 Programming Contest. In university, I'm also learning object-oriented programming with Java as part of my coursework.",
@@ -240,8 +30,6 @@
       'about.future-goals-desc': 'My goal is to become a full-stack engineer with expertise in both backend and frontend development. After gaining hands-on experience in the field, I aim to grow into a highly skilled developer capable of contributing to open-source projects.',
       'about.overview': 'Overview.',
       'about.overview-desc': "Hi, I'm Taiga Oishi, a student majoring in Computer Systems at the Faculty of Information Science at Aichi Institute of Technology. My hobbies include watching movies and reading. I started learning programming in May of my first year at university, and since my second year, I've been committing code to GitHub every day to keep growing as a developer.",
-      
-      // Experience Section
       'experience.title': 'Experience',
       'experience.dept-info-science': 'Department of Information Science',
       'experience.aichi-institute': 'Aichi Institute of Technology',
@@ -263,8 +51,6 @@
       'experience.desktop-app': 'Developing a cross-platform desktop application using React, Electron, and TypeScript',
       'experience.ui-ux-focus': 'Focusing on intuitive UI/UX and efficient clipboard data management',
       'experience.contest-submission': 'Aiming to submit the final product to the U-22 Programming Contest in summer 2025',
-      
-      // Skills Section
       'skills.title': 'Skills & Technologies',
       'skills.frontend': 'Frontend',
       'skills.backend': 'Backend',
@@ -278,8 +64,6 @@
       'skills.linux-basic': 'Linux Basic Operations',
       'skills.docker-intro': 'Docker Introduction',
       'skills.cloud-aws': 'Cloud (AWS / Firebase)',
-      
-      // Blog Section
       'blog.title': 'Blog & Articles',
       'blog.tech-blog': 'Tech Blog',
       'blog.tech-blog-desc': 'Personal blog where I share my learning journey and technical insights',
@@ -287,8 +71,6 @@
       'blog.qiita-desc': 'Programming tips and solutions to common development challenges',
       'blog.not-available': '(NOT AVAILABLE)',
       'blog.visit-qiita': 'Visit Qiita',
-      
-      // Contact Section
       'contact.title': 'Get In Touch',
       'contact.connect-title': "Let's Connect",
       'contact.connect-desc': "I'm always open to connecting with fellow developers, collaborators, or anyone who shares an interest in tech. Feel free to reach out — whether it's about a project or just to say hi!",
@@ -302,9 +84,7 @@
       'contact.message-placeholder': 'Your Message',
       'contact.send-btn': 'Send Message →'
     },
-    
     ja: {
-      // Header
       'nav.home': 'ホーム',
       'nav.about': '私について',
       'nav.experience': '経験',
@@ -312,14 +92,10 @@
       'nav.blog': 'ブログ',
       'nav.contact': 'お問い合わせ',
       'menu.title': 'メニュー',
-      
-      // Hero Section
       'hero.greeting': 'こんにちは、私は',
       'hero.description': '愛知県の大学生で、プログラミングを学んでいます。',
       'hero.contact-btn': 'お問い合わせ',
       'hero.github-btn': 'GitHub を見る',
-      
-      // About Section
       'about.title': '私について',
       'about.currently-learning': '現在学習中',
       'about.currently-learning-desc': '現在、U-22プログラミングコンテスト向けにReact、Electron、TypeScriptを使用したデスクトップアプリケーションを開発しています。大学では、授業の一環としてJavaでオブジェクト指向プログラミングも学んでいます。',
@@ -328,8 +104,6 @@
       'about.future-goals-desc': 'バックエンドとフロントエンドの両方に精通したフルスタックエンジニアになることが目標です。実務経験を積んだ後は、オープンソースプロジェクトに貢献できる高度なスキルを持つ開発者に成長したいと考えています。',
       'about.overview': '概要',
       'about.overview-desc': 'こんにちは、愛知工業大学情報科学部コンピュータシステム専攻の2年、大石大雅です。趣味は映画鑑賞と読書です。大学1年生の5月からプログラミングの学習を始め、2年生からは開発者として成長し続けるために毎日GitHubにコードをコミットしています。',
-      
-      // Experience Section
       'experience.title': '経験',
       'experience.dept-info-science': '情報科学部',
       'experience.aichi-institute': '愛知工業大学',
@@ -351,8 +125,6 @@
       'experience.desktop-app': 'React、Electron、TypeScript を使用したクロスプラットフォームデスクトップアプリケーションを開発',
       'experience.ui-ux-focus': '直感的な UI/UX と効率的なクリップボードデータ管理に重点を置く',
       'experience.contest-submission': '2025年夏のU-22プログラミングコンテストへの最終製品提出を目指す',
-      
-      // Skills Section
       'skills.title': 'スキル・技術',
       'skills.frontend': 'フロントエンド',
       'skills.backend': 'バックエンド',
@@ -366,8 +138,6 @@
       'skills.linux-basic': 'Linux 基本操作',
       'skills.docker-intro': 'Docker 入門',
       'skills.cloud-aws': 'Cloud（AWS / Firebase）',
-      
-      // Blog Section
       'blog.title': 'ブログ・記事',
       'blog.tech-blog': 'Tech Blog',
       'blog.tech-blog-desc': '学習の過程や技術的な洞察を共有する個人ブログ',
@@ -375,8 +145,6 @@
       'blog.qiita-desc': 'プログラミングのコツや一般的な開発課題の解決策',
       'blog.not-available': '（利用不可）',
       'blog.visit-qiita': 'Qiitaを見る',
-      
-      // Contact Section
       'contact.title': 'お問い合わせ',
       'contact.connect-title': 'つながりましょう',
       'contact.connect-desc': '開発者仲間、コラボレーター、技術に興味のある方とのつながりを大切にしています。プロジェクトのことでも、ただのご挨拶でも、お気軽にお声がけください！',
@@ -392,27 +160,11 @@
     }
   };
 
-  class LanguageToggle {
+  // 言語管理クラス
+  class LanguageManager {
     constructor() {
       this.currentLang = this.getCurrentLanguage();
-      
-      // DOM要素を遅延取得
-      this.findElements();
-    }
-
-    findElements() {
-      this.button = document.getElementById('language-toggle');
-      this.flagElement = document.getElementById('current-flag');
-      this.textElement = document.getElementById('current-lang-text');
-      
-      if (this.button && this.flagElement && this.textElement) {
-        this.init();
-      } else {
-        // 要素が見つからない場合は少し待ってから再試行
-        setTimeout(() => {
-          this.findElements();
-        }, 50);
-      }
+      this.initializeElements();
     }
 
     getCurrentLanguage() {
@@ -428,7 +180,32 @@
       return translations[this.currentLang][key] || translations['en'][key] || key;
     }
 
-    updateButton() {
+    initializeElements() {
+      this.button = document.getElementById('language-toggle');
+      this.flagElement = document.getElementById('current-flag');
+      this.textElement = document.getElementById('current-lang-text');
+      
+      if (this.button && this.flagElement && this.textElement) {
+        this.setupEventListeners();
+        this.updateButtonDisplay();
+        this.updateAllTexts();
+      } else {
+        setTimeout(() => this.initializeElements(), 50);
+      }
+    }
+
+    setupEventListeners() {
+      if (this.button) {
+        this.button.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Language toggle clicked');
+          this.toggleLanguage();
+        });
+        console.log('Language toggle event listener added');
+      }
+    }
+
+    updateButtonDisplay() {
       if (this.flagElement && this.textElement) {
         if (this.currentLang === 'ja') {
           this.flagElement.textContent = '🇯🇵';
@@ -442,7 +219,6 @@
 
     updateButtonWithAnimation() {
       if (this.flagElement && this.textElement) {
-        // フラグとテキストにアニメーションを追加
         this.flagElement.classList.add('flag-swap');
         this.textElement.classList.add('text-slide');
         
@@ -455,7 +231,6 @@
             this.textElement.textContent = 'EN';
           }
           
-          // アニメーションクラスを削除
           setTimeout(() => {
             this.flagElement.classList.remove('flag-swap');
             this.textElement.classList.remove('text-slide');
@@ -481,55 +256,32 @@
       this.setLanguage(newLang);
       this.updateButtonWithAnimation();
       
-      // 少し遅延させてテキストを更新（アニメーション後）
-      setTimeout(() => {
-        this.updateAllTexts();
-      }, 300);
+      setTimeout(() => this.updateAllTexts(), 300);
       
-      // カスタムイベントを発火
-      window.dispatchEvent(new CustomEvent('languageChanged', { 
-        detail: { language: newLang } 
-      }));
+      this.dispatchLanguageChangeEvent(newLang);
     }
 
-    init() {
-      console.log('LanguageToggle initializing...', this.button);
-      
-      if (this.button) {
-        this.button.addEventListener('click', (e) => {
-          e.preventDefault();
-          console.log('Language toggle clicked');
-          this.toggleLanguage();
-        });
-        console.log('Event listener added');
-      } else {
-        console.error('Button not found');
-      }
-      
-      // 初期表示を更新
-      this.updateButton();
-      
-      // 少し遅延させて初期テキストを更新
-      setTimeout(() => {
-        this.updateAllTexts();
-      }, 100);
+    dispatchLanguageChangeEvent(language) {
+      window.dispatchEvent(new CustomEvent('languageChanged', { 
+        detail: { language } 
+      }));
     }
   }
 
-  // DOM読み込み完了後に初期化
+  // 初期化
   function initLanguageToggle() {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
-        new LanguageToggle();
+        console.log('DOM loaded, initializing language toggle');
+        new LanguageManager();
       });
     } else {
-      new LanguageToggle();
+      console.log('DOM already loaded, initializing language toggle');
+      new LanguageManager();
     }
   }
 
-  // 即座に初期化を試行
+  // 即座に初期化
   initLanguageToggle();
-
-  // エクスポート（他のスクリプトから使用可能）
-  window.LanguageToggle = LanguageToggle;
+  window.LanguageManager = LanguageManager;
 </script>
