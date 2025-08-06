@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",
-    "astro": "^5.9.3"
+    "astro": "^5.9.3",
+    "lucide-astro": "^0.536.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
