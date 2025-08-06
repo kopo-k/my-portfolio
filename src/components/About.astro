@@ -2,6 +2,7 @@
 // About.astro
 import StarIcon from './icons/StarIcon.astro';
 import CodeIcon from './icons/CodeIcon.astro';
+import TechBadge from './About/TechBadge.astro';
 ---
 <section id="about" class="animate-fade-in-up bg-gradient-to-b from-white via-slate-50 to-white
          dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-gray-900
@@ -35,10 +36,10 @@ import CodeIcon from './icons/CodeIcon.astro';
             <p class="group-hover:text-blue-600 transition-colors duration-300" data-translate="about.favorite-tech">Favorite Technologies</p>
           </h3>
           <div class="flex flex-wrap gap-2">
-            <span class="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-xs font-medium px-3 py-1 rounded-full">React</span>
-            <span class="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300 text-xs font-medium px-3 py-1 rounded-full">TypeScript</span>
-            <span class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 text-xs font-medium px-3 py-1 rounded-full">Go</span>
-            <span class="bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300 text-xs font-medium px-3 py-1 rounded-full">AWS</span>
+            <TechBadge label="React" color="blue" />
+            <TechBadge label="TypeScript" color="purple" />
+            <TechBadge label="Go" color="green" />
+            <TechBadge label="AWS" color="orange" />
           </div>
         </div>
 
