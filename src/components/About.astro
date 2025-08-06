@@ -1,10 +1,12 @@
 ---
 // About.astro
+import StarIcon from './icons/StarIcon.astro';
 ---
 <section id="about" class="animate-fade-in-up bg-gradient-to-b from-white via-slate-50 to-white
          dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-gray-900
          text-gray-900 dark:text-white
          transition-colors duration-300">
+         
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16">
       <h2 class="text-4xl font-bold text-gray-900 dark:text-white" data-translate="about.title">About Me</h2>
@@ -17,8 +19,7 @@
         <!-- Currently Learning -->
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300  "><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
-            </svg>
+            <StarIcon />
             <p class="group-hover:text-blue-600 transition-colors duration-300" data-translate="about.currently-learning">Currently Learning</p>
           </h3>
           <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-translate="about.currently-learning-desc">
@@ -29,11 +30,9 @@
         <!-- Favorite Technologies -->
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
-            </svg>
+            <StarIcon />
             <p class="group-hover:text-blue-600 transition-colors duration-300" data-translate="about.favorite-tech">Favorite Technologies</p>
           </h3>
-          
           <div class="flex flex-wrap gap-2">
             <span class="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-xs font-medium px-3 py-1 rounded-full">React</span>
             <span class="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300 text-xs font-medium px-3 py-1 rounded-full">TypeScript</span>
@@ -45,10 +44,9 @@
         <!-- Future Goals -->
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
-            </svg>
+            <StarIcon />
             <p class="group-hover:text-blue-600 transition-colors duration-300" data-translate="about.future-goals">
-              Future Goals
+              Future Goals 
             </p>
           </h3>
           <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-translate="about.future-goals-desc">
