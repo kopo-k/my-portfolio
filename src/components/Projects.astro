@@ -1,5 +1,6 @@
 ---
 // projects.astro
+import { Globe, Database, Cpu, Music } from "lucide-astro";
 ---
 
 <section
@@ -10,38 +11,44 @@
          text-gray-900 dark:text-white
          transition-colors duration-300"
 >
-  <h2 class="text-3xl font-bold text-center mb-10 text-gray-900 dark:text-white">Featured Projects
-    <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
-  </h2>
+<div class="text-center mb-16">
+  <h2 class="text-4xl font-bold text-gray-900 dark:text-white" data-translate="projects.title">Projects</h2>
+  <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
+</div>
 
-  
   <div class="grid md:grid-cols-3 gap-6">
     <!-- プロジェクトカード 1 -->
     <div class="rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-800 dark:to-gray-700 transition-transform hover:scale-105 transition-transform duration-300">
       <div class="flex justify-center items-center h-40">
-        <i data-lucide="globe" class="w-12 h-12 text-blue-600"></i>
+        <Music class="w-12 h-12 text-blue-600" />
       </div>
       <div class="dark:bg-gray-800 bg-white p-6 ">
-        <h3 class="text-xl font-bold mb-2">E-commerce Platform</h3>
-        <p class="text-sm mb-4">A full-stack e-commerce application built with React and Go</p>
+        <h3 class="text-xl font-bold mb-2">Music Sharing App</h3>
+        <p class="text-sm mb-4">A music sharing app that lets users tag songs with moods, situations, and lyric types, and search songs shared by others.</p>
         <div class="flex flex-wrap gap-2 mb-4 text-sm ">
           <span class="px-2 py-1 rounded bg-[#f4f4f5] dark:bg-gray-700 ">React</span>
-          <span class="px-2 py-1 rounded bg-[#f4f4f5] dark:bg-gray-700 ">Go</span>
-          <span class="px-2 py-1 rounded bg-[#f4f4f5] dark:bg-gray-700 ">PostgreSQL</span>
+          <span class="px-2 py-1 rounded bg-[#f4f4f5] dark:bg-gray-700 ">Node.js</span>
+          <span class="px-2 py-1 rounded bg-[#f4f4f5] dark:bg-gray-700 ">Firebase</span>
         </div>
         <div class="flex items-center justify-between  ">
-          <a href="#" class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition w-full mr-4 flex justify-center hover:scale-105 transition-transform duration-300 ">
+          <a href="https://youtu.be/axTLGOGyHqE"  
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition w-full mr-4 flex justify-center hover:scale-105 transition-transform duration-300 ">
             <i data-lucide="external-link" class="w-4 h-4 "></i> Live Demo
           </a>
-          <button class="bg-black px-3 py-2 rounded hover:scale-125 transition-transform duration-300 bg-white dark:bg-black border border-gray-300 dark:border-none"><i data-lucide="github" class="w-4 h-4 dark:text-white text-black"></i></button>
+          <a href="https://github.com/kopo-k/Hackathon" target="_blank" rel="noopener noreferrer"
+            class="bg-black px-3 py-2 rounded hover:scale-125 transition-transform duration-300 bg-white dark:bg-black border border-gray-300 dark:border-none">
+            <i data-lucide="github" class="w-4 h-4 dark:text-white text-black"></i>
+          </a>
         </div>
       </div>
     </div>
 
     <!-- プロジェクトカード 2 -->
-    <div class="rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-800 dark:to-gray-700 transition-transform hover:scale-105 transition-transform duration-300">
+    <!-- <div class="rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-800 dark:to-gray-700 transition-transform hover:scale-105 transition-transform duration-300">
       <div class="flex justify-center items-center h-40">
-        <i data-lucide="database" class="w-12 h-12 text-purple-600"></i>
+        <Database class="w-12 h-12 text-purple-600" />
       </div>
       <div class="dark:bg-gray-800 bg-white p-6">
         <h3 class="text-xl font-bold mb-2">Task Management App</h3>
@@ -58,12 +65,12 @@
           <button class="bg-black px-3 py-2 rounded hover:scale-125 transition-transform duration-300 bg-white dark:bg-black border border-gray-300 dark:border-none"><i data-lucide="github" class="w-4 h-4 dark:text-white text-black"></i></button>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- プロジェクトカード 3 -->
-    <div class="rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-green-100 to-blue-100 dark:from-gray-800 dark:to-gray-700 transition-transform hover:scale-105 transition-transform duration-300">
+    <!-- <div class="rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-green-100 to-blue-100 dark:from-gray-800 dark:to-gray-700 transition-transform hover:scale-105 transition-transform duration-300">
       <div class="flex justify-center items-center h-40 ">
-        <i data-lucide="cpu" class="w-12 h-12 text-green-600"></i>
+        <Cpu class="w-12 h-12 text-green-600" />
       </div>
       <div class="dark:bg-gray-800 bg-white p-6">
         <h3 class="text-xl font-bold mb-2">Game Engine</h3>
@@ -80,15 +87,6 @@
           <button class="bg-black px-3 py-2 rounded hover:scale-125 transition-transform duration-300 bg-white dark:bg-black border border-gray-300 dark:border-none"><i data-lucide="github" class="w-4 h-4 dark:text-white text-black"></i></button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
-
-  
-  <!-- Lucide Icons 読み込み -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script is:inline>
-    window.onload = () => {
-      if (window.lucide) window.lucide.createIcons();
-    };
-  </script>
 </section>
