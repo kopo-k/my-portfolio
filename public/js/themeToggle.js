@@ -1,11 +1,9 @@
 // public/js/themeToggle.js に保存（拡張子は .js に）
 export function initThemeToggle() {
   //デバッグ用
-  console.log("✅ initThemeToggle loaded");
-
+  // console.log("✅ initThemeToggle loaded");
 
   const toggleButton = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
   const toggleCircle = document.getElementById('toggle-circle');
 
 // ライト or ダークモードの切り替え

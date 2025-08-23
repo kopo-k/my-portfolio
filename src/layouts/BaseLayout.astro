@@ -3,7 +3,7 @@ import "../styles/global.css";
 import LanguageToggle from "../components/LanguageToggle.astro";
 ---
 
-<html lang="ja" class="dark scroll-smooth">
+<html lang="ja" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" /> <!--文字化け対策-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,17 +17,18 @@ import LanguageToggle from "../components/LanguageToggle.astro";
     <meta property="og:type" content="website" />
     <link rel="icon" href="/my-portfolio/images/favicon.ico" />
     <script>
-      if (
-        localStorage.theme === 'dark' ||
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        //未指定なら、ユーザーのデバイスの好みに従う 
-      ) {
-        document.documentElement.classList.add('dark'); //ダークモードを有効化
-      } else {
-        document.documentElement.classList.remove('dark'); //ダークモードを解除
-      }
+      // 既定をライトにしたいので変更
+      //初期値を設定
+      (function () {
+        var saved = localStorage.getItem('theme');       // 'dark' | 'light' | null
+        var mode  = saved ? saved : 'light';             // 既定は light
+        if (mode === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
     </script>
-    
     <!-- <slot name="head" /> -->
   </head>
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
