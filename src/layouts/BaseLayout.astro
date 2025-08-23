@@ -33,15 +33,11 @@ import LanguageToggle from "../components/LanguageToggle.astro";
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
     <slot />
     <LanguageToggle />
-    <script src="/my-portfolio/js/themeToggle.js" type="module"></script>
-    <!-- 別ファイルにせず、HTMLの中に直接埋め込む -->
-    <script is:inline>
-      window.addEventListener("DOMContentLoaded", () => {
-        import(`/my-portfolio/js/themeToggle.js`).then(mod => {
-          mod.initThemeToggle();
-        });
+    <script type="module">
+      import { initThemeToggle } from '/my-portfolio/js/themeToggle.js';
+      document.addEventListener('DOMContentLoaded', () => {
+        initThemeToggle();
       });
     </script>
-    
   </body>
 </html>
