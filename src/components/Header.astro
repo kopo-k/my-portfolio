@@ -1,5 +1,5 @@
 ---
-// ヘッダー用のスクリプトやpropsは現時点では不要
+import { Sun, Moon, X } from 'lucide-astro';
 ---
 <header class="w-full flex items-center justify-between px-6 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 sticky top-0 z-50">
   <div class="text-2xl font-bold bg-gradient-to-r from-taiga-blue to-taiga-purple bg-clip-text text-transparent ml-4">
@@ -26,10 +26,10 @@
       <div id="toggle-circle"
         class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center transition-all duration-700 overflow-hidden p-0.5 translate-x-0 dark:translate-x-7">
         
-        <!-- SVGアイコン -->
-        <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-yellow-500 dark:text-blue-600" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 4.5V2m0 20v-2.5m7.07-14.07l1.77-1.77m-1.77 17.66l1.77 1.77M4.5 12H2m20 0h-2.5m-14.07-7.07L4.66 3.16m0 17.66l-1.77 1.77M12 7a5 5 0 100 10 5 5 0 000-10z"/>
-        </svg>
+        <div id="theme-icon">
+          <Sun class="w-4 h-4 text-yellow-500 dark:hidden" />
+          <Moon class="w-4 h-4 text-blue-600 hidden dark:block" />
+        </div>
       </div>
     </button>
 
@@ -55,9 +55,7 @@
           Menu
         </div>
         <button id="mobile-menu-close" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-          <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          <X class="w-5 h-5 text-gray-600 dark:text-gray-400" />
         </button>
       </div>
       
