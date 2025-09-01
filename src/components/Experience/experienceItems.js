@@ -39,7 +39,17 @@ const experienceItems = [
       "experience.ui-ux-focus",
       "experience.contest-submission"
     ]
-  }
+  },
+  {
+    titleKey: "experience.hrcloud-intern",
+    orgKey: "experience.hrcloud-joined",
+    period: "August 2025 – Present",
+    detailKeys: [
+      "experience.hrcloud-role",
+      "experience.hrcloud-db-ui",
+      "experience.hrcloud-skills"
+    ]
+  }, 
 ];
 
 export default experienceItems;
