@@ -1,5 +1,5 @@
 // public/js/header.js
-console.log("✅ header.js loaded");
+// console.log("✅ header.js loaded");
 
 window.addEventListener("DOMContentLoaded", () => {
   // ナビゲーションのアクティブ状態管理
