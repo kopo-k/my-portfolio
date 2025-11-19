@@ -2,6 +2,7 @@
 // projects.astro
 
 import projectItems from './Projects/projectItems';
+import { ChevronLeft, ChevronRight } from 'lucide-astro';
 ---
 
 <section
@@ -17,46 +18,129 @@ import projectItems from './Projects/projectItems';
   <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
 </div>
 
-<div class="grid md:grid-cols-3 gap-6">
-  {projectItems.map((project) => (
-    <div class={`rounded-lg overflow-hidden shadow-lg bg-gradient-to-br ${project.gradientFrom} ${project.gradientTo} dark:from-gray-800 dark:to-gray-700 transition-transform hover:scale-105 transition-transform duration-300  h-full flex flex-col`}>
-      <div class="flex justify-center items-center h-40">
-        <project.icon class={`w-12 h-12 ${project.iconColor}`} />
-      </div>
-      <div class="dark:bg-gray-800 bg-white p-6 flex flex-col flex-1">
-        <h3 class="text-xl font-bold mb-2 " data-translate={project.titleKey}>{project.titleKey}</h3>
-        <p class="text-sm mb-4" data-translate={project.descriptionKey}>{project.descriptionKey}</p>
+<div class="relative max-w-6xl mx-auto">
+  <!-- カルーセルコンテナ -->
+  <div class="overflow-hidden">
+    <div id="carousel-track" class="flex transition-transform duration-500 ease-out gap-6">
+      {projectItems.map((project, index) => (
+        <div class="flex-shrink-0 w-full md:w-[calc(33.333%-16px)]">
+          <div class={`rounded-lg overflow-hidden shadow-lg bg-gradient-to-br ${project.gradientFrom} ${project.gradientTo} dark:from-gray-800 dark:to-gray-700 transition-transform hover:scale-105 duration-300 h-full flex flex-col`}>
+            <div class="flex justify-center items-center h-40">
+              <project.icon class={`w-12 h-12 ${project.iconColor}`} />
+            </div>
+            <div class="dark:bg-gray-800 bg-white p-6 flex flex-col flex-1">
+              <h3 class="text-xl font-bold mb-2" data-translate={project.titleKey}>{project.titleKey}</h3>
+              <p class="text-sm mb-4" data-translate={project.descriptionKey}>{project.descriptionKey}</p>
 
-        <div class="flex-1"></div>
+              <div class="flex-1"></div>
 
-        <div class="flex flex-wrap gap-2 mb-4 text-sm ">
-          {project.techStack.map((tech) => (
-            <span class="px-2 py-1 rounded bg-[#f4f4f5] dark:bg-gray-700">{tech}</span>
-          ))}
+              <div class="flex flex-wrap gap-2 mb-4 text-sm">
+                {project.techStack.map((tech) => (
+                  <span class="px-2 py-1 rounded bg-[#f4f4f5] dark:bg-gray-700">{tech}</span>
+                ))}
+              </div>
+
+              <div class="flex items-center justify-between mt-auto">
+                <a
+                  href={project.liveDemoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition w-full mr-4 justify-center hover:scale-105 transition-transform duration-300"
+                >
+                  <i data-lucide="external-link" class="w-4 h-4"></i> <span data-translate="projects.demo">Live Demo</span>
+                </a>
+
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="bg-white dark:bg-black border border-gray-300 dark:border-none px-3 py-2 rounded hover:scale-125 transition-transform duration-300"
+                >
+                  <i data-lucide="github" class="w-4 h-4 dark:text-white text-black"></i>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="flex items-center justify-between mt-auto">
-          <a
-            href={project.liveDemoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition w-full mr-4 justify-center hover:scale-105 transition-transform duration-300"
-          >
-            <i data-lucide="external-link" class="w-4 h-4"></i> <span data-translate="projects.demo">Live Demo</span>
-          </a>
-
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="bg-white dark:bg-black border border-gray-300 dark:border-none px-3 py-2 rounded hover:scale-125 transition-transform duration-300"
-          >
-            <i data-lucide="github" class="w-4 h-4 dark:text-white text-black"></i>
-          </a>
-        </div>
-      </div>
+      ))}
     </div>
-  ))}
+  </div>
+
+  <!-- ナビゲーションボタン -->
+  <button
+    id="prev-btn"
+    class="absolute -left-16 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg hover:scale-110 transition-transform duration-300 hidden lg:block z-10"
+    aria-label="Previous"
+  >
+    <ChevronLeft class="w-6 h-6 text-gray-900 dark:text-white" />
+  </button>
+
+  <button
+    id="next-btn"
+    class="absolute -right-16 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg hover:scale-110 transition-transform duration-300 hidden lg:block z-10"
+    aria-label="Next"
+  >
+    <ChevronRight class="w-6 h-6 text-gray-900 dark:text-white" />
+  </button>
+
+  <!-- インジケーター -->
+  <div class="flex justify-center gap-2 mt-8">
+    {projectItems.map((_, index) => (
+      <button
+        class="carousel-indicator w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-all duration-300"
+        data-index={index}
+        aria-label={`Go to slide ${index + 1}`}
+      ></button>
+    ))}
+  </div>
 </div>
 
 </section>
+
+<script>
+  let currentIndex = 0;
+  const track = document.getElementById('carousel-track');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const indicators = document.querySelectorAll('.carousel-indicator');
+  const totalSlides = indicators.length;
+
+  function updateCarousel() {
+    if (!track) return;
+
+    const isMobile = window.innerWidth < 768;
+    const slideWidth = isMobile ? 100 : 33.333;
+    const gap = isMobile ? 0 : 1.5;
+
+    track.style.transform = `translateX(-${currentIndex * (slideWidth + gap)}%)`;
+
+    indicators.forEach((indicator, index) => {
+      if (index === currentIndex) {
+        indicator.classList.add('bg-blue-600', 'dark:bg-blue-500', 'w-8');
+        indicator.classList.remove('bg-gray-300', 'dark:bg-gray-600');
+      } else {
+        indicator.classList.remove('bg-blue-600', 'dark:bg-blue-500', 'w-8');
+        indicator.classList.add('bg-gray-300', 'dark:bg-gray-600');
+      }
+    });
+  }
+
+  prevBtn?.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateCarousel();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateCarousel();
+  });
+
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      currentIndex = index;
+      updateCarousel();
+    });
+  });
+
+  updateCarousel();
+</script>
