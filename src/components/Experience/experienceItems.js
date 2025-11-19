@@ -49,7 +49,18 @@ const experienceItems = [
       "experience.hrcloud-db-ui",
       "experience.hrcloud-skills"
     ]
-  }, 
+  },
+  {
+    titleKey: "experience.geekcamp2025-vol14",
+    orgKey: "experience.supporterz",
+    period: "November 8-9, 2025",
+    detailKeys: [
+      "experience.geekcamp2025-solo-joined",
+      "experience.geekcamp2025-effort-award",
+      "experience.geekcamp2025-docker",
+      "experience.geekcamp2025-cicd"
+    ]
+  }
 ];
 
 export default experienceItems;

@@ -1,5 +1,5 @@
 // Projects/projectItems.js
-import { Music, Clipboard } from "lucide-astro";
+import { Music, Clipboard, Code } from "lucide-astro";
 
 const projectItems = [
   {
@@ -23,6 +23,17 @@ const projectItems = [
     techStack: ["Electron", "TypeScript", "SQLite", "React"],
     liveDemoUrl: "https://youtu.be/Y_FGdNWNgvk",
     githubUrl: "https://github.com/kopo-k/MultiClip",
+  },
+  {
+    icon: Code,
+    iconColor: "text-green-600",
+    gradientFrom: "from-green-100",
+    gradientTo: "to-teal-100",
+    titleKey: "projects.tuioku.title",
+    descriptionKey: "projects.tuioku.description",
+    techStack: ["Phaser 3", "TypeScript", "Vite", "Docker"],
+    liveDemoUrl: "https://tuioku.netlify.app/",
+    githubUrl: "https://github.com/vol-14/phaser3_practice",
   },
 ];
 
