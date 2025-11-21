@@ -1,5 +1,5 @@
 // Projects/projectItems.js
-import { Music, Clipboard, Code } from "lucide-astro";
+import { Music, Clipboard, Code, Kanban } from "lucide-astro";
 
 const projectItems = [
   {
@@ -34,6 +34,17 @@ const projectItems = [
     techStack: ["Phaser 3", "TypeScript", "Vite", "Docker"],
     liveDemoUrl: "https://tuioku.netlify.app/",
     githubUrl: "https://github.com/vol-14/phaser3_practice",
+  },
+  {
+    icon: Kanban,
+    iconColor: "text-orange-600",
+    gradientFrom: "from-orange-100",
+    gradientTo: "to-amber-100",
+    titleKey: "projects.jobhunting.title",
+    descriptionKey: "projects.jobhunting.description",
+    techStack: ["FuelPHP", "Knockout.js", "MySQL", "Docker"],
+    liveDemoUrl: "https://youtu.be/WB8xpwAnGhM",
+    githubUrl: "https://github.com/kopo-k/Job_hunting_progress",
   },
 ];
 
