@@ -9,8 +9,18 @@
          text-gray-900 dark:text-white
          transition-colors duration-300"
 >
-<div class="text-center mb-16">
-  <h2 class="text-4xl font-bold text-gray-900 dark:text-white" data-translate="skills.title">Skills & Technologies</h2>
+<div class="flex flex-col text-center mb-16">
+  <div class="flex flex-col items-center justify-center gap-2">
+    <h2 class="text-4xl font-bold text-gray-900 dark:text-white" data-translate="skills.title">Skills & Technologies</h2>
+    <button
+      id="skill-info-btn"
+      class="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+      aria-label="スキル指標の説明"
+    >
+      <i data-lucide="help-circle" class="w-5 h-5"></i>
+      <span data-translate="skills.info-label">スキル指標について</span>
+    </button>
+  </div>
   <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
 </div>
 
@@ -144,10 +154,73 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div
+    id="skill-modal"
+    class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 transition-opacity"
+  >
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-2xl mx-4 relative shadow-2xl">
+      <button
+        id="close-modal"
+        class="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+      >
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <h3 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white" data-translate="skills.modal.title">スキル指標について</h3>
+
+      <div class="space-y-4 text-gray-700 dark:text-gray-300">
+        <div class="flex items-start gap-3">
+          <span class="font-semibold text-blue-600 dark:text-blue-400 min-w-[80px]">90-100%</span>
+          <p data-translate="skills.modal.expert">3年以上の実務経験、他者に教えられるレベル</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="font-semibold text-blue-600 dark:text-blue-400 min-w-[80px]">70-89%</span>
+          <p data-translate="skills.modal.advanced">1-3年の実務経験、自律的に開発可能</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="font-semibold text-green-600 dark:text-green-400 min-w-[80px]">50-69%</span>
+          <p data-translate="skills.modal.intermediate">6ヶ月-1年の経験、基本的な実装が可能</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="font-semibold text-orange-600 dark:text-orange-400 min-w-[80px]">30-49%</span>
+          <p data-translate="skills.modal.beginner">学習中、チュートリアルレベルは理解</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="font-semibold text-purple-600 dark:text-purple-400 min-w-[80px]">10-29%</span>
+          <p data-translate="skills.modal.learning">入門段階、基礎を学習中</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/lucide@latest"></script>
   <script is:inline>
     window.onload = () => {
       if (window.lucide) window.lucide.createIcons();
     };
+
+    // Modal functionality
+    const modal = document.getElementById('skill-modal');
+    const openBtn = document.getElementById('skill-info-btn');
+    const closeBtn = document.getElementById('close-modal');
+
+    openBtn?.addEventListener('click', () => {
+      modal?.classList.remove('hidden');
+      modal?.classList.add('flex');
+    });
+
+    closeBtn?.addEventListener('click', () => {
+      modal?.classList.add('hidden');
+      modal?.classList.remove('flex');
+    });
+
+    // Close modal when clicking outside
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    });
   </script>
 </section>
