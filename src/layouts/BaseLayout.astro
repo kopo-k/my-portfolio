@@ -34,10 +34,79 @@ import LanguageToggle from "../components/LanguageToggle.astro";
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
     <slot />
     <LanguageToggle />
+
+    <!-- Skill Modal -->
+    <div
+      id="skill-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 transition-opacity"
+    >
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-2xl mx-4 relative shadow-2xl">
+        <button
+          id="close-modal"
+          class="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+        >
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+
+        <h3 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white" data-translate="skills.modal.title">スキル指標について</h3>
+
+        <div class="space-y-4 text-gray-700 dark:text-gray-300">
+          <div class="flex items-start gap-3">
+            <span class="font-semibold text-blue-600 dark:text-blue-400 min-w-[80px]">90-100%</span>
+            <p data-translate="skills.modal.expert">3年以上の実務経験、他者に教えられるレベル</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-semibold text-blue-600 dark:text-blue-400 min-w-[80px]">70-89%</span>
+            <p data-translate="skills.modal.advanced">1-3年の実務経験、自律的に開発可能</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-semibold text-green-600 dark:text-green-400 min-w-[80px]">50-69%</span>
+            <p data-translate="skills.modal.intermediate">6ヶ月-1年の経験、基本的な実装が可能</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-semibold text-orange-600 dark:text-orange-400 min-w-[80px]">30-49%</span>
+            <p data-translate="skills.modal.beginner">学習中、チュートリアルレベルは理解</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="font-semibold text-purple-600 dark:text-purple-400 min-w-[80px]">10-29%</span>
+            <p data-translate="skills.modal.learning">入門段階、基礎を学習中</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script type="module">
       import { initThemeToggle } from '/my-portfolio/js/themeToggle.js';
       document.addEventListener('DOMContentLoaded', () => {
         initThemeToggle();
+      });
+    </script>
+
+    <script is:inline>
+      // Modal functionality
+      const modal = document.getElementById('skill-modal');
+      const openBtn = document.getElementById('skill-info-btn');
+      const closeBtn = document.getElementById('close-modal');
+
+      openBtn?.addEventListener('click', () => {
+        modal?.classList.remove('hidden');
+        modal?.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        modal?.classList.add('hidden');
+        modal?.classList.remove('flex');
+        document.body.style.overflow = '';
+      });
+
+      // Close modal when clicking outside
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+          document.body.style.overflow = '';
+        }
       });
     </script>
   </body>
