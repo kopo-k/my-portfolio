@@ -46,6 +46,17 @@ const projectItems = [
     liveDemoUrl: "https://youtu.be/WB8xpwAnGhM",
     githubUrl: "https://github.com/kopo-k/Job_hunting_progress",
   },
+  {
+    icon: Kanban,
+    iconColor: "text-teal-600",
+    gradientFrom: "from-teal-100",
+    gradientTo: "to-cyan-100",
+    titleKey: "projects.daijob.title",
+    descriptionKey: "projects.daijob.description",
+    techStack: ["React", "Next.js", "TypeScript", "FastAPI", "Supabase", "Docker"],
+    liveDemoUrl: "https://youtu.be/4fBMtR1opks",
+    githubUrl: "https://github.com/fuharu/Deploy",
+  },
 ];
 
 export default projectItems;

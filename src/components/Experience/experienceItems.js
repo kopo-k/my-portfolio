@@ -60,6 +60,18 @@ const experienceItems = [
       "experience.geekcamp2025-docker",
       "experience.geekcamp2025-cicd"
     ]
+  },
+  {
+    titleKey: "experience.geekcamp2025-vol16",
+    orgKey: "experience.supporterz",
+    period: "December 20-21, 2025",
+    detailKeys: [
+      "experience.geekcamp2025-vol16-backend",
+      "experience.geekcamp2025-vol16-gmail",
+      "experience.geekcamp2025-vol16-reminder",
+      "experience.geekcamp2025-vol16-mvp-lesson",
+      "experience.geekcamp2025-vol16-scope-lesson"
+    ]
   }
 ];
 
