@@ -1,5 +1,6 @@
 ---
 // src/components/Skills.astro
+import { HelpCircle, Globe, Database, Cloud, Code } from 'lucide-astro';
 ---
 <section
   id="skills"
@@ -19,7 +20,7 @@
     class="flex justify-center gap-1 py-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
     aria-label="スキル指標の説明"
   >
-    <i data-lucide="help-circle" class="w-5 h-5"></i>
+    <HelpCircle class="w-5 h-5" />
     <span data-translate="skills.info-label">スキル指標について</span>
   </button>
 </div>
@@ -29,7 +30,7 @@
     <div class="dark:bg-[#1e293b] bg-[#e5f0fe] rounded-xl p-6">
       <div class="flex justify-center mb-4">
         <div class="bg-blue-600 p-3 rounded-xl">
-          <i data-lucide="globe" class="text-white"></i>
+          <Globe class="text-white w-6 h-6" />
         </div>
       </div>
       <h3 class="text-center text-xl font-semibold text-blue-400 mb-6" data-translate="skills.frontend">Frontend</h3>
@@ -61,7 +62,7 @@
     <div class="dark:bg-[#1e293b] bg-[#e7fcee] rounded-xl p-6 ">
       <div class="flex justify-center mb-4">
         <div class="bg-green-600 p-3 rounded-xl">
-          <i data-lucide="database" class="text-white"></i>
+          <Database class="text-white w-6 h-6" />
         </div>
       </div>
       <h3 class="text-center text-xl font-semibold text-green-400 mb-6" data-translate="skills.backend">Backend</h3>
@@ -93,7 +94,7 @@
     <div class="dark:bg-[#1e293b] bg-[#fff5e8] rounded-xl p-6">
       <div class="flex justify-center mb-4">
         <div class="bg-orange-600 p-3 rounded-xl">
-          <i data-lucide="cloud" class="text-white"></i>
+          <Cloud class="text-white w-6 h-6" />
         </div>
       </div>
       <h3 class="text-center text-xl font-semibold text-orange-400 mb-6" data-translate="skills.tools">Tools & Dev</h3>
@@ -125,7 +126,7 @@
     <div class="dark:bg-[#1e293b] bg-[#f8f2ff] rounded-xl p-6">
       <div class="flex justify-center mb-4">
         <div class="bg-purple-600 p-3 rounded-xl">
-          <i data-lucide="code" class="text-white"></i>
+          <Code class="text-white w-6 h-6" />
         </div>
       </div>
       <h3 class="text-center text-xl font-semibold text-purple-400 mb-6" data-translate="skills.learning">Currently Learning</h3>
@@ -154,10 +155,4 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script is:inline>
-    window.onload = () => {
-      if (window.lucide) window.lucide.createIcons();
-    };
-  </script>
 </section>

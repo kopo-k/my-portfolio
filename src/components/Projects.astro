@@ -2,7 +2,7 @@
 // projects.astro
 
 import projectItems from './Projects/projectItems';
-import { ChevronLeft, ChevronRight } from 'lucide-astro';
+import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
 ---
 
 <section
@@ -48,7 +48,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-astro';
                   rel="noopener noreferrer"
                   class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition w-full mr-4 justify-center hover:scale-105 transition-transform duration-300"
                 >
-                  <i data-lucide="external-link" class="w-4 h-4"></i> <span data-translate="projects.demo">Live Demo</span>
+                  <ExternalLink class="w-4 h-4" /> <span data-translate="projects.demo">Live Demo</span>
                 </a>
 
                 <a
@@ -57,7 +57,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-astro';
                   rel="noopener noreferrer"
                   class="bg-white dark:bg-black border border-gray-300 dark:border-none px-3 py-2 rounded hover:scale-125 transition-transform duration-300"
                 >
-                  <i data-lucide="github" class="w-4 h-4 dark:text-white text-black"></i>
+                  <Github class="w-4 h-4 dark:text-white text-black" />
                 </a>
               </div>
               </div>

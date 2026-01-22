@@ -1,3 +1,6 @@
+---
+import { Mail, Github } from 'lucide-astro';
+---
 <section class="animate-fade-in-up min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-white via-indigo-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300" id="home">
   <div class="mt-20 flex flex-col items-center">
       <div class="w-32 h-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-[0_0_20px_rgba(59,130,246,0.6)] flex items-center justify-center mb-6 overflow-hidden">
@@ -16,12 +19,12 @@
     <div class="flex gap-4 mb-8">
 
       <a href="#contact" class="px-6 py-2 rounded-full bg-indigo-500 text-white font-semibold shadow hover:bg-indigo-600 transition flex items-center gap-2 group">
-        <i data-lucide="mail" class="text-white w-5 h-5 group-hover:rotate-12 transition-transform duration-300"></i>
+        <Mail class="text-white w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
         <span data-translate="hero.contact-btn">Get In Touch</span>
       </a>
 
       <a href="https://github.com/kopo-k" target="_blank" rel="noopener" class="px-6 py-2 rounded-full border border-gray-600 text-gray-900 dark:text-gray-300 font-semibold hover:bg-indigo-50 dark:hover:bg-gray-800 transition flex items-center gap-2 bg-white dark:bg-black group transition-colors duration-700">
-        <i data-lucide="github" class="dark:text-white text-gray-900 w-5 h-5 group-hover:rotate-12 transition-transform duration-300"></i>
+        <Github class="dark:text-white text-gray-900 w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
         <span data-translate="hero.github-btn">View GitHub</span>
       </a>
     </div>
