@@ -66,7 +66,7 @@ const projectItems = [
     descriptionKey: "projects.programtokku.description",
     techStack: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Docker"],
     liveDemoUrl: "https://program-tokku.vercel.app/",
-    githubUrl: "https://github.com/kopo-k/program-tokku",
+    githubUrl: "https://github.com/geek-camp-vol18/program-tokku",
   },
 ];
 
