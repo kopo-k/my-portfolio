@@ -1,5 +1,5 @@
 // Projects/projectItems.js
-import { Music, Clipboard, Code, Kanban } from "lucide-astro";
+import { Music, Clipboard, Code, Kanban, MessageCircleQuestion } from "lucide-astro";
 
 const projectItems = [
   {
@@ -56,6 +56,17 @@ const projectItems = [
     techStack: ["React", "Next.js", "TypeScript", "FastAPI", "Supabase", "Docker"],
     liveDemoUrl: "https://youtu.be/4fBMtR1opks",
     githubUrl: "https://github.com/fuharu/Deploy",
+  },
+  {
+    icon: MessageCircleQuestion,
+    iconColor: "text-indigo-600",
+    gradientFrom: "from-indigo-100",
+    gradientTo: "to-violet-100",
+    titleKey: "projects.programtokku.title",
+    descriptionKey: "projects.programtokku.description",
+    techStack: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Docker"],
+    liveDemoUrl: "https://program-tokku.vercel.app/",
+    githubUrl: "https://github.com/kopo-k/program-tokku",
   },
 ];
 

@@ -72,6 +72,18 @@ const experienceItems = [
       "experience.geekcamp2025-vol16-mvp-lesson",
       "experience.geekcamp2025-vol16-scope-lesson"
     ]
+  },
+  {
+    titleKey: "experience.geekcamp2025-vol18",
+    orgKey: "experience.supporterz",
+    period: "January 11-18, 2026",
+    detailKeys: [
+      "experience.geekcamp2025-vol18-role",
+      "experience.geekcamp2025-vol18-product",
+      "experience.geekcamp2025-vol18-deploy",
+      "experience.geekcamp2025-vol18-conflict",
+      "experience.geekcamp2025-vol18-lesson"
+    ]
   }
 ];
 
