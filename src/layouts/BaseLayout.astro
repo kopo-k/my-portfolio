@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import LanguageToggle from "../components/LanguageToggle.astro";
 import { X } from 'lucide-astro';
 ---
 
@@ -34,7 +33,6 @@ import { X } from 'lucide-astro';
   </head>
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
     <slot />
-    <LanguageToggle />
 
     <!-- Skill Modal -->
     <div
@@ -49,28 +47,28 @@ import { X } from 'lucide-astro';
           <X class="w-6 h-6" />
         </button>
 
-        <h3 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white" data-translate="skills.modal.title">スキル指標について</h3>
+        <h3 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">スキル指標について</h3>
 
         <div class="space-y-4 text-gray-700 dark:text-gray-300">
           <div class="flex items-start gap-3">
             <span class="font-semibold text-blue-600 dark:text-blue-400 min-w-[80px]">90-100%</span>
-            <p data-translate="skills.modal.expert">3年以上の実務経験、他者に教えられるレベル</p>
+            <p>複数のプロジェクトで使用、他者に教えられるレベル</p>
           </div>
           <div class="flex items-start gap-3">
             <span class="font-semibold text-blue-600 dark:text-blue-400 min-w-[80px]">70-89%</span>
-            <p data-translate="skills.modal.advanced">1-3年の実務経験、自律的に開発可能</p>
+            <p>長期インターンなどの実務で使用経験あり</p>
           </div>
           <div class="flex items-start gap-3">
             <span class="font-semibold text-green-600 dark:text-green-400 min-w-[80px]">50-69%</span>
-            <p data-translate="skills.modal.intermediate">6ヶ月-1年の経験、基本的な実装が可能</p>
+            <p>ハッカソンでの使用経験・個人開発での使用経験あり</p>
           </div>
           <div class="flex items-start gap-3">
             <span class="font-semibold text-orange-600 dark:text-orange-400 min-w-[80px]">30-49%</span>
-            <p data-translate="skills.modal.beginner">学習中、チュートリアルレベルは理解</p>
+            <p>Udemy等の動画講座を見ながら学習中</p>
           </div>
           <div class="flex items-start gap-3">
             <span class="font-semibold text-purple-600 dark:text-purple-400 min-w-[80px]">10-29%</span>
-            <p data-translate="skills.modal.learning">入門段階、基礎を学習中</p>
+            <p>入門段階、チュートリアルや基礎を学習中</p>
           </div>
         </div>
       </div>

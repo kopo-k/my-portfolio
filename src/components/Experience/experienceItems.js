@@ -1,88 +1,88 @@
 
 const experienceItems = [
   {
-    titleKey: "experience.dept-info-science",
-    orgKey: "experience.aichi-institute",
+    title: "情報科学部",
+    org: "愛知工業大学",
     period: "2024.4 - Present",
-    detailKeys: [
-      "experience.study-java",
-      "experience.passed-fe"
+    details: [
+      "Java プログラミング、C プログラミングを学習",
+      "高校3年生の2023年5月に基本情報技術者試験（FE）に合格"
     ],
   },
   {
-    titleKey: "experience.geekcamp-title",
-    orgKey: "experience.supporterz",
+    title: "技育CAMP ハッカソン Vol.19",
+    org: "株式会社サポーターズ",
     period: "2024.12",
-    detailKeys: [
-      "experience.joined-individual",
-      "experience.built-prototype",
-      "experience.frontend-dev",
+    details: [
+      "個人参加で初対面のメンバーとチームを結成",
+      "React を使用したフロントエンドで2日間で動作するプロトタイプを構築",
+      "フロントエンド開発を担当し、チーム開発の実践経験を積む",
     ],
   },
   {
-    titleKey: "experience.matech-member",
-    orgKey: "experience.matech-org",
+    title: "学生エンジニアコミュニティのメンバー",
+    org: "MaTech",
     period: "2025.5 - Present",
-    detailKeys: [
-      "experience.joined-matech",
-      "experience.weekly-presentations",
-      "experience.hackathons-study",
-      "experience.communication-skills"
+    details: [
+      "約20名の学生によるエンジニアコミュニティ MaTech に参加",
+      "週次の発表会で学んだことを共有",
+      "connpass などのプラットフォームを通じてハッカソン、勉強会、meetup に参加",
+      "チーム活動を通じてコミュニケーション能力と協力スキルを向上"
     ],
   },
   {
-    titleKey: "experience.u22-project",
-    orgKey: "experience.ipa-support",
+    title: "U-22 プログラミングコンテスト プロジェクト",
+    org: "IPA（情報処理推進機構）支援",
     period: "June 2025 – Present",
-    detailKeys: [
-      "experience.desktop-app",
-      "experience.ui-ux-focus",
-      "experience.contest-submission"
+    details: [
+      "React、Electron、TypeScript を使用したクロスプラットフォームデスクトップアプリケーションを開発",
+      "直感的な UI/UX と効率的なクリップボードデータ管理に重点を置く",
+      "2025年夏のU-22プログラミングコンテストへの最終製品提出を目指す"
     ]
   },
   {
-    titleKey: "experience.hrcloud-intern",
-    orgKey: "experience.hrcloud-joined",
+    title: "HRクラウドでのエンジニアインターン",
+    org: "2025年夏にHRクラウドのインターンシップに参加",
     period: "August 2025 – Present",
-    detailKeys: [
-      "experience.hrcloud-role",
-      "experience.hrcloud-db-ui",
-      "experience.hrcloud-skills"
+    details: [
+      "Webアプリケーション開発を中心に取り組むソフトウェアエンジニアインターンとして従事",
+      "社内ツールの要件定義・データベース設計・UI設計に貢献",
+      "バックエンド/フロントエンド開発および実践的な設計プロセスにおける技術力を強化"
     ]
   },
   {
-    titleKey: "experience.geekcamp2025-vol14",
-    orgKey: "experience.supporterz",
+    title: "【技育CAMP2025】ハッカソン Vol.14【オンライン開催】",
+    org: "株式会社サポーターズ",
     period: "November 8-9, 2025",
-    detailKeys: [
-      "experience.geekcamp2025-solo-joined",
-      "experience.geekcamp2025-effort-award",
-      "experience.geekcamp2025-docker",
-      "experience.geekcamp2025-cicd"
+    details: [
+      "野良参加しました",
+      "努力賞を受賞しました",
+      "Dockerを使用してチームの開発スピードを向上させました",
+      "CI/CDパイプラインを構築しました"
     ]
   },
   {
-    titleKey: "experience.geekcamp2025-vol16",
-    orgKey: "experience.supporterz",
+    title: "【技育CAMP2025】ハッカソン Vol.16【オンライン開催】",
+    org: "株式会社サポーターズ",
     period: "December 20-21, 2025",
-    detailKeys: [
-      "experience.geekcamp2025-vol16-backend",
-      "experience.geekcamp2025-vol16-gmail",
-      "experience.geekcamp2025-vol16-reminder",
-      "experience.geekcamp2025-vol16-mvp-lesson",
-      "experience.geekcamp2025-vol16-scope-lesson"
+    details: [
+      "バックエンド担当",
+      "Gmail連携機能の実装",
+      "リマインド・通知機能の実装",
+      "実装に時間がかかるものをMVPにしてしまった反省",
+      "2日間で機能が多く、生産性の高いものを作るのは厳しいため、もっと作りやすいものにするべきだと学んだ"
     ]
   },
   {
-    titleKey: "experience.geekcamp2025-vol18",
-    orgKey: "experience.supporterz",
+    title: "【技育CAMP2025】ハッカソン Vol.18【1週間開催】",
+    org: "株式会社サポーターズ",
     period: "January 11-18, 2026",
-    detailKeys: [
-      "experience.geekcamp2025-vol18-role",
-      "experience.geekcamp2025-vol18-product",
-      "experience.geekcamp2025-vol18-deploy",
-      "experience.geekcamp2025-vol18-conflict",
-      "experience.geekcamp2025-vol18-lesson"
+    details: [
+      "UI設計、Docker環境構築、認証認可実装、RLSポリシー、デプロイ担当",
+      "「プログラム特区」Q&Aサービスを4人チームで開発",
+      "Vercelへの早期デプロイにより発表直前のビルドエラーを防止",
+      "Discord作業報告チャンネルでリアルタイム共有し、Gitコンフリクトを0件に",
+      "ブランチ戦略（develop/main分離）の重要性を学んだ"
     ]
   }
 ];

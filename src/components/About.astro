@@ -9,13 +9,13 @@ import { Code } from "lucide-astro";
          dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-gray-900
          text-gray-900 dark:text-white
          transition-colors duration-300">
-         
+
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 dark:text-white" data-translate="about.title">About Me</h2>
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white">私について</h2>
       <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
     </div>
-    
+
     <div class="grid md:grid-cols-2 gap-12 items-start">
       <!-- Left: About Text -->
       <div class="space-y-10">
@@ -23,10 +23,10 @@ import { Code } from "lucide-astro";
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
             <StarIcon />
-            <p class="group-hover:text-blue-600 transition-colors duration-300" data-translate="about.currently-learning">Currently Learning</p>
+            <p class="group-hover:text-blue-600 transition-colors duration-300">現在学習中</p>
           </h3>
-          <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-translate="about.currently-learning-desc">
-            I'm currently working on a desktop application using React, Electron, and TypeScript for the U-22 Programming Contest. In university, I'm also learning object-oriented programming with Java as part of my coursework.
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+            「干し日和」というFlutterアプリを開発中で、天気APIから取得した降水確率・気温・湿度・風速を分析し、洗濯に最適なタイミングを判定します。現在はプッシュ通知（FCM）による毎朝の天気配信機能に取り組んでおり、トークン管理や定時配信にはサーバーサイド実装が必要だと学びました。この経験からフロントエンドだけでは限界があることを実感し、バックエンド技術への興味が深まりました。インターンでGoのAPI実装を学び、自前のバックエンドを構築したいと考えています。
           </p>
         </div>
 
@@ -34,7 +34,7 @@ import { Code } from "lucide-astro";
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
             <StarIcon />
-            <p class="group-hover:text-blue-600 transition-colors duration-300" data-translate="about.favorite-tech">Favorite Technologies</p>
+            <p class="group-hover:text-blue-600 transition-colors duration-300">好きな技術</p>
           </h3>
           <div class="flex flex-wrap gap-2">
             <TechBadge label="React" color="blue" />
@@ -48,12 +48,12 @@ import { Code } from "lucide-astro";
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
             <StarIcon />
-            <p class="group-hover:text-blue-600 transition-colors duration-300" data-translate="about.future-goals">
-              Future Goals 
+            <p class="group-hover:text-blue-600 transition-colors duration-300">
+              将来の目標
             </p>
           </h3>
-          <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-translate="about.future-goals-desc">
-            My goal is to become a full-stack engineer with expertise in both backend and frontend development. After gaining hands-on experience -in the field, I aim to grow into a highly skilled developer capable of contributing to open-source projects.
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+            バックエンドとフロントエンドの両方に精通したフルスタックエンジニアになることが目標です。実務経験を積んだ後は、オープンソースプロジェクトに貢献できる高度なスキルを持つ開発者に成長したいと考えています。
           </p>
         </div>
       </div>
@@ -64,11 +64,9 @@ import { Code } from "lucide-astro";
           <Code className= "w-8 h-8 text-white group-hover:rotate-12 transition-transform duration-1000"/>
           <!-- <CodeIcon /> -->
         </div>
-        <h4 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors duration-1000" data-translate="about.overview">Overview.</h4>
-        <p class="text-gray-700 dark:text-gray-300" data-translate="about.overview-desc">
-          Hi, I'm Taiga Oishi, a student majoring in Computer Systems at the Faculty of Information Science at Aichi Institute of Technology.
-          My hobbies include watching movies and reading.
-          I started learning programming in May of my first year at university, and since my second year, I’ve been committing code to GitHub every day to keep growing as a developer.          
+        <h4 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors duration-1000">概要</h4>
+        <p class="text-gray-700 dark:text-gray-300">
+          こんにちは、愛知工業大学情報科学部コンピュータシステム専攻の2年、大石大雅です。趣味は映画鑑賞と読書です。大学1年生の5月からプログラミングの学習を始め、2年生からは開発者として成長し続けるために毎日GitHubにコードをコミットしています。
         </p>
       </div>
     </div>

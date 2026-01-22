@@ -14,7 +14,7 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
          transition-colors duration-300"
 >
 <div class="text-center mb-16">
-  <h2 class="text-4xl font-bold text-gray-900 dark:text-white" data-translate="projects.title">Projects</h2>
+  <h2 class="text-4xl font-bold text-gray-900 dark:text-white">成果物</h2>
   <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
 </div>
 
@@ -30,8 +30,8 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
                 <project.icon class={`w-12 h-12 ${project.iconColor}`} />
               </div>
               <div class="dark:bg-gray-800 bg-white p-6 flex flex-col flex-1">
-              <h3 class="text-xl font-bold mb-2" data-translate={project.titleKey}>{project.titleKey}</h3>
-              <p class="text-sm mb-4" data-translate={project.descriptionKey}>{project.descriptionKey}</p>
+              <h3 class="text-xl font-bold mb-2">{project.title}</h3>
+              <p class="text-sm mb-4">{project.description}</p>
 
               <div class="flex-1"></div>
 
@@ -48,7 +48,7 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
                   rel="noopener noreferrer"
                   class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition w-full mr-4 justify-center hover:scale-105 transition-transform duration-300"
                 >
-                  <ExternalLink class="w-4 h-4" /> <span data-translate="projects.demo">Live Demo</span>
+                  <ExternalLink class="w-4 h-4" /> <span>デモを見る</span>
                 </a>
 
                 <a
