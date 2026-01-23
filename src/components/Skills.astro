@@ -27,7 +27,7 @@ import { HelpCircle, Globe, Database, Cloud, Code } from 'lucide-astro';
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     <!-- Frontend -->
-    <div class="dark:bg-[#1e293b] bg-[#e5f0fe] rounded-xl p-6">
+    <div class="skill-card-blue dark:bg-[#1e293b] bg-[#e5f0fe] rounded-xl p-6 transition-all duration-300">
       <div class="flex justify-center mb-4">
         <div class="bg-blue-600 p-3 rounded-xl">
           <Globe class="text-white w-6 h-6" />
@@ -59,7 +59,7 @@ import { HelpCircle, Globe, Database, Cloud, Code } from 'lucide-astro';
     </div>
 
     <!-- Backend -->
-    <div class="dark:bg-[#1e293b] bg-[#e7fcee] rounded-xl p-6 ">
+    <div class="skill-card-green dark:bg-[#1e293b] bg-[#e7fcee] rounded-xl p-6 transition-all duration-300">
       <div class="flex justify-center mb-4">
         <div class="bg-green-600 p-3 rounded-xl">
           <Database class="text-white w-6 h-6" />
@@ -91,7 +91,7 @@ import { HelpCircle, Globe, Database, Cloud, Code } from 'lucide-astro';
     </div>
 
     <!-- Tools -->
-    <div class="dark:bg-[#1e293b] bg-[#fff5e8] rounded-xl p-6">
+    <div class="skill-card-orange dark:bg-[#1e293b] bg-[#fff5e8] rounded-xl p-6 transition-all duration-300">
       <div class="flex justify-center mb-4">
         <div class="bg-orange-600 p-3 rounded-xl">
           <Cloud class="text-white w-6 h-6" />
@@ -123,7 +123,7 @@ import { HelpCircle, Globe, Database, Cloud, Code } from 'lucide-astro';
     </div>
 
     <!-- Learning -->
-    <div class="dark:bg-[#1e293b] bg-[#f8f2ff] rounded-xl p-6">
+    <div class="skill-card-purple dark:bg-[#1e293b] bg-[#f8f2ff] rounded-xl p-6 transition-all duration-300">
       <div class="flex justify-center mb-4">
         <div class="bg-purple-600 p-3 rounded-xl">
           <Code class="text-white w-6 h-6" />
@@ -156,3 +156,74 @@ import { HelpCircle, Globe, Database, Cloud, Code } from 'lucide-astro';
   </div>
 
 </section>
+
+<style>
+  /* ニューモーフィズム - ライトモード */
+  .skill-card-blue {
+    box-shadow:
+      8px 8px 16px #c4d4eb,
+      -8px -8px 16px #ffffff;
+  }
+  .skill-card-blue:hover {
+    box-shadow:
+      12px 12px 24px #c4d4eb,
+      -12px -12px 24px #ffffff;
+    transform: translateY(-4px);
+  }
+
+  .skill-card-green {
+    box-shadow:
+      8px 8px 16px #c9e6d4,
+      -8px -8px 16px #ffffff;
+  }
+  .skill-card-green:hover {
+    box-shadow:
+      12px 12px 24px #c9e6d4,
+      -12px -12px 24px #ffffff;
+    transform: translateY(-4px);
+  }
+
+  .skill-card-orange {
+    box-shadow:
+      8px 8px 16px #e6ddd0,
+      -8px -8px 16px #ffffff;
+  }
+  .skill-card-orange:hover {
+    box-shadow:
+      12px 12px 24px #e6ddd0,
+      -12px -12px 24px #ffffff;
+    transform: translateY(-4px);
+  }
+
+  .skill-card-purple {
+    box-shadow:
+      8px 8px 16px #ded6eb,
+      -8px -8px 16px #ffffff;
+  }
+  .skill-card-purple:hover {
+    box-shadow:
+      12px 12px 24px #ded6eb,
+      -12px -12px 24px #ffffff;
+    transform: translateY(-4px);
+  }
+
+  /* ニューモーフィズム - ダークモード */
+  :global(.dark) .skill-card-blue,
+  :global(.dark) .skill-card-green,
+  :global(.dark) .skill-card-orange,
+  :global(.dark) .skill-card-purple {
+    box-shadow:
+      8px 8px 16px #151c28,
+      -8px -8px 16px #27324e;
+  }
+
+  :global(.dark) .skill-card-blue:hover,
+  :global(.dark) .skill-card-green:hover,
+  :global(.dark) .skill-card-orange:hover,
+  :global(.dark) .skill-card-purple:hover {
+    box-shadow:
+      12px 12px 24px #151c28,
+      -12px -12px 24px #27324e;
+    transform: translateY(-4px);
+  }
+</style>

@@ -21,5 +21,161 @@ body {
   .animate-fade-in-up {
     animation: fade-in-up 1.5s ease-out both;
   }
+
+  /* ニューモーフィズム - ライトモード */
+  .neumorphic {
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow:
+      8px 8px 20px rgba(166, 180, 200, 0.5),
+      -8px -8px 20px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .neumorphic:hover {
+    box-shadow:
+      12px 12px 24px rgba(166, 180, 200, 0.6),
+      -12px -12px 24px rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
+  }
+
+  /* ニューモーフィズム - ダークモード */
+  .dark .neumorphic {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    box-shadow:
+      8px 8px 20px rgba(0, 0, 0, 0.5),
+      -8px -8px 20px rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .dark .neumorphic:hover {
+    box-shadow:
+      12px 12px 28px rgba(0, 0, 0, 0.6),
+      -12px -12px 28px rgba(255, 255, 255, 0.05);
+    transform: translateY(-4px);
+  }
+
+  /* カラーバリエーション - ブルー */
+  .neumorphic-blue {
+    background: linear-gradient(145deg, #e8f4fc, #d0e8f8);
+    box-shadow:
+      8px 8px 20px rgba(147, 177, 206, 0.5),
+      -8px -8px 20px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+  }
+
+  .neumorphic-blue:hover {
+    box-shadow:
+      12px 12px 24px rgba(147, 177, 206, 0.6),
+      -12px -12px 24px rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
+  }
+
+  .dark .neumorphic-blue {
+    background: linear-gradient(145deg, #1e3a5f, #0f172a);
+    box-shadow:
+      8px 8px 20px rgba(0, 0, 0, 0.5),
+      -8px -8px 20px rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+
+  .dark .neumorphic-blue:hover {
+    box-shadow:
+      12px 12px 28px rgba(0, 0, 0, 0.6),
+      -12px -12px 28px rgba(59, 130, 246, 0.08);
+    transform: translateY(-4px);
+  }
+
+  /* カラーバリエーション - グリーン */
+  .neumorphic-green {
+    background: linear-gradient(145deg, #e8fcee, #d0f5dc);
+    box-shadow:
+      8px 8px 20px rgba(147, 206, 166, 0.5),
+      -8px -8px 20px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(34, 197, 94, 0.15);
+  }
+
+  .neumorphic-green:hover {
+    box-shadow:
+      12px 12px 24px rgba(147, 206, 166, 0.6),
+      -12px -12px 24px rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
+  }
+
+  .dark .neumorphic-green {
+    background: linear-gradient(145deg, #14532d, #0f172a);
+    box-shadow:
+      8px 8px 20px rgba(0, 0, 0, 0.5),
+      -8px -8px 20px rgba(34, 197, 94, 0.05);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .dark .neumorphic-green:hover {
+    box-shadow:
+      12px 12px 28px rgba(0, 0, 0, 0.6),
+      -12px -12px 28px rgba(34, 197, 94, 0.08);
+    transform: translateY(-4px);
+  }
+
+  /* カラーバリエーション - オレンジ */
+  .neumorphic-orange {
+    background: linear-gradient(145deg, #fff5e8, #ffe8d0);
+    box-shadow:
+      8px 8px 20px rgba(206, 177, 147, 0.5),
+      -8px -8px 20px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(249, 115, 22, 0.15);
+  }
+
+  .neumorphic-orange:hover {
+    box-shadow:
+      12px 12px 24px rgba(206, 177, 147, 0.6),
+      -12px -12px 24px rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
+  }
+
+  .dark .neumorphic-orange {
+    background: linear-gradient(145deg, #431407, #0f172a);
+    box-shadow:
+      8px 8px 20px rgba(0, 0, 0, 0.5),
+      -8px -8px 20px rgba(249, 115, 22, 0.05);
+    border: 1px solid rgba(249, 115, 22, 0.2);
+  }
+
+  .dark .neumorphic-orange:hover {
+    box-shadow:
+      12px 12px 28px rgba(0, 0, 0, 0.6),
+      -12px -12px 28px rgba(249, 115, 22, 0.08);
+    transform: translateY(-4px);
+  }
+
+  /* カラーバリエーション - パープル */
+  .neumorphic-purple {
+    background: linear-gradient(145deg, #f8f2ff, #ede0ff);
+    box-shadow:
+      8px 8px 20px rgba(177, 147, 206, 0.5),
+      -8px -8px 20px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+  }
+
+  .neumorphic-purple:hover {
+    box-shadow:
+      12px 12px 24px rgba(177, 147, 206, 0.6),
+      -12px -12px 24px rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
+  }
+
+  .dark .neumorphic-purple {
+    background: linear-gradient(145deg, #3b0764, #0f172a);
+    box-shadow:
+      8px 8px 20px rgba(0, 0, 0, 0.5),
+      -8px -8px 20px rgba(139, 92, 246, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+  }
+
+  .dark .neumorphic-purple:hover {
+    box-shadow:
+      12px 12px 28px rgba(0, 0, 0, 0.6),
+      -12px -12px 28px rgba(139, 92, 246, 0.08);
+    transform: translateY(-4px);
+  }
 }
 

@@ -59,16 +59,42 @@ import { Code, User } from "lucide-astro";
       </div>
 
       <!-- Right: Overview Card -->
-      <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl hover:shadow-2xl mt-12 transition-all duration-1200 ">
+      <div class="about-card bg-white dark:bg-gray-800 p-8 rounded-2xl mt-12 transition-all duration-300">
         <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group">
           <User className= "w-8 h-8 text-white group-hover:rotate-12 transition-transform duration-1000"/>
           <!-- <CodeIcon /> -->
         </div>
         <h4 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors duration-1000">私について</h4>
-        <p class="text-gray-700 dark:text-gray-300">
+        <p class="text-gray-700 dark:text-gray-300 ">
           こんにちは、愛知工業大学情報科学部コンピュータシステム専攻の2年、大石大雅です。趣味は映画鑑賞と読書です。大学1年生の5月からプログラミングの学習を始め、2年生からは開発者として成長し続けるために毎日GitHubにコードをコミットしています。
         </p>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .about-card {
+    box-shadow:
+      8px 8px 20px #d1d5e0,
+      -8px -8px 20px #ffffff;
+  }
+  .about-card:hover {
+    box-shadow:
+      12px 12px 28px #d1d5e0,
+      -12px -12px 28px #ffffff;
+    transform: translateY(-6px);
+  }
+
+  :global(.dark) .about-card {
+    box-shadow:
+      8px 8px 20px #151c28,
+      -8px -8px 20px #27324e;
+  }
+  :global(.dark) .about-card:hover {
+    box-shadow:
+      12px 12px 28px #151c28,
+      -12px -12px 28px #27324e;
+    transform: translateY(-6px);
+  }
+</style>

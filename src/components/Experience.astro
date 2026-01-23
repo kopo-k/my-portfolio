@@ -22,7 +22,7 @@ import experienceItems from './Experience/experienceItems.js';
 
             <!-- カード -->
             <div class="w-full md:w-1/2 px-4">
-              <div class="dark:bg-gray-800 bg-white rounded-lg p-6 shadow-lg">
+              <div class="experience-card dark:bg-gray-800 bg-white rounded-2xl p-6 transition-all duration-300">
                 <h3 class="text-lg font-semibold">{exp.title}</h3>
                 <p class="text-blue-400 text-sm mb-1">{exp.org}</p>
                 <p class="text-gray-400 text-sm mb-4">{exp.period}</p>
@@ -42,3 +42,29 @@ import experienceItems from './Experience/experienceItems.js';
     </div>
   </div>
 </section>
+
+<style>
+  .experience-card {
+    box-shadow:
+      8px 8px 20px #d1d5e0,
+      -8px -8px 20px #ffffff;
+  }
+  .experience-card:hover {
+    box-shadow:
+      12px 12px 28px #d1d5e0,
+      -12px -12px 28px #ffffff;
+    transform: translateY(-4px);
+  }
+
+  :global(.dark) .experience-card {
+    box-shadow:
+      8px 8px 20px #151c28,
+      -8px -8px 20px #27324e;
+  }
+  :global(.dark) .experience-card:hover {
+    box-shadow:
+      12px 12px 28px #151c28,
+      -12px -12px 28px #ffffff10;
+    transform: translateY(-4px);
+  }
+</style>
