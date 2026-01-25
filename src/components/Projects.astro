@@ -68,7 +68,7 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
     </div>
   </div>
 
-  <!-- ナビゲーションボタン -->
+  <!-- ナビゲーションボタン（デスクトップ） -->
   <button
     id="prev-btn"
     class="absolute -left-16 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-3 shadow-2xl hover:scale-110 transition-all duration-300 hidden lg:block z-10 border-4 border-gray-300 dark:border-gray-500"
@@ -84,6 +84,24 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
   >
     <ChevronRight class="w-6 h-6 text-gray-900 dark:text-white" />
   </button>
+
+  <!-- ナビゲーションボタン（モバイル） -->
+  <div class="flex justify-center gap-4 mt-6 lg:hidden">
+    <button
+      id="prev-btn-mobile"
+      class="bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg active:scale-95 transition-all duration-300 border-2 border-gray-300 dark:border-gray-500"
+      aria-label="Previous"
+    >
+      <ChevronLeft class="w-5 h-5 text-gray-900 dark:text-white" />
+    </button>
+    <button
+      id="next-btn-mobile"
+      class="bg-white dark:bg-gray-800 rounded-full p-3 shadow-lg active:scale-95 transition-all duration-300 border-2 border-gray-300 dark:border-gray-500"
+      aria-label="Next"
+    >
+      <ChevronRight class="w-5 h-5 text-gray-900 dark:text-white" />
+    </button>
+  </div>
 
   <!-- インジケーター -->
   <div class="flex justify-center gap-2 mt-8">
@@ -104,6 +122,8 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
   const track = document.getElementById('carousel-track');
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
+  const prevBtnMobile = document.getElementById('prev-btn-mobile');
+  const nextBtnMobile = document.getElementById('next-btn-mobile');
   const indicators = document.querySelectorAll('.carousel-indicator');
   const totalSlides = indicators.length;
 
@@ -127,15 +147,20 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
     });
   }
 
-  prevBtn?.addEventListener('click', () => {
+  function goToPrev() {
     currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
     updateCarousel();
-  });
+  }
 
-  nextBtn?.addEventListener('click', () => {
+  function goToNext() {
     currentIndex = (currentIndex + 1) % totalSlides;
     updateCarousel();
-  });
+  }
+
+  prevBtn?.addEventListener('click', goToPrev);
+  nextBtn?.addEventListener('click', goToNext);
+  prevBtnMobile?.addEventListener('click', goToPrev);
+  nextBtnMobile?.addEventListener('click', goToNext);
 
   indicators.forEach((indicator, index) => {
     indicator.addEventListener('click', () => {
@@ -143,6 +168,31 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
       updateCarousel();
     });
   });
+
+  // スワイプ操作対応
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const swipeThreshold = 50;
+
+  track?.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  track?.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        goToNext();
+      } else {
+        goToPrev();
+      }
+    }
+  }, { passive: true });
+
+  // ウィンドウリサイズ時にカルーセルを更新
+  window.addEventListener('resize', updateCarousel);
 
   updateCarousel();
 </script>
