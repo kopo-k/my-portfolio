@@ -30,7 +30,8 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
                 <project.icon class={`w-12 h-12 ${project.iconColor}`} />
               </div>
               <div class="dark:bg-gray-800 bg-white p-6 flex flex-col flex-1">
-              <h3 class="text-xl font-bold mb-2">{project.title}</h3>
+              <h3 class="text-xl font-bold mb-1">{project.title}</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">担当：{project.role}</p>
               <p class="text-sm mb-4">{project.description}</p>
 
               <div class="flex-1"></div>
