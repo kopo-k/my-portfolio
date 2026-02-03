@@ -33,7 +33,7 @@ const experienceItems = [
   {
     title: "U-22 プログラミングコンテスト プロジェクト",
     org: "IPA（情報処理推進機構）支援",
-    period: "June 2025 – Present",
+    period: "2025.6 - Present",
     details: [
       "React、Electron、TypeScript を使用したクロスプラットフォームデスクトップアプリケーションを開発",
       "直感的な UI/UX と効率的なクリップボードデータ管理に重点を置く",
@@ -54,7 +54,7 @@ const experienceItems = [
   {
     title: "【技育CAMP2025】ハッカソン Vol.14【オンライン開催】",
     org: "株式会社サポーターズ",
-    period: "November 8-9, 2025",
+    period: "2025.11",
     details: [
       "野良参加しました",
       "努力賞を受賞しました",
@@ -65,7 +65,7 @@ const experienceItems = [
   {
     title: "【技育CAMP2025】ハッカソン Vol.16【オンライン開催】",
     org: "株式会社サポーターズ",
-    period: "December 20-21, 2025",
+    period: "2025.12",
     details: [
       "バックエンド担当",
       "Gmail連携機能の実装",
@@ -77,7 +77,7 @@ const experienceItems = [
   {
     title: "【技育CAMP2025】ハッカソン Vol.18【1週間開催】",
     org: "株式会社サポーターズ",
-    period: "January 11-18, 2026",
+    period: "2026.1",
     details: [
       "UI設計、Docker環境構築、認証認可実装、RLSポリシー、デプロイ担当",
       "「プログラム特区」Q&Aサービスを4人チームで開発",
