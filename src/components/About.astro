@@ -1,9 +1,7 @@
 ---
 // About.astro
-import StarIcon from './icons/StarIcon.astro';
-import CodeIcon from './icons/CodeIcon.astro';
 import TechBadge from './About/TechBadge.astro';
-import { Code, User } from "lucide-astro";
+import { Star, User } from "lucide-astro";
 ---
 <section id="about" class="animate-fade-in-up bg-gradient-to-b from-white via-indigo-50 to-white
          dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-gray-900
@@ -22,7 +20,7 @@ import { Code, User } from "lucide-astro";
         <!-- Currently Learning -->
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
-            <StarIcon />
+            <Star class="w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300" />
             <p class="group-hover:text-blue-600 transition-colors duration-300">現在学習中</p>
           </h3>
           <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -33,7 +31,7 @@ import { Code, User } from "lucide-astro";
         <!-- Favorite Technologies -->
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
-            <StarIcon />
+            <Star class="w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300" />
             <p class="group-hover:text-blue-600 transition-colors duration-300">好きな技術</p>
           </h3>
           <div class="flex flex-wrap gap-2">
@@ -47,7 +45,7 @@ import { Code, User } from "lucide-astro";
         <!-- Future Goals -->
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
-            <StarIcon />
+            <Star class="w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300" />
             <p class="group-hover:text-blue-600 transition-colors duration-300">
               将来の目標
             </p>
@@ -61,8 +59,7 @@ import { Code, User } from "lucide-astro";
       <!-- Right: Overview Card -->
       <div class="about-card bg-white dark:bg-gray-800 p-8 rounded-2xl mt-12 transition-all duration-300">
         <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group">
-          <User className= "w-8 h-8 text-white group-hover:rotate-12 transition-transform duration-1000"/>
-          <!-- <CodeIcon /> -->
+          <User class="w-8 h-8 text-white group-hover:rotate-12 transition-transform duration-1000" />
         </div>
         <h4 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors duration-1000">私について</h4>
         <p class="text-gray-700 dark:text-gray-300 ">
