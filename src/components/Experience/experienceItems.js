@@ -33,7 +33,7 @@ const experienceItems = [
   {
     title: "U-22 プログラミングコンテスト プロジェクト",
     org: "IPA（情報処理推進機構）支援",
-    period: "2025.6 - Present",
+    period: "2025.6 - 2025.8",
     details: [
       "React、Electron、TypeScript を使用したクロスプラットフォームデスクトップアプリケーションを開発",
       "直感的な UI/UX と効率的なクリップボードデータ管理に重点を置く",
