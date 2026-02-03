@@ -63,6 +63,16 @@ const experienceItems = [
     ]
   },
   {
+    title: "TECH STADIUM Unityコース 受講",
+    org: "TECH STADIUM（オンラインスクール）",
+    period: "2025.11 - 2026.1",
+    details: [
+      "Unity と C# を使用したゲーム開発の基礎を習得",
+      "2ヶ月間のカリキュラムで簡易ゲームを複数制作",
+      "ゲームにおけるバックエンド開発は Web 開発と共通点が多いことを学んだ"
+    ]
+  },
+  {
     title: "【技育CAMP2025】ハッカソン Vol.16【オンライン開催】",
     org: "株式会社サポーターズ",
     period: "2025.12",
