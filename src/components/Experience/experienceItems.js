@@ -85,7 +85,7 @@ const experienceItems = [
     ]
   },
   {
-    title: "【技育CAMP2025】ハッカソン Vol.18【1週間開催】",
+    title: "【技育CAMP2025】ハッカソン Vol.18【オンライン開催】",
     org: "株式会社サポーターズ",
     period: "2026.1",
     details: [
