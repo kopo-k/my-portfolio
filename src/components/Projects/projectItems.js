@@ -1,5 +1,5 @@
 // Projects/projectItems.js
-import { Music, Clipboard, Code, Kanban, MessageCircleQuestion } from "lucide-astro";
+import { Music, Clipboard, Code, Kanban, MessageCircleQuestion, Gamepad2 } from "lucide-astro";
 
 const projectItems = [
   {
@@ -73,6 +73,18 @@ const projectItems = [
     techStack: ["Next.js", "TypeScript", "Tailwind", "Supabase", "Docker"],
     liveDemoUrl: "https://program-tokku.vercel.app/",
     githubUrl: "https://github.com/geek-camp-vol18/program-tokku",
+  },
+  {
+    icon: Gamepad2,
+    iconColor: "text-rose-600",
+    gradientFrom: "from-rose-100",
+    gradientTo: "to-pink-100",
+    title: "VRMアスレチック",
+    role: "個人開発（設計・実装・テスト全て）",
+    description: "VRMアバターを操作してアスレチックコースを攻略するタイムアタックゲーム。クリアタイムをランキングで競えます。",
+    techStack: ["Unity", "C#", "UniVRM", "Supabase"],
+    liveDemoUrl: "https://kopo-k.github.io/vrm-athletic/",
+    githubUrl: "https://github.com/kopo-k/vrm-athletic",
   },
 ];
 
