@@ -95,6 +95,17 @@ const experienceItems = [
       "Discord作業報告チャンネルでリアルタイム共有し、Gitコンフリクトを0件に",
       "ブランチ戦略（develop/main分離）の重要性を学んだ"
     ]
+  },
+  {
+    title: "Progateハッカソン powered by AWS",
+    org: "株式会社Progate",
+    period: "2026.2",
+    details: [
+      "4人チームでフロントエンド・バックエンド・インフラを担当",
+      "AWS Amplify Gen 2 を活用し、サーバーレスアーキテクチャで MVP を2週間で構築",
+      "Amazon Bedrock と Translate を組み合わせたリアルタイムチャット分析・翻訳機能を実装",
+      "特別賞を受賞"
+    ]
   }
 ];
 

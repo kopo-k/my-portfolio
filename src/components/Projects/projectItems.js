@@ -86,6 +86,17 @@ const projectItems = [
     liveDemoUrl: "https://kopo-k.github.io/vrm-athletic/",
     githubUrl: "https://github.com/kopo-k/vrm-athletic",
   },
+  {
+    image: "/my-portfolio/images/streamboard.webp",
+    gradientFrom: "from-gray-900",
+    gradientTo: "to-gray-800",
+    title: "StreamBoard",
+    role: "フロントエンド / バックエンド / インフラ",
+    description: "YouTube・Twitchの配信を1画面で複数同時に視聴できるマルチストリームビューアー。ドラッグ&ドロップでレイアウトをカスタマイズでき、リアルタイムでチャットの翻訳・盛り上がり分析機能を搭載。",
+    techStack: ["React", "Tailwind CSS", "AWS Amplify", "Amazon Bedrock", "DynamoDB"],
+    liveDemoUrl: "https://topaz.dev/projects/2e1ff9f4eccc40205e75",
+    githubUrl: "https://github.com/progate-hackathon-2026-02/streamboard",
+  },
 ];
 
 export default projectItems;
