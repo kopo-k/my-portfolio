@@ -13,9 +13,37 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
          text-gray-900 dark:text-white
          transition-colors duration-300"
 >
-<div class="text-center mb-16">
+<div class="text-center mb-8">
   <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Projects</h2>
   <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
+</div>
+
+<!-- フィルターボタン -->
+<div class="flex justify-center gap-3 mb-8 flex-wrap">
+  <button
+    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-blue-600 text-white"
+    data-filter="all"
+  >
+    すべて
+  </button>
+  <button
+    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
+    data-filter="Webアプリ"
+  >
+    Webアプリ
+  </button>
+  <button
+    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
+    data-filter="ゲーム"
+  >
+    ゲーム
+  </button>
+  <button
+    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
+    data-filter="デスクトップアプリ"
+  >
+    デスクトップアプリ
+  </button>
 </div>
 
 <div class="relative max-w-7xl mx-auto">
@@ -23,7 +51,7 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
   <div class="overflow-hidden">
     <div id="carousel-track" class="flex items-start transition-transform duration-500 ease-out gap-6">
       {projectItems.map((project, index) => (
-        <div class="flex-shrink-0 w-full md:w-[calc(33.333%-16px)] p-2">
+        <div class="project-item flex-shrink-0 w-full md:w-[calc(33.333%-16px)] p-2" data-tag={project.tag} data-title={project.title.toLowerCase()}>
           <div class="project-card rounded-2xl overflow-hidden transition-all duration-300 h-[520px]">
             <div class={`bg-gradient-to-br ${project.gradientFrom} ${project.gradientTo} dark:from-gray-800 dark:to-gray-700 h-full flex flex-col`}>
               {project.image ? (
@@ -131,11 +159,69 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
   const nextBtn = document.getElementById('next-btn');
   const prevBtnMobile = document.getElementById('prev-btn-mobile');
   const nextBtnMobile = document.getElementById('next-btn-mobile');
-  const indicators = document.querySelectorAll('.carousel-indicator');
-  const totalSlides = indicators.length;
+  const indicatorsContainer = document.querySelector('.flex.justify-center.gap-2.mt-8');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const allItems = document.querySelectorAll('.project-item');
+
+  let currentFilter = 'all';
+
+  function getVisibleItems() {
+    return Array.from(allItems).filter(item => {
+      const tag = item.dataset.tag;
+      return currentFilter === 'all' || tag === currentFilter;
+    });
+  }
+
+  function updateVisibility() {
+    const visibleItems = getVisibleItems();
+
+    allItems.forEach(item => {
+      const tag = item.dataset.tag;
+      const matchesFilter = currentFilter === 'all' || tag === currentFilter;
+
+      if (matchesFilter) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+
+    // インジケーターを更新
+    updateIndicators(visibleItems.length);
+
+    // カルーセル位置をリセット
+    currentIndex = 0;
+    updateCarousel();
+  }
+
+  function updateIndicators(count) {
+    if (!indicatorsContainer) return;
+    indicatorsContainer.innerHTML = '';
+
+    for (let i = 0; i < count; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'carousel-indicator w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-all duration-300';
+      btn.dataset.index = i;
+      btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      btn.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarousel();
+      });
+      indicatorsContainer.appendChild(btn);
+    }
+  }
 
   function updateCarousel() {
     if (!track) return;
+
+    const visibleItems = getVisibleItems();
+    const totalSlides = visibleItems.length;
+
+    if (totalSlides === 0) return;
+
+    if (currentIndex >= totalSlides) {
+      currentIndex = 0;
+    }
 
     const isMobile = window.innerWidth < 768;
     const slideWidth = isMobile ? 100 : 33.333;
@@ -143,6 +229,7 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
 
     track.style.transform = `translateX(-${currentIndex * (slideWidth + gap)}%)`;
 
+    const indicators = document.querySelectorAll('.carousel-indicator');
     indicators.forEach((indicator, index) => {
       if (index === currentIndex) {
         indicator.classList.add('bg-blue-600', 'dark:bg-blue-500', 'w-8');
@@ -155,26 +242,41 @@ import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-astro';
   }
 
   function goToPrev() {
+    const totalSlides = getVisibleItems().length;
     currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
     updateCarousel();
   }
 
   function goToNext() {
+    const totalSlides = getVisibleItems().length;
     currentIndex = (currentIndex + 1) % totalSlides;
     updateCarousel();
   }
+
+  // フィルターボタンのイベント
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentFilter = btn.dataset.filter;
+
+      // ボタンのスタイルを更新
+      filterBtns.forEach(b => {
+        if (b === btn) {
+          b.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+          b.classList.add('bg-blue-600', 'text-white');
+        } else {
+          b.classList.remove('bg-blue-600', 'text-white');
+          b.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+        }
+      });
+
+      updateVisibility();
+    });
+  });
 
   prevBtn?.addEventListener('click', goToPrev);
   nextBtn?.addEventListener('click', goToNext);
   prevBtnMobile?.addEventListener('click', goToPrev);
   nextBtnMobile?.addEventListener('click', goToNext);
-
-  indicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', () => {
-      currentIndex = index;
-      updateCarousel();
-    });
-  });
 
   // スワイプ操作対応
   let touchStartX = 0;
