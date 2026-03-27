@@ -1,10 +1,8 @@
 // Projects/projectItems.js
-import { Music, Clipboard, Code, Kanban, MessageCircleQuestion, Gamepad2 } from "lucide-astro";
 
 const projectItems = [
   {
-    icon: Music,
-    iconColor: "text-blue-600",
+    image: "/my-portfolio/images/music.webp",
     gradientFrom: "from-blue-100",
     gradientTo: "to-purple-100",
     title: "音楽共有アプリ",
@@ -16,8 +14,7 @@ const projectItems = [
     githubUrl: "https://github.com/kopo-k/Hackathon",
   },
   {
-    icon: Clipboard,
-    iconColor: "text-purple-600",
+    image: "/my-portfolio/images/multclip.webp",
     gradientFrom: "from-purple-100",
     gradientTo: "to-pink-100",
     title: "MultiClip",
@@ -29,8 +26,7 @@ const projectItems = [
     githubUrl: "https://github.com/kopo-k/MultiClip",
   },
   {
-    icon: Code,
-    iconColor: "text-green-600",
+    image: "/my-portfolio/images/tuioku.webp",
     gradientFrom: "from-green-100",
     gradientTo: "to-teal-100",
     title: "追憶（ついおく）",
@@ -42,8 +38,7 @@ const projectItems = [
     githubUrl: "https://github.com/vol-14/phaser3_practice",
   },
   {
-    icon: Kanban,
-    iconColor: "text-orange-600",
+    image: "/my-portfolio/images/syuukatu.webp",
     gradientFrom: "from-orange-100",
     gradientTo: "to-amber-100",
     title: "就活進捗管理アプリ",
@@ -55,8 +50,7 @@ const projectItems = [
     githubUrl: "https://github.com/kopo-k/Job_hunting_progress",
   },
   {
-    icon: Kanban,
-    iconColor: "text-teal-600",
+    image: "/my-portfolio/images/good-job.webp",
     gradientFrom: "from-teal-100",
     gradientTo: "to-cyan-100",
     title: "dai-job（だいじょぶ）",
@@ -68,8 +62,7 @@ const projectItems = [
     githubUrl: "https://github.com/fuharu/Deploy",
   },
   {
-    icon: MessageCircleQuestion,
-    iconColor: "text-indigo-600",
+    image: "/my-portfolio/images/tokku.webp",
     gradientFrom: "from-indigo-100",
     gradientTo: "to-violet-100",
     title: "プログラム特区",
@@ -81,8 +74,7 @@ const projectItems = [
     githubUrl: "https://github.com/geek-camp-vol18/program-tokku",
   },
   {
-    icon: Gamepad2,
-    iconColor: "text-rose-600",
+    image: "/my-portfolio/images/VRM_athletic.webp",
     gradientFrom: "from-rose-100",
     gradientTo: "to-pink-100",
     title: "VRMアスレチック",

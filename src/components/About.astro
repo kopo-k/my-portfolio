@@ -1,6 +1,5 @@
 ---
 // About.astro
-import TechBadge from './About/TechBadge.astro';
 import { Star, User } from "lucide-astro";
 ---
 <section id="about" class="animate-fade-in-up bg-gradient-to-b from-white via-indigo-50 to-white
@@ -24,22 +23,8 @@ import { Star, User } from "lucide-astro";
             <p class="group-hover:text-blue-600 transition-colors duration-300">現在学習中</p>
           </h3>
           <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-            「干し日和」というFlutterアプリを開発中で、天気APIから取得した降水確率・気温・湿度・風速を分析し、洗濯に最適なタイミングを判定します。現在はプッシュ通知（FCM）による毎朝の天気配信機能に取り組んでおり、トークン管理や定時配信にはサーバーサイド実装が必要だと学びました。この経験からフロントエンドだけでは限界があることを実感し、バックエンド技術への興味が深まりました。インターンでGoのAPI実装を学び、自前のバックエンドを構築したいと考えています。
+            個人開発で「tamado」というWebアプリを開発中です。現在はGCP（Cloud Run）にデプロイしており、今後Fastify + Prismaによるバックエンド追加とCloud SQL（PostgreSQL）の導入を予定しています。リソース管理にはTerraformを導入し、インフラをコードで管理する手法を学んでいます。フロントエンドだけでなく、バックエンドやインフラまで一貫して構築できるエンジニアを目指しています。
           </p>
-        </div>
-
-        <!-- Favorite Technologies -->
-        <div>
-          <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
-            <Star class="w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-            <p class="group-hover:text-blue-600 transition-colors duration-300">好きな技術</p>
-          </h3>
-          <div class="flex flex-wrap gap-2">
-            <TechBadge label="React" color="blue" />
-            <TechBadge label="TypeScript" color="purple" />
-            <TechBadge label="Go" color="green" />
-            <TechBadge label="AWS" color="orange" />
-          </div>
         </div>
 
         <!-- Future Goals -->
@@ -51,7 +36,7 @@ import { Star, User } from "lucide-astro";
             </p>
           </h3>
           <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-            バックエンドとフロントエンドの両方に精通したフルスタックエンジニアになることが目標です。実務経験を積んだ後は、オープンソースプロジェクトに貢献できる高度なスキルを持つ開発者に成長したいと考えています。
+            フロントエンドからバックエンド、インフラまで一貫して設計・構築できるエンジニアになることが目標です。現在はGCPやTerraformを通じてインフラの知識を深めており、技術的な質問に必ず答えられるような、チームから頼られるエンジニアになりたいと考えています。
           </p>
         </div>
       </div>
@@ -63,7 +48,7 @@ import { Star, User } from "lucide-astro";
         </div>
         <h4 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors duration-1000">私について</h4>
         <p class="text-gray-700 dark:text-gray-300 ">
-          こんにちは、愛知工業大学情報科学部コンピュータシステム専攻の2年、大石大雅です。趣味は映画鑑賞と読書です。大学1年生の5月からプログラミングの学習を始め、2年生からは開発者として成長し続けるために毎日GitHubにコードをコミットしています。
+          こんにちは、愛知工業大学情報科学部コンピュータシステム専攻の3年、大石大雅です。趣味は映画鑑賞と読書です。大学1年生の5月からプログラミングの学習を始め、2年生からは開発者として成長し続けるために毎日GitHubにコードをコミットしています。
         </p>
       </div>
     </div>

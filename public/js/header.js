@@ -36,8 +36,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const hamburgerLines = document.querySelectorAll(".hamburger-line");
 
   function openMobileMenu() {
-    mobileMenu.classList.remove("translate-x-full");
-    mobileMenuOverlay.classList.remove("opacity-0", "invisible");
+    mobileMenu.classList.remove("translate-x-full", "pointer-events-none");
+    mobileMenuOverlay.classList.remove("opacity-0", "invisible", "pointer-events-none");
     document.body.style.overflow = "hidden";
 
     hamburgerLines[0].style.transform = "rotate(45deg) translate(6px, 6px)";
@@ -46,8 +46,8 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function closeMobileMenu() {
-    mobileMenu.classList.add("translate-x-full");
-    mobileMenuOverlay.classList.add("opacity-0", "invisible");
+    mobileMenu.classList.add("translate-x-full", "pointer-events-none");
+    mobileMenuOverlay.classList.add("opacity-0", "invisible", "pointer-events-none");
     document.body.style.overflow = "";
 
     hamburgerLines[0].style.transform = "";
