@@ -106,6 +106,17 @@ const experienceItems = [
       "Amazon Bedrock と Translate を組み合わせたリアルタイムチャット分析・翻訳機能を実装",
       "特別賞を受賞"
     ]
+  },
+  {
+    title: "株式会社Preferred 長期インターン",
+    org: "株式会社Preferred",
+    period: "2026.4 - Present",
+    details: [
+      "Next.js 15 / TypeScript / tRPC / Prisma を用いたマルチテナントWebアプリの開発に参画",
+      "決済ユーティリティのユニットテスト作成（Vitest）、既存テストのエッジケース拡充・デッドコード発見と修正",
+      "注文履歴ページのUI改善（Skeletonローディング実装、エラー時のrefetchによるリトライ機能）",
+      "GitHubのissueベースでの開発フロー（ブランチ運用・PR作成・コードレビュー）を実践"
+    ]
   }
 ];
 
