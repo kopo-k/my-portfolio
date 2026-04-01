@@ -44,6 +44,12 @@ import { ExternalLink, Github } from 'lucide-astro';
   >
     デスクトップアプリ
   </button>
+  <button
+    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
+    data-filter="モバイルアプリ"
+  >
+    モバイルアプリ
+  </button>
 </div>
 
 <div class="max-w-5xl mx-auto space-y-6">
@@ -52,7 +58,7 @@ import { ExternalLink, Github } from 'lucide-astro';
       <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 md:min-h-[280px]">
         <!-- 左: 画像 / アイコン -->
         <div class={`md:w-96 w-full h-56 md:h-64 flex-shrink-0 bg-gradient-to-br ${project.gradientFrom} ${project.gradientTo} dark:from-gray-700 dark:to-gray-600 flex items-center justify-center overflow-hidden`}>
-          <img src={project.image} alt={project.title} class="w-full h-full object-cover object-top" />
+          <img src={project.image} alt={project.title} class="w-full h-full object-contain" />
         </div>
 
         <!-- 右: テキスト -->
