@@ -1,70 +1,91 @@
 ---
 import experienceItems from './Experience/experienceItems.js';
+
+// 新しい順に表示する（データは古い順に書かれている）
+const items = [...experienceItems].reverse();
+// 最初に見せる件数。残りは「すべて表示」で開く
+const VISIBLE = 5;
+const hiddenCount = Math.max(0, items.length - VISIBLE);
 ---
 
 <section
   id="experience"
-  class="animate-fade-in-up py-32 min-h-screen bg-gradient-to-b from-white via-indigo-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-white scroll-mt-24 transition-colors duration-300"
+  class="animate-fade-in-up py-20 px-4 bg-gradient-to-b from-white via-indigo-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-white transition-colors duration-300"
 >
-  <div class="container mx-auto px-4">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Experience</h2>
-      <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
-    </div>
-
-    <div class="relative max-w-5xl mx-auto">
-      <!-- 中央縦線（常に表示） -->
-      <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-[#2563EB] to-[#9333EA] z-0 pointer-events-none"></div>
-
-      <div class="space-y-32 relative z-10">
-        {experienceItems.map((exp, i) => (
-          <div class={`relative flex flex-col md:flex-row items-center ${i % 2 === 0 ? '' : 'md:flex-row-reverse'}`}>
-
-            <!-- カード -->
-            <div class="w-full md:w-1/2 px-4">
-              <div class="experience-card dark:bg-gray-800 bg-white rounded-2xl p-6 transition-all duration-300">
-                <h3 class="text-lg font-semibold">{exp.title}</h3>
-                <p class="text-blue-400 text-sm mb-1">{exp.org}</p>
-                <p class="text-gray-400 text-sm mb-4">{exp.period}</p>
-                <ul class="list-disc list-inside text-sm space-y-1 text-[#4b5563] dark:text-gray-300 marker:text-blue-500">
-                  {exp.details.map(detail => <li>{detail}</li>)}
-                </ul>
-              </div>
-            </div>
-
-            <!-- タイムラインノード -->
-            <div class="hidden md:block absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:z-10">
-              <div class="w-4 h-4 rounded-full bg-gradient-to-br from-[#2563EB] to-[#9333EA] border-4 border-white dark:border-gray-900"></div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+  <div class="text-center mb-12">
+    <h2 class="text-4xl font-bold text-gray-900 dark:text-white">Experience</h2>
+    <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
+    <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">新しい順に並んでいます</p>
   </div>
+
+  <ol id="exp-list" class="relative max-w-3xl mx-auto border-l-2 border-indigo-200 dark:border-indigo-800 ml-2 sm:ml-auto">
+    {items.map((exp, i) => (
+      <li class:list={["relative pl-6 sm:pl-8 pb-8 last:pb-0", { "exp-extra hidden": i >= VISIBLE }]}>
+        <!-- タイムラインの点 -->
+        <span class="absolute -left-[9px] top-[24px] sm:top-[28px] w-4 h-4 rounded-full bg-gradient-to-br from-[#2563EB] to-[#9333EA] border-4 border-white dark:border-gray-900" aria-hidden="true"></span>
+        <div class="experience-card dark:bg-gray-800 bg-white rounded-2xl p-5 sm:p-6 transition-all duration-300">
+          <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{exp.period}</p>
+          <h3 class="text-lg font-semibold leading-snug">{exp.title}</h3>
+          <p class="text-blue-700 dark:text-blue-300 text-sm mb-3">{exp.org}</p>
+          <ul class="list-disc pl-5 text-sm space-y-1 text-[#4b5563] dark:text-gray-300 marker:text-blue-500">
+            {exp.details.map((detail) => <li>{detail}</li>)}
+          </ul>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  {hiddenCount > 0 && (
+    <div class="text-center mt-10">
+      <button
+        id="exp-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="exp-list"
+        data-more={`すべて表示（あと${hiddenCount}件）`}
+        data-less="最新の5件だけ表示"
+        class="px-6 py-2 rounded-full border border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 font-semibold hover:bg-indigo-50 dark:hover:bg-gray-800 transition-colors"
+      >
+        すべて表示（あと{hiddenCount}件）
+      </button>
+    </div>
+  )}
 </section>
+
+<script>
+  const btn = document.getElementById('exp-toggle');
+  btn?.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    document.querySelectorAll('.exp-extra').forEach((el) => el.classList.toggle('hidden', open));
+    btn.setAttribute('aria-expanded', String(!open));
+    btn.textContent = open ? btn.dataset.more! : btn.dataset.less!;
+    // 閉じたときは、ボタンが画面外に飛ばないよう経歴の先頭へ戻す
+    if (open) document.getElementById('experience')?.scrollIntoView();
+  });
+</script>
 
 <style>
   .experience-card {
     box-shadow:
-      8px 8px 20px #d1d5e0,
-      -8px -8px 20px #ffffff;
+      6px 6px 16px #d1d5e0,
+      -6px -6px 16px #ffffff;
   }
   .experience-card:hover {
     box-shadow:
-      12px 12px 28px #d1d5e0,
-      -12px -12px 28px #ffffff;
-    transform: translateY(-4px);
+      10px 10px 24px #d1d5e0,
+      -10px -10px 24px #ffffff;
+    transform: translateY(-3px);
   }
 
   :global(.dark) .experience-card {
     box-shadow:
-      8px 8px 20px #151c28,
-      -8px -8px 20px #27324e;
+      6px 6px 16px #151c28,
+      -6px -6px 16px #27324e;
   }
   :global(.dark) .experience-card:hover {
     box-shadow:
-      12px 12px 28px #151c28,
-      -12px -12px 28px #ffffff10;
-    transform: translateY(-4px);
+      10px 10px 24px #151c28,
+      -10px -10px 24px #ffffff10;
+    transform: translateY(-3px);
   }
 </style>

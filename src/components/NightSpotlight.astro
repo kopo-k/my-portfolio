@@ -1,0 +1,198 @@
+---
+// 夜（見る人の端末の時刻で 19:00〜翌4:59）は、ページを暗くして懐中電灯で照らして見る遊び。
+// ページのあちこちに隠れた星を5つ探す。全部見つけるか「明かりをつける」で普通の表示に戻る。
+// テスト用：?night=1 で昼でも夜モード、?night=0 で夜でも通常表示。
+---
+
+<div id="ns-dark" class="fixed inset-0 z-[70] pointer-events-none transition-opacity duration-700" style="display: none" aria-hidden="true"></div>
+
+<p id="ns-banner" role="status" class="fixed left-1/2 top-20 z-[72] -translate-x-1/2 w-[min(92vw,34rem)] rounded-2xl bg-gray-900/90 text-gray-100 px-5 py-3 text-sm leading-relaxed shadow-lg transition-opacity duration-500" style="display: none"></p>
+
+<div id="ns-hud" class="fixed bottom-4 left-4 z-[72] flex items-center gap-2 rounded-full bg-gray-900/90 text-gray-100 pl-4 pr-1.5 py-1.5 text-sm shadow-lg" style="display: none">
+  <span id="ns-count" aria-live="polite">★ 0 / 5</span>
+  <button id="ns-toggle" type="button" class="rounded-full bg-amber-300 text-gray-900 px-3 py-1 font-semibold hover:bg-amber-200">明かりをつける</button>
+</div>
+
+<!-- is:global：星はスクリプトで後から作るので、部品に閉じたスタイルだと当たらない -->
+<style is:global>
+  .ns-star {
+    position: absolute;
+    z-index: 69;
+    width: 30px;
+    height: 30px;
+    pointer-events: none;
+    transition: transform 0.3s ease-out;
+  }
+  .ns-star.found {
+    transform: scale(1.35) rotate(18deg);
+  }
+  .ns-star.found polygon {
+    fill: #ffd43b;
+  }
+  .lights-on .ns-star:not(.found) {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ns-star {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const dark = document.getElementById('ns-dark') as HTMLElement | null;
+  const banner = document.getElementById('ns-banner') as HTMLElement | null;
+  const hud = document.getElementById('ns-hud') as HTMLElement | null;
+  const count = document.getElementById('ns-count');
+  const toggle = document.getElementById('ns-toggle') as HTMLButtonElement | null;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const TOTAL = 5;
+
+  function isNight() {
+    const q = new URLSearchParams(location.search).get('night');
+    if (q === '1') return true;
+    if (q === '0') return false;
+    const h = new Date().getHours(); // 見る人の端末の時刻（＝その人のいる場所の時刻）
+    return h >= 19 || h < 5;
+  }
+
+  let lightsOn = false;
+  let found = 0;
+  let x = innerWidth / 2;
+  let y = innerHeight / 2;
+  let raf = 0;
+  const stars: HTMLElement[] = [];
+
+  const radius = () => Math.max(110, Math.min(200, Math.min(innerWidth, innerHeight) * (innerWidth < 640 ? 0.3 : 0.22)));
+
+  function paint(t = 0) {
+    if (!dark) return;
+    // ライトの縁が少しだけ揺らぐ（電池の弱い懐中電灯っぽく）
+    const r = radius() + (reduce ? 0 : Math.sin(t * 0.006) * 2 + Math.sin(t * 0.017) * 1.5);
+    dark.style.background = `radial-gradient(circle ${r}px at ${x}px ${y}px, rgba(255,236,190,0.10) 0%, rgba(255,236,190,0.05) 45%, rgba(4,6,12,0.93) 100%)`;
+    checkStars(r);
+  }
+  function loop(t: number) {
+    paint(t);
+    raf = lightsOn ? 0 : requestAnimationFrame(loop);
+  }
+
+  function setLight(nx: number, ny: number) {
+    x = nx;
+    y = ny;
+    if (reduce) paint();
+    // 描画のループが止まっていても（裏のタブなど）、動かした時点で星の判定はする
+    else checkStars(radius());
+  }
+
+  function placeStars() {
+    // 各セクションの左右の端あたりに1つずつ隠す（本文の上には置かない）
+    const ns = 'http://www.w3.org/2000/svg';
+    const ids = ['home', 'about', 'experience', 'projects', 'contact'];
+    ids.slice(0, TOTAL).forEach((id) => {
+      const sec = document.getElementById(id);
+      if (!sec) return;
+      const r = sec.getBoundingClientRect();
+      const left = Math.random() < 0.5;
+      const px = r.left + scrollX + r.width * (left ? 0.04 + Math.random() * 0.08 : 0.88 + Math.random() * 0.08);
+      const py = r.top + scrollY + r.height * (0.15 + Math.random() * 0.7);
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('viewBox', '0 0 30 30');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.classList.add('ns-star');
+      (svg as unknown as HTMLElement).style.left = `${px - 15}px`;
+      (svg as unknown as HTMLElement).style.top = `${py - 15}px`;
+      const star = document.createElementNS(ns, 'polygon');
+      const pts: string[] = [];
+      for (let i = 0; i < 10; i++) {
+        const rr = i % 2 === 0 ? 13 : 5.5;
+        const a = -Math.PI / 2 + (i * Math.PI) / 5;
+        pts.push(`${(15 + Math.cos(a) * rr).toFixed(1)},${(15 + Math.sin(a) * rr).toFixed(1)}`);
+      }
+      star.setAttribute('points', pts.join(' '));
+      star.setAttribute('fill', 'none');
+      star.setAttribute('stroke', '#e8590c');
+      star.setAttribute('stroke-width', '2');
+      star.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(star);
+      document.body.appendChild(svg);
+      stars.push(svg as unknown as HTMLElement);
+    });
+  }
+
+  function checkStars(r: number) {
+    if (lightsOn) return;
+    for (const s of stars) {
+      if (s.classList.contains('found')) continue;
+      const b = s.getBoundingClientRect();
+      const d = Math.hypot(b.left + b.width / 2 - x, b.top + b.height / 2 - y);
+      if (d < r * 0.5) {
+        s.classList.add('found');
+        found++;
+        if (count) count.textContent = `★ ${found} / ${stars.length}`;
+        if (found === stars.length) {
+          say('全部見つけました！ 明かりをつけますね。');
+          setTimeout(() => setLights(true), 900);
+        }
+      }
+    }
+  }
+
+  let bannerTimer = 0;
+  function say(text: string, ms = 4500) {
+    if (!banner) return;
+    banner.textContent = text;
+    banner.style.display = 'block';
+    banner.style.opacity = '1';
+    clearTimeout(bannerTimer);
+    bannerTimer = window.setTimeout(() => {
+      banner.style.opacity = '0';
+      setTimeout(() => (banner.style.display = 'none'), 500);
+    }, ms);
+  }
+
+  function setLights(on: boolean) {
+    lightsOn = on;
+    document.documentElement.classList.toggle('lights-on', on);
+    if (dark) dark.style.opacity = on ? '0' : '1';
+    if (toggle) toggle.textContent = on ? '懐中電灯に戻す' : '明かりをつける';
+    try {
+      sessionStorage.setItem('ns-lights', on ? 'on' : 'off');
+    } catch {}
+    if (!on && !raf) raf = requestAnimationFrame(loop);
+  }
+
+  function start() {
+    if (!dark || !hud) return;
+    dark.style.display = 'block';
+    hud.style.display = 'flex';
+    placeStars();
+    if (count) count.textContent = `★ 0 / ${stars.length}`;
+    const now = new Date();
+    const hm = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+    say(`いま ${hm}。夜なので懐中電灯モードです。カーソル（スマホは指）で照らして、隠れた星を${stars.length}つ探してみてください。`, 7000);
+
+    // マウス・ペン・指でライトを動かす
+    addEventListener('pointermove', (e) => setLight(e.clientX, e.clientY), { passive: true });
+    addEventListener('pointerdown', (e) => setLight(e.clientX, e.clientY), { passive: true });
+    // キーボードで移動した人には、フォーカスした場所を照らす
+    addEventListener('focusin', (e) => {
+      const el = e.target as HTMLElement;
+      if (!el?.getBoundingClientRect) return;
+      const b = el.getBoundingClientRect();
+      setLight(b.left + b.width / 2, b.top + b.height / 2);
+    });
+    toggle?.addEventListener('click', () => setLights(!lightsOn));
+    // スクロールで星がライトの下に来たときも判定する
+    addEventListener('scroll', () => checkStars(radius()), { passive: true });
+
+    let saved: string | null = null;
+    try {
+      saved = sessionStorage.getItem('ns-lights');
+    } catch {}
+    setLights(saved === 'on');
+    paint();
+  }
+
+  if (isNight()) start();
+</script>

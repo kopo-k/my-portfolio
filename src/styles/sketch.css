@@ -1,0 +1,334 @@
+/* =====================================================================
+   手描きスケッチ風テーマ（お試し）。<html class="sketch"> のときだけ効く。
+   ライト＝生成りの紙に鉛筆、ダーク＝黒板にチョーク。
+   ===================================================================== */
+.sketch {
+  --paper: #fbf7ee;
+  --ink: #2d2a26;
+  --pencil: rgba(45, 42, 38, 0.78);
+  --marker: #ffe066;
+  --accent: #e8590c;
+  --wobble: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --wobble2: 15px 255px 15px 225px / 225px 15px 255px 15px;
+  /* 大きなカード用の控えめなゆがみ（大きい値だと角が膨らみすぎる） */
+  --wobble-card: 22px 8px 26px 10px / 10px 24px 8px 22px;
+}
+.sketch.dark {
+  --paper: #1f2723;
+  --ink: #eef0ea;
+  --pencil: rgba(238, 240, 234, 0.82);
+  --marker: #4263eb;
+  --accent: #ffa94d;
+}
+
+/* 紙（ライト）と黒板（ダーク）の質感 */
+.sketch body {
+  background-color: var(--paper) !important;
+  color: var(--ink) !important;
+  font-family: "Klee One", "Hiragino Maru Gothic ProN", system-ui, sans-serif;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.sketch.dark body {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.sketch :is(h1, h2, h3, h4) {
+  font-family: "Yomogi", "Klee One", cursive;
+  letter-spacing: 0.02em;
+}
+
+/* セクションのグラデーション背景は消して、紙を見せる */
+.sketch section {
+  background: transparent !important;
+}
+
+/* ヘッダー：紙の色＋手描きの線 */
+.sketch header {
+  background-color: color-mix(in srgb, var(--paper) 94%, transparent) !important;
+  border-bottom: 0 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 6' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q 50 1 100 3.5 T 200 3 T 300 2.5 T 400 3.5' fill='none' stroke='%232d2a26' stroke-opacity='.7' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 6px;
+}
+.sketch.dark header {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 6' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q 50 1 100 3.5 T 200 3 T 300 2.5 T 400 3.5' fill='none' stroke='%23eef0ea' stroke-opacity='.7' stroke-width='1.6'/%3E%3C/svg%3E");
+}
+.sketch #mobile-menu {
+  background-color: var(--paper) !important;
+}
+
+/* グラデーション文字（ロゴ・名前）はインクの色に */
+.sketch .bg-clip-text {
+  background: none !important;
+  color: var(--accent) !important;
+  -webkit-text-fill-color: currentColor;
+}
+.sketch #home h1 span:last-child {
+  color: var(--accent) !important;
+}
+
+/* 見出し下のグラデーションの棒 → 手描きの波線 */
+.sketch section h2 + div {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 18 2, 30 12, 48 7 S 78 2, 94 8 S 112 11, 117 6' fill='none' stroke='%23e8590c' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100% !important;
+  height: 14px !important;
+  width: 8rem !important;
+  border-radius: 0 !important;
+}
+.sketch.dark section h2 + div {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8 C 18 2, 30 12, 48 7 S 78 2, 94 8 S 112 11, 117 6' fill='none' stroke='%23ffa94d' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+}
+
+/* カード：鉛筆でなぞった、少しゆがんだ枠 */
+.sketch :is(.about-card, .experience-card, .project-card),
+.sketch #contact .relative.rounded-2xl {
+  background: var(--paper) !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: var(--wobble-card) !important;
+  box-shadow: 3px 4px 0 var(--pencil) !important;
+}
+.sketch :is(.about-card, .experience-card, .project-card):hover {
+  transform: translate(-1px, -2px) rotate(-0.3deg) !important;
+  box-shadow: 5px 6px 0 var(--pencil) !important;
+}
+.sketch .project-item:nth-child(odd) {
+  rotate: -0.35deg;
+}
+.sketch .project-item:nth-child(even) {
+  rotate: 0.35deg;
+}
+.sketch .project-card > div:first-child {
+  background: transparent !important;
+  border-bottom: 2px dashed var(--pencil);
+}
+.sketch #contact .blur-xl {
+  display: none;
+}
+
+/* ボタン：マーカーで塗ったような色＋鉛筆の枠 */
+.sketch :is(a, button)[class*="bg-gradient-to-r"]:not(.bg-clip-text),
+.sketch #home a[href="#contact"],
+.sketch .filter-btn[aria-pressed="true"] {
+  background: var(--marker) !important;
+  color: var(--ink) !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: var(--wobble2) !important;
+  box-shadow: 2px 3px 0 var(--pencil) !important;
+}
+.sketch.dark :is(a, button)[class*="bg-gradient-to-r"]:not(.bg-clip-text),
+.sketch.dark #home a[href="#contact"],
+.sketch.dark .filter-btn[aria-pressed="true"] {
+  color: #fff !important;
+}
+.sketch #home a[href="#contact"] :is(svg) {
+  color: currentColor !important;
+}
+.sketch #home a[href*="github.com"],
+.sketch .filter-btn,
+.sketch .project-card a:not([class*="bg-gradient-to-r"]),
+.sketch #exp-toggle {
+  background: transparent !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: var(--wobble) !important;
+  color: var(--ink) !important;
+}
+
+/* 小さなタグ：点線の枠 */
+.sketch .project-card ul li,
+.sketch .project-card h3 + span {
+  background: transparent !important;
+  border: 1.5px dashed var(--pencil);
+  border-radius: 6px 10px 7px 9px;
+  color: var(--ink) !important;
+}
+
+/* 入力欄 */
+.sketch #contact :is(input, textarea) {
+  background: transparent !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: 12px 4px 10px 5px / 5px 10px 4px 12px !important;
+  color: var(--ink) !important;
+}
+
+/* 経歴の線と点 */
+.sketch #exp-list {
+  border-left: 2px dashed var(--pencil) !important;
+}
+.sketch #exp-list > li > span:first-child {
+  background: var(--accent) !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 3px var(--paper);
+}
+
+/* トップのアイコン：手描きの丸い枠 */
+.sketch #home .w-32.h-32 {
+  background: transparent !important;
+  border: 3px solid var(--pencil);
+  /* 演出で描く輪と同じ、きれいな丸 */
+  border-radius: 50% !important;
+  box-shadow: 3px 4px 0 var(--pencil) !important;
+}
+
+/* ナビの現在地・トップの矢印もインクとアクセント色に */
+.sketch .nav-link.active,
+.sketch .nav-link:hover {
+  color: var(--accent) !important;
+}
+.sketch .nav-link.active {
+  border-color: var(--accent) !important;
+}
+.sketch #home a[href="#about"] {
+  color: var(--accent) !important;
+}
+/* 現在地の下線も手描きの波線に（Header.astro の ::after を上書き） */
+.sketch .nav-link.active::after {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 6' preserveAspectRatio='none'%3E%3Cpath d='M1 4 Q 15 1 30 3.5 T 59 2.5' fill='none' stroke='%23e8590c' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100% !important;
+  height: 6px !important;
+  bottom: -3px !important;
+  border-radius: 0 !important;
+}
+.sketch.dark .nav-link.active::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 6' preserveAspectRatio='none'%3E%3Cpath d='M1 4 Q 15 1 30 3.5 T 59 2.5' fill='none' stroke='%23ffa94d' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+}
+.sketch .mobile-nav-link.active {
+  color: var(--accent) !important;
+  border-left-color: var(--accent) !important;
+  background: transparent !important;
+}
+
+/* ---- 最初に鉛筆で書く演出（PencilIntro.astro） ---- */
+.sketch #home .pi-line {
+  display: inline-block;
+}
+/* 名前の下の手描き波線（演出では左から伸びる） */
+.sketch #home .pi-name {
+  padding-bottom: 6px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C 20 2, 32 11, 52 6 S 82 2, 98 7 S 114 10, 118 5' fill='none' stroke='%23e8590c' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left bottom / 100% 12px;
+}
+.sketch.dark #home .pi-name {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C 20 2, 32 11, 52 6 S 82 2, 98 7 S 114 10, 118 5' fill='none' stroke='%23ffa94d' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+/* 書く前の状態 */
+.pencil-intro #home .pi-line {
+  clip-path: inset(-25% 100% -25% 0);
+}
+.pencil-intro #home .pi-name {
+  background-size: 0% 12px;
+}
+.pencil-intro #home .pi-ring {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.pencil-intro #home .pi-ring img,
+.pencil-intro #home .pi-buttons {
+  opacity: 0;
+}
+/* 保険：スクリプトが動かなくても、6秒後には全部見せる */
+.pencil-intro #home :is(.pi-line, .pi-ring img, .pi-buttons) {
+  animation: pi-show 0.3s 6s forwards;
+}
+.pencil-intro #home .pi-name {
+  animation: pi-show 0.3s 6s forwards, pi-line-show 0.3s 6s forwards;
+}
+@keyframes pi-show {
+  to {
+    clip-path: inset(-25% 0 -25% 0);
+    opacity: 1;
+  }
+}
+@keyframes pi-line-show {
+  to {
+    background-size: 100% 12px;
+  }
+}
+
+/* ---- アイコン：スケッチ風のときは鉛筆で描いた版に差し替え（SketchAvatar.astro） ---- */
+.sketch-avatar {
+  display: none;
+}
+.sketch .sketch-avatar {
+  display: block;
+  color: var(--ink);
+}
+.sketch #home .pi-ring img {
+  display: none !important;
+}
+.sketch #home .pi-ring {
+  background: var(--paper) !important;
+}
+/* 鉛筆の演出の前は隠しておく（保険のアニメーションで6秒後には出る） */
+.pencil-intro #home .sketch-avatar {
+  opacity: 0;
+  animation: pi-show 0.3s 6s forwards;
+}
+
+/* ---- アイコン（星・メール・GitHub など）も手描き風に ---- */
+.sketch svg.lucide {
+  filter: url(#sketchy);
+  stroke-width: 1.8;
+}
+/* About の見出しの星はアクセント色、ほかのアイコンはインクの色 */
+.sketch #about h3 svg.lucide {
+  color: var(--accent) !important;
+}
+.sketch #about .about-card svg.lucide,
+.sketch #contact svg.lucide,
+.sketch .project-card svg.lucide {
+  color: var(--ink) !important;
+}
+/* About カードの、グラデーションの四角いアイコン枠 → 鉛筆の枠 */
+.sketch #about .about-card > div:first-child {
+  background: transparent !important;
+  border: 2px solid var(--pencil);
+  border-radius: 14px 6px 16px 8px / 8px 16px 6px 14px !important;
+}
+/* 連絡先カードのアイコン枠（色付きの四角）も鉛筆の枠に */
+.sketch #contact [class*="bg-gradient-to-br"][class*="rounded-xl"] {
+  background: transparent !important;
+  border: 2px solid var(--pencil);
+  box-shadow: none !important;
+}
+/* 箇条書きの点・会社名の青をアクセント色に */
+.sketch :is(#exp-list, #projects) ul {
+  --tw-marker: var(--accent);
+}
+.sketch #exp-list li li::marker {
+  color: var(--accent);
+}
+.sketch #exp-list .text-blue-700,
+.sketch #exp-list .dark\:text-blue-300 {
+  color: var(--accent) !important;
+}
+
+/* ---- Contact の「Let's Connect」：リンクカードも紙＋鉛筆の手描き枠に ---- */
+.sketch #contact a > .group {
+  background: transparent !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: 14px 6px 16px 7px / 7px 15px 6px 14px !important;
+  box-shadow: 2px 3px 0 var(--pencil) !important;
+  font-family: "Klee One", system-ui, sans-serif;
+}
+.sketch #contact a > .group:hover {
+  transform: translate(-1px, -2px) rotate(-0.4deg) !important;
+  box-shadow: 4px 5px 0 var(--pencil) !important;
+}
+.sketch #contact a > .group p:first-child {
+  color: var(--ink) !important;
+  font-weight: 600;
+}
+.sketch #contact a > .group p + p {
+  color: var(--ink) !important;
+  opacity: 0.7;
+}
+.sketch #contact a > .group:hover p:first-child,
+.sketch #contact a > .group:hover svg.lucide {
+  color: var(--accent) !important;
+}
+.sketch #contact :is(p, label) {
+  font-family: "Klee One", system-ui, sans-serif;
+}
+/* アイコンは丸い枠いっぱいに描く（黄色い丸の背景が枠の内側を満たす） */
+.sketch #home .pi-ring .sketch-avatar {
+  width: 100%;
+  height: 100%;
+}

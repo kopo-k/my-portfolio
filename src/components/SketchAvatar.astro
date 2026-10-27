@@ -1,0 +1,60 @@
+---
+// スケッチ風テーマのアイコン。黄色い丸の中で、アンテナのある白いキャラクターが寝そべって手を振っている（よだれ付き）。
+// 表情はわざと間の抜けた感じ：左右の高さがずれた点の目＋右を向いた三角の口。アンテナもへにゃっと曲がっている。
+// 塗り（.sa-fill）と線（.sa-line, pathLength=1）を分けてあるので、鉛筆の演出で「線を描いてから塗る」ができる。
+const CREAM = '#fffaf0';
+const YELLOW = '#fce588';
+const INK = '#1f1d1a';
+
+// 体の各パーツ（奥から順に）：塗りの形と、輪郭の線は同じパス
+// 振っている手：アンテナとそろえて「線（腕）＋丸（手）」で描く
+const arm = 'M161 106 C 167 99, 171 92, 173 85';
+const parts = [
+  // 体
+  'M50 150 C 44 112, 64 82, 100 76 C 139 70, 167 96, 166 130 C 166 151, 152 162, 130 164 L 74 166 C 60 166, 52 161, 50 150 Z',
+];
+// へにゃっと曲がったアンテナの茎
+const stalk = 'M92 78 C 89 65, 97 55, 108 54';
+// ほっぺ・手を振る「ぶんぶん」の弧
+const details = [
+  'M123 135 L 126 141', 'M129 133 L 132 139', // ほっぺ
+  'M187 68 C 191 73, 192 80, 190 86', // ぶんぶん
+  'M194 60 C 199 68, 200 78, 197 88',
+];
+// 右を向いた三角の口（大きく開けている）
+const mouth = 'M80 109 L 80 140 L 107 124.5 Z';
+// 口の端からたれる、よだれ1滴
+const drool = 'M84 139 C 85 145, 90 149, 89 153 C 88 158, 81 158, 80 153 C 79 149, 83 145, 84 139 Z';
+---
+
+<svg class="sketch-avatar w-28 h-28" viewBox="0 0 200 200" role="img" aria-label="Kopo-k のアイコン（手を振る、アンテナのある白いキャラクター）">
+  <!-- 背景の黄色い丸 -->
+  <circle class="sa-fill" cx="100" cy="100" r="100" fill={YELLOW} />
+  <!-- 床の影 -->
+  <ellipse class="sa-fill" cx="104" cy="168" rx="66" ry="7" fill="#000" opacity="0.08" />
+
+  <!-- 塗り（クリーム色） -->
+  <g class="sa-fill" fill={CREAM}>
+    {parts.map((d) => <path d={d} />)}
+    <circle cx="117" cy="51" r="10" />
+    <circle cx="176" cy="76" r="9" />
+    <path d={mouth} />
+  </g>
+  <path class="sa-fill" d={drool} fill="#bfe3ff" />
+
+  <!-- 輪郭の線（手描き風に少しゆらす） -->
+  <g fill="none" stroke={INK} stroke-width="5" stroke-linecap="round" stroke-linejoin="round" style="filter: url(#sketchy)">
+    {parts.map((d) => <path class="sa-line" d={d} pathLength="1" />)}
+    <path class="sa-line" d={stalk} pathLength="1" />
+    <circle class="sa-line" cx="117" cy="51" r="10" pathLength="1" />
+    <path class="sa-line" d={arm} pathLength="1" />
+    <circle class="sa-line" cx="176" cy="76" r="9" pathLength="1" />
+    <path class="sa-line" d={mouth} pathLength="1" stroke-width="4.6" />
+    <path class="sa-line" d={drool} pathLength="1" stroke-width="3" />
+    {details.map((d) => <path class="sa-line" d={d} pathLength="1" stroke-width="3.4" />)}
+  </g>
+
+  <!-- 目：左は高く、右は口の先と同じ低さ（わざとずらす） -->
+  <circle class="sa-fill" cx="78" cy="97" r="6.5" fill={INK} />
+  <circle class="sa-fill" cx="121" cy="124" r="6.5" fill={INK} />
+</svg>

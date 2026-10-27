@@ -1,24 +1,30 @@
 ---
 import { Mail, Github } from 'lucide-astro';
+import GenerativeBg from './GenerativeBg.astro';
+import PencilIntro from './PencilIntro.astro';
+import SketchAvatar from './SketchAvatar.astro';
 ---
-<section class="animate-fade-in-up min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-white via-indigo-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300" id="home">
-  <div class="mt-20 flex flex-col items-center">
-      <div class="w-32 h-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-[0_0_20px_rgba(59,130,246,0.6)] flex items-center justify-center mb-6 overflow-hidden">
+<section class="animate-fade-in-up min-h-screen relative overflow-hidden flex flex-col justify-center items-center px-4 bg-gradient-to-b from-white via-indigo-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300" id="home">
+  <GenerativeBg />
+  <div class="relative z-10 mt-20 flex flex-col items-center">
+      <div class="pi-ring w-32 h-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-[0_0_20px_rgba(59,130,246,0.6)] flex items-center justify-center mb-6 overflow-hidden">
         <!-- ライトモード用画像 -->
-        <img src="/my-portfolio/images/icon-light.webp" alt="Taiga's profile icon" class="w-28 h-28 rounded-full object-cover dark:hidden bg-white" loading="lazy" />
+        <img src="/my-portfolio/images/icon-light.webp" alt="Kopo-k のアイコン" width="112" height="112" class="w-28 h-28 rounded-full object-cover dark:hidden bg-white" fetchpriority="high" />
 
         <!-- ダークモード用画像 -->
-        <img src="/my-portfolio/images/icon-dark.webp" alt="Taiga's profile icon" class="w-28 h-28 rounded-full object-cover hidden dark:block" loading="lazy" />
+        <img src="/my-portfolio/images/icon-dark.webp" alt="Kopo-k のアイコン" width="112" height="112" class="w-28 h-28 rounded-full object-cover hidden dark:block" />
+        <!-- スケッチ風テーマのときだけ表示する、鉛筆で描いたアイコン -->
+        <SketchAvatar />
       </div>
     <h1 class="text-4xl md:text-5xl font-bold text-center mb-4 transition-colors duration-1000">
-      <span>こんにちは、私は</span> <span class="text-indigo-500 dark:text-purple-400">Kopo-k</span>
+      <span class="pi-line">こんにちは、私は</span> <span class="pi-line pi-name text-indigo-500 dark:text-purple-400">Kopo-k</span>
     </h1>
-    <p class="text-lg md:text-xl text-center text-gray-700 dark:text-gray-300 mb-8 max-w-xl">
+    <p class="pi-line pi-fast text-lg md:text-xl text-center text-gray-700 dark:text-gray-300 mb-8 max-w-xl">
       愛知県の大学生で、プログラミングを学んでいます。
     </p>
-    <div class="flex gap-4 mb-8">
+    <div class="pi-buttons flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
 
-      <a href="#contact" class="px-6 py-2 rounded-full bg-indigo-500 text-white font-semibold shadow hover:bg-indigo-600 transition flex items-center gap-2 group">
+      <a href="#contact" class="px-6 py-2 rounded-full bg-indigo-600 text-white font-semibold shadow hover:bg-indigo-700 transition flex items-center gap-2 group">
         <Mail class="text-white w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
         <span>お問い合わせ</span>
       </a>
@@ -28,12 +34,14 @@ import { Mail, Github } from 'lucide-astro';
         <span>GitHub を見る</span>
       </a>
     </div>
-    <div class="animate-bounce mt-8">
-      <a href="#about" class="text-indigo-400 dark:text-purple-400 " >
-        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <div class="pi-buttons animate-bounce mt-8">
+      <a href="#about" aria-label="自己紹介へ" class="text-indigo-500 dark:text-purple-400 inline-block p-2">
+        <svg aria-hidden="true" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
       </svg>
+      </a>
     </div>
   </div>
 
+  <PencilIntro />
 </section>

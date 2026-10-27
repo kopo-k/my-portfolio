@@ -3,7 +3,7 @@ import "../styles/global.css";
 import { X } from 'lucide-astro';
 ---
 
-<html lang="ja" class="scroll-smooth">
+<html lang="ja" class="scroll-smooth sketch">
   <head>
     <meta charset="UTF-8" /> <!--文字化け対策-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,12 +17,23 @@ import { X } from 'lucide-astro';
     <meta property="og:url" content="https://kopo-k.github.io/my-portfolio/" />
     <meta property="og:type" content="website" />
     <link rel="icon" href="/my-portfolio/images/favicon.ico" />
-    <script>
+    <!-- 手描きスケッチ風（お試し）のフォント：見出し＝Yomogi、本文＝Klee One -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Yomogi&display=swap" />
+    <!-- is:inline：描画の前にそのまま実行させる（付けないと Astro が後から動くモジュールに変換し、ちらつく） -->
+    <script is:inline>
       // 既定をライトにしたいので変更
       //初期値を設定
       (function () {
-        var saved = localStorage.getItem('theme');       // 'dark' | 'light' | null
-        var mode  = saved ? saved : 'light';             // 既定は light
+        // 保存値があればそれを、なければ OS の設定に合わせる（読み込み時のちらつきを防ぐため head で判定）
+        var saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (e) {}
+        var mode = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        // 鉛筆で書く演出（スケッチ風のとき）：書く前の状態を描画前に作っておく
+        if (document.documentElement.classList.contains('sketch') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('pencil-intro');
+        }
         if (mode === 'dark') {
           document.documentElement.classList.add('dark');
         } else {
@@ -33,22 +44,34 @@ import { X } from 'lucide-astro';
     <!-- <slot name="head" /> -->
   </head>
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
+    <!-- スケッチ風テーマ用：アイコンの線を手描き風にゆらすフィルター（sketch.css から参照） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <filter id="sketchy" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
     <slot />
 
     <!-- Skill Modal -->
     <div
       id="skill-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="skill-modal-title"
       class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 transition-opacity"
     >
       <div class="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-2xl mx-4 relative shadow-2xl">
         <button
           id="close-modal"
+          type="button"
+          aria-label="閉じる"
           class="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
         >
           <X class="w-6 h-6" />
         </button>
 
-        <h3 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">スキル指標について</h3>
+        <h3 id="skill-modal-title" class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">スキル指標について</h3>
 
         <div class="space-y-4 text-gray-700 dark:text-gray-300">
           <div class="flex items-start gap-3">
@@ -83,31 +106,28 @@ import { X } from 'lucide-astro';
     </script>
 
     <script is:inline>
-      // Modal functionality
+      // スキル指標の説明（モーダル）
       const modal = document.getElementById('skill-modal');
       const openBtn = document.getElementById('skill-info-btn');
       const closeBtn = document.getElementById('close-modal');
-
-      openBtn?.addEventListener('click', () => {
+      const openModal = () => {
         modal?.classList.remove('hidden');
         modal?.classList.add('flex');
         document.body.style.overflow = 'hidden';
-      });
-
-      closeBtn?.addEventListener('click', () => {
+        closeBtn?.focus();
+      };
+      const closeModal = () => {
+        if (modal?.classList.contains('hidden')) return;
         modal?.classList.add('hidden');
         modal?.classList.remove('flex');
         document.body.style.overflow = '';
-      });
-
-      // Close modal when clicking outside
-      modal?.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.add('hidden');
-          modal.classList.remove('flex');
-          document.body.style.overflow = '';
-        }
-      });
+        openBtn?.focus();
+      };
+      openBtn?.addEventListener('click', openModal);
+      closeBtn?.addEventListener('click', closeModal);
+      // 外側をクリック・Esc キーで閉じる
+      modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
     </script>
   </body>
 </html>

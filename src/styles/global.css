@@ -1,9 +1,31 @@
+@import "./sketch.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
   @apply font-sans;
+}
+
+/* キーボード操作のフォーカス枠を、どの部品でもはっきり見せる */
+:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+/* ページ内リンクで移動したとき、見出しが固定ヘッダーの下に隠れないようにする */
+html {
+  scroll-padding-top: 6rem;
+}
+
+/* 「視差効果を減らす」を設定している人には、スクロールやフェードの動きを出さない */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  .animate-fade-in-up {
+    animation: none !important;
+  }
 }
 
 @layer utilities {
@@ -19,7 +41,7 @@ body {
   }
 
   .animate-fade-in-up {
-    animation: fade-in-up 1.5s ease-out both;
+    animation: fade-in-up 0.7s ease-out both;
   }
 
   /* ニューモーフィズム - ライトモード */

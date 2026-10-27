@@ -1,0 +1,203 @@
+---
+// ページを開いたときに、鉛筆がトップの内容をその場で書いていく演出（スケッチ風テーマのときだけ）。
+// 書く前の状態は <head> のスクリプトが html に付ける .pencil-intro クラスで作る（sketch.css 参照）。
+// クリック・キー・スクロールですぐに最後まで飛ばせる。視差効果を減らす設定の人には出さない。
+---
+
+<!-- 鉛筆（オリジナルの絵）。左端の (0,12) が芯の先 -->
+<div id="pi-pencil" class="pointer-events-none absolute left-0 top-0 z-[60]" style="transform-origin: 0 12px; display: none" aria-hidden="true">
+  <svg width="120" height="24" viewBox="0 0 120 24">
+    <polygon points="0,12 8,9.2 8,14.8" fill="#3b3a38" />
+    <polygon points="8,9.2 22,4 22,20 8,14.8" fill="#e9c49b" stroke="#8a6a48" stroke-width="0.6" />
+    <rect x="22" y="4" width="78" height="16" fill="#ffd43b" stroke="#8a6a00" stroke-width="0.6" />
+    <line x1="22" y1="9.4" x2="100" y2="9.4" stroke="#e6b800" stroke-width="1" />
+    <line x1="22" y1="14.6" x2="100" y2="14.6" stroke="#e6b800" stroke-width="1" />
+    <rect x="100" y="4" width="8" height="16" fill="#b8bec6" stroke="#6c737c" stroke-width="0.6" />
+    <rect x="108" y="4" width="11" height="16" rx="3" fill="#f78fb3" stroke="#a8566f" stroke-width="0.6" />
+  </svg>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const pencil = document.getElementById('pi-pencil');
+
+  type Pt = { x: number; y: number };
+  const anims: Animation[] = [];
+  const overlays: Element[] = [];
+  let done = false;
+
+  /** ページ全体での座標（スクロール分を足す） */
+  function box(el: Element) {
+    const r = el.getBoundingClientRect();
+    return { left: r.left + scrollX, top: r.top + scrollY, width: r.width, height: r.height, right: r.right + scrollX, bottom: r.bottom + scrollY };
+  }
+  /** 芯の先を (x, y) に置き、少し傾けて持つ */
+  const pose = (p: Pt, tilt = -40) => `translate(${p.x}px, ${p.y - 12}px) rotate(${tilt}deg)`;
+
+  function play(el: Element | null, frames: Keyframe[], opts: KeyframeAnimationOptions) {
+    if (!el) return Promise.resolve();
+    const a = el.animate(frames, { fill: 'forwards', ...opts });
+    anims.push(a);
+    return a.finished.catch(() => {});
+  }
+  function movePencil(points: Pt[], duration: number, easing = 'linear') {
+    return play(pencil, points.map((p) => ({ transform: pose(p) })), { duration, easing });
+  }
+
+  /** 枠と同じきれいな円（SVGの線）を、要素の上に重ねて描く。描き終わったら本物の枠と入れ替わるので、位置・太さ・色をそろえる */
+  function drawRing(el: Element) {
+    const b = box(el);
+    const bw = parseFloat(getComputedStyle(el).borderTopWidth) || 3;
+    const cx = b.width / 2 + 6;
+    const cy = b.height / 2 + 6;
+    const r = b.width / 2 - bw / 2;
+    const pts: string[] = [];
+    const n = 72;
+    for (let i = 0; i <= n; i++) {
+      const t = -Math.PI / 2 + (i / n) * Math.PI * 2;
+      const rr = r;
+      pts.push(`${(cx + Math.cos(t) * rr).toFixed(1)},${(cy + Math.sin(t) * rr).toFixed(1)}`);
+    }
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('width', String(b.width + 12));
+    svg.setAttribute('height', String(b.height + 12));
+    svg.setAttribute('aria-hidden', 'true');
+    Object.assign((svg as SVGElement).style, { position: 'absolute', left: `${b.left - 6}px`, top: `${b.top - 6}px`, zIndex: '55', pointerEvents: 'none', overflow: 'visible' });
+    const path = document.createElementNS(ns, 'polyline');
+    path.setAttribute('points', pts.join(' '));
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', getComputedStyle(root).getPropertyValue('--pencil').trim() || '#333');
+    path.setAttribute('stroke-width', String(bw));
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.appendChild(path);
+    document.body.appendChild(svg);
+    overlays.push(svg);
+    const len = (path as SVGPolylineElement).getTotalLength();
+    path.style.strokeDasharray = `${len}`;
+    path.style.strokeDashoffset = `${len}`;
+    // 鉛筆が線の先端を追いかけるように、線上の点を拾う
+    const follow: Pt[] = Array.from({ length: 24 }, (_, i) => {
+      const p = (path as SVGPolylineElement).getPointAtLength((len * i) / 23);
+      return { x: b.left - 6 + p.x, y: b.top - 6 + p.y };
+    });
+    return { path, len, follow };
+  }
+
+  /** 1行を左から書く：文字を左から見せながら、鉛筆を上下に揺らして右へ進める */
+  async function writeLine(el: Element, speed: number) {
+    const b = box(el);
+    const duration = Math.max(350, Math.min(1200, b.width * speed));
+    const steps = Math.max(8, Math.round(b.width / 14));
+    const base = b.top + b.height * 0.72;
+    const amp = Math.min(10, b.height * 0.22);
+    const pts: Pt[] = Array.from({ length: steps + 1 }, (_, i) => ({
+      x: b.left + (b.width * i) / steps,
+      y: base + (i % 2 === 0 ? -amp : amp * 0.4) + (Math.random() - 0.5) * 3,
+    }));
+    await Promise.all([
+      play(el, [{ clipPath: 'inset(-25% 100% -25% 0)' }, { clipPath: 'inset(-25% 0% -25% 0)' }], { duration, easing: 'linear' }),
+      movePencil(pts, duration),
+    ]);
+  }
+
+  function finish() {
+    if (done) return;
+    done = true;
+    root.classList.remove('pencil-intro');
+    document.querySelectorAll<SVGElement>('.sketch-avatar, .sketch-avatar .sa-line, .sketch-avatar .sa-fill').forEach((el) => {
+      el.style.opacity = '';
+      el.style.strokeDasharray = '';
+      el.style.strokeDashoffset = '';
+    });
+    anims.forEach((a) => a.cancel());
+    overlays.forEach((o) => o.remove());
+    if (pencil) pencil.style.display = 'none';
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((ev) => removeEventListener(ev, finish));
+  }
+
+  async function run() {
+    if (!pencil) return finish();
+    // 位置の基準をページ全体にするため、鉛筆を body 直下へ移す（セクションの中だと基準がずれ、端で切れる）
+    document.body.appendChild(pencil);
+    // フォントが読み込まれてから測る（文字幅が変わるため。待つのは最大0.8秒）
+    await Promise.race([document.fonts?.ready, new Promise((r) => setTimeout(r, 800))]);
+    // トップがふわっと出てくるアニメーションが終わってから測る（動いている途中だと位置がずれる）
+    const heroEl = document.getElementById('home');
+    await Promise.race([Promise.all((heroEl?.getAnimations() ?? []).map((a) => a.finished.catch(() => {}))), new Promise((r) => setTimeout(r, 1000))]);
+    if (done) return;
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((ev) => addEventListener(ev, finish, { passive: true }));
+
+    const hero = document.getElementById('home');
+    const ring = hero?.querySelector('.pi-ring');
+    const lines = Array.from(hero?.querySelectorAll('.pi-line') ?? []);
+    const name = hero?.querySelector('.pi-name');
+    const rest = Array.from(hero?.querySelectorAll('.pi-buttons') ?? []);
+    pencil.style.display = 'block';
+
+    // 0. 鉛筆が画面の右下から入ってくる
+    const hb = hero ? box(hero) : { right: innerWidth, bottom: innerHeight };
+    if (ring) {
+      const rg = drawRing(ring);
+      await movePencil([{ x: hb.right + 80, y: hb.bottom * 0.8 }, rg.follow[0]], 450, 'ease-out');
+      if (done) return;
+      // 1. アイコンの丸い枠をぐるっと描く → 中の絵を出す
+      await Promise.all([
+        play(rg.path, [{ strokeDashoffset: rg.len }, { strokeDashoffset: 0 }], { duration: 700, easing: 'ease-in-out' }),
+        movePencil(rg.follow, 700, 'ease-in-out'),
+      ]);
+      if (done) return;
+      const art = ring.querySelector<SVGSVGElement>('.sketch-avatar');
+      if (art && getComputedStyle(art).display !== 'none') {
+        // スケッチ版のアイコン：輪郭を順番に描き、最後に陰影と目を入れる
+        art.style.opacity = '1';
+        const lines = Array.from(art.querySelectorAll<SVGPathElement>('.sa-line'));
+        const fills = Array.from(art.querySelectorAll<SVGElement>('.sa-fill'));
+        lines.forEach((l) => {
+          l.style.strokeDasharray = '1';
+          l.style.strokeDashoffset = '1';
+        });
+        fills.forEach((f) => (f.style.opacity = '0'));
+        const ab = box(art);
+        const zig: Pt[] = Array.from({ length: 14 }, (_, i) => ({
+          x: ab.left + ab.width * (0.2 + 0.6 * ((i * 0.37) % 1)),
+          y: ab.top + ab.height * (0.2 + (0.65 * i) / 13),
+        }));
+        await Promise.all([
+          ...lines.map((l, i) => play(l, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 260, delay: (i % 11) * 55, easing: 'ease-out' })),
+          movePencil(zig, 900),
+        ]);
+        if (done) return;
+        fills.forEach((f) => play(f, [{ opacity: 0 }, { opacity: 1 }], { duration: 300 }));
+        lines.forEach((l) => {
+          l.style.strokeDasharray = '';
+          l.style.strokeDashoffset = '';
+        });
+      } else {
+        ring.querySelectorAll('img').forEach((img) => play(img, [{ opacity: 0 }, { opacity: 1 }], { duration: 350 }));
+      }
+    }
+    // 2. 見出しと名前、説明文を左から書く
+    for (const el of lines) {
+      if (done) return;
+      await writeLine(el, el.classList.contains('pi-fast') ? 0.9 : 2.2);
+      // 名前の下に波線を引く
+      if (el === name && !done) {
+        const b = box(el);
+        await Promise.all([
+          play(el, [{ backgroundSize: '0% 12px' }, { backgroundSize: '100% 12px' }], { duration: 380, easing: 'ease-out' }),
+          movePencil([{ x: b.left, y: b.bottom - 2 }, { x: b.right, y: b.bottom - 4 }], 380, 'ease-out'),
+        ]);
+      }
+    }
+    if (done) return;
+    // 3. ボタンを出して、鉛筆は右上へ去る
+    rest.forEach((el) => play(el, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 400, easing: 'ease-out' }));
+    const last = (pencil.getAnimations().at(-1)?.effect as KeyframeEffect | undefined)?.getKeyframes().at(-1)?.transform as string | undefined;
+    await play(pencil, [{ transform: last ?? 'none' }, { transform: `translate(${(hb.right ?? innerWidth) + 140}px, ${scrollY - 80}px) rotate(-55deg)` }], { duration: 500, easing: 'ease-in' });
+    finish();
+  }
+
+  if (root.classList.contains('pencil-intro')) run();
+</script>
