@@ -9,11 +9,14 @@ import SkillsSection from "../components/Skills.astro";
 import ContactSection from "../components/ContactSection.astro";
 ---
 <Layout title="kopo-k's Portfolio" description="Welcome to my portfolio site!" image="/my-portfolio/images/opg.webp" url="https://kopo-k.github.io/my-portfolio/">
+	<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:rounded focus:bg-white focus:text-black focus:shadow">本文へスキップ</a>
 	<Header />
+	<main id="main">
 	<HeroSection />
 	<AboutSection />
 	<ExperienceSection />
 	<ProjectsSection />
 	<SkillsSection />
 	<ContactSection />
+	</main>
 </Layout>

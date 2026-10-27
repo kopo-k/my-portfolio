@@ -2,7 +2,15 @@
 // projects.astro
 
 import projectItems from './Projects/projectItems';
-import { ExternalLink, Github } from 'lucide-astro';
+import { ExternalLink, Github, PlayCircle, Smartphone } from 'lucide-astro';
+
+// リンク先に合わせてボタンの文字を変える（押す前に行き先が分かるように）
+function linkKind(url) {
+  if (/youtu\.?be/.test(url)) return { label: '動画を見る', icon: PlayCircle };
+  if (/apps\.apple\.com/.test(url)) return { label: 'App Storeで見る', icon: Smartphone };
+  return { label: 'サイトを開く', icon: ExternalLink };
+}
+const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップアプリ', 'モバイルアプリ'];
 ---
 
 <section
@@ -19,119 +27,99 @@ import { ExternalLink, Github } from 'lucide-astro';
 </div>
 
 <!-- フィルターボタン -->
-<div class="flex justify-center gap-3 mb-8 flex-wrap">
-  <button
-    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-blue-600 text-white"
-    data-filter="all"
-  >
-    すべて
-  </button>
-  <button
-    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
-    data-filter="Webアプリ"
-  >
-    Webアプリ
-  </button>
-  <button
-    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
-    data-filter="ゲーム"
-  >
-    ゲーム
-  </button>
-  <button
-    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
-    data-filter="デスクトップアプリ"
-  >
-    デスクトップアプリ
-  </button>
-  <button
-    class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"
-    data-filter="モバイルアプリ"
-  >
-    モバイルアプリ
-  </button>
+<div class="flex justify-center gap-2 sm:gap-3 mb-8 flex-wrap" role="group" aria-label="作品の種類で絞り込む">
+  {filters.map((f, i) => (
+    <button
+      type="button"
+      class:list={["filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300", i === 0 ? "bg-blue-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"]}
+      data-filter={i === 0 ? 'all' : f}
+      aria-pressed={i === 0 ? 'true' : 'false'}
+    >
+      {f}
+    </button>
+  ))}
 </div>
+<p id="project-count" class="sr-only" aria-live="polite"></p>
 
-<div class="max-w-5xl mx-auto space-y-6">
-  {projectItems.map((project) => (
-    <div class="project-item project-card rounded-2xl overflow-hidden transition-all duration-300" data-tag={project.tag}>
-      <div class="flex flex-col md:flex-row bg-white dark:bg-gray-800 md:min-h-[280px]">
-        <!-- 左: 画像 / アイコン -->
-        <div class={`md:w-96 w-full h-56 md:h-64 flex-shrink-0 bg-gradient-to-br ${project.gradientFrom} ${project.gradientTo} dark:from-gray-700 dark:to-gray-600 flex items-center justify-center overflow-hidden`}>
-          <img src={project.image} alt={project.title} class="w-full h-full object-contain" />
+<div class="max-w-6xl mx-auto grid gap-6 md:grid-cols-2">
+  {projectItems.map((project) => {
+    const link = linkKind(project.liveDemoUrl);
+    const LinkIcon = link.icon;
+    return (
+    <article class="project-item project-card rounded-2xl overflow-hidden transition-all duration-300 bg-white dark:bg-gray-800 flex flex-col" data-tag={project.tag}>
+      <div class={`w-full h-52 sm:h-60 flex-shrink-0 bg-gradient-to-br ${project.gradientFrom} ${project.gradientTo} dark:from-gray-700 dark:to-gray-600 flex items-center justify-center overflow-hidden`}>
+        <img src={project.image} alt={`${project.title} の画面`} loading="lazy" decoding="async" class="w-full h-full object-contain" />
+      </div>
+
+      <div class="flex-1 p-6 flex flex-col">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h3 class="text-xl font-bold">{project.title}</h3>
+          <span class="px-2 py-0.5 rounded-full text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">{project.tag}</span>
         </div>
+        <p class="text-xs text-gray-600 dark:text-gray-400 mb-3">担当：{project.role}</p>
+        <p class="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{project.description}</p>
 
-        <!-- 右: テキスト -->
-        <div class="flex-1 p-6 flex flex-col">
-          <div class="flex items-center gap-3 mb-2">
-            <h3 class="text-xl font-bold">{project.title}</h3>
-            <span class="px-2 py-0.5 rounded-full text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">{project.tag}</span>
-          </div>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">担当：{project.role}</p>
-          <p class="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{project.description}</p>
+        <div class="mt-auto">
+          <ul class="flex flex-wrap gap-2 mb-4" aria-label="使用技術">
+            {project.techStack.map((tech) => (
+              <li class="px-2 py-1 rounded text-xs bg-[#f4f4f5] dark:bg-gray-700">{tech}</li>
+            ))}
+          </ul>
 
-          <div class="mt-auto">
-            <div class="flex flex-wrap gap-2 mb-4">
-              {project.techStack.map((tech) => (
-                <span class="px-2 py-1 rounded text-xs bg-[#f4f4f5] dark:bg-gray-700">{tech}</span>
-              ))}
-            </div>
-
-            <div class="flex items-center gap-3">
-              <a
-                href={project.liveDemoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md hover:scale-105 transition-all duration-300"
-              >
-                <ExternalLink class="w-4 h-4" /> <span>デモを見る</span>
-              </a>
+          <div class="flex flex-wrap items-center gap-3">
+            <a
+              href={project.liveDemoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition-all duration-300"
+            >
+              <LinkIcon class="w-4 h-4" aria-hidden="true" /> <span>{link.label}</span>
+              <span class="sr-only">（{project.title}・新しいタブで開きます）</span>
+            </a>
+            {project.githubUrl && (
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="bg-white dark:bg-black border border-gray-300 dark:border-gray-600 px-3 py-2 rounded hover:scale-110 transition-transform duration-300"
+                class="flex items-center gap-2 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 px-3 py-2 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300"
               >
-                <Github class="w-4 h-4 dark:text-white text-black" />
+                <Github class="w-4 h-4 dark:text-white text-black" aria-hidden="true" /> <span>コード</span>
+                <span class="sr-only">（{project.title} の GitHub・新しいタブで開きます）</span>
               </a>
-            </div>
+            )}
           </div>
         </div>
       </div>
-    </div>
-  ))}
+    </article>
+    );
+  })}
 </div>
 
 </section>
 
 <script>
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const allItems = document.querySelectorAll('.project-item');
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const allItems = document.querySelectorAll<HTMLElement>('.project-item');
+  const count = document.getElementById('project-count');
+  const ON = ['bg-blue-600', 'text-white'];
+  const OFF = ['bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300'];
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const filter = btn.dataset.filter;
-
-      // ボタンのスタイルを更新
       filterBtns.forEach(b => {
-        if (b === btn) {
-          b.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-          b.classList.add('bg-blue-600', 'text-white');
-        } else {
-          b.classList.remove('bg-blue-600', 'text-white');
-          b.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-        }
+        const on = b === btn;
+        b.classList.remove(...(on ? OFF : ON));
+        b.classList.add(...(on ? ON : OFF));
+        b.setAttribute('aria-pressed', String(on));
       });
-
-      // フィルター適用
+      let shown = 0;
       allItems.forEach(item => {
-        const tag = item.dataset.tag;
-        if (filter === 'all' || tag === filter) {
-          item.classList.remove('hidden');
-        } else {
-          item.classList.add('hidden');
-        }
+        const hit = filter === 'all' || item.dataset.tag === filter;
+        item.classList.toggle('hidden', !hit);
+        if (hit) shown++;
       });
+      if (count) count.textContent = `${shown}件の作品を表示しています`;
     });
   });
 </script>
@@ -146,7 +134,7 @@ import { ExternalLink, Github } from 'lucide-astro';
     box-shadow:
       12px 12px 28px #d1d5e0,
       -12px -12px 28px #ffffff;
-    transform: translateY(-4px);
+    transform: translateY(-2px);
   }
 
   :global(.dark) .project-card {
@@ -158,6 +146,6 @@ import { ExternalLink, Github } from 'lucide-astro';
     box-shadow:
       12px 12px 28px #151c28,
       -12px -12px 28px #27324e;
-    transform: translateY(-4px);
+    transform: translateY(-2px);
   }
 </style>

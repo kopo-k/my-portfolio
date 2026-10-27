@@ -107,7 +107,8 @@ const projectItems = [
     description: "天気情報から洗濯の可否を判定するモバイルアプリ。今日は洗濯物を干せるかがすぐわかる。App Storeにてリリース済み。",
     techStack: ["Flutter", "Firebase"],
     liveDemoUrl: "https://apps.apple.com/jp/app/%E6%B4%97%E6%BF%AF%E6%97%A5%E5%92%8C%E3%83%81%E3%82%A7%E3%83%83%E3%82%AB%E3%83%BC/id6757654112",
-    githubUrl: "https://github.com/kopo-k",
+    // ソースは非公開のため、GitHub のボタンは出さない
+    githubUrl: "",
   },
 ];
 

@@ -8,6 +8,8 @@ export function initThemeToggle() {
 
 // ライト or ダークモードの切り替え
 const setTheme = (mode) => {
+  // 読み上げソフトにも今の状態を伝える（ボタン名は「ダークモード」、押されている＝ダーク）
+  toggleButton?.setAttribute('aria-pressed', String(mode === 'dark'));
   if (mode === 'dark') {
     document.documentElement.classList.add('dark');
     localStorage.theme = 'dark';

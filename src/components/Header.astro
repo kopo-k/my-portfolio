@@ -7,7 +7,7 @@ import { Sun, Moon, X } from 'lucide-astro';
   </div>
 
   <!-- デスクトップナビゲーション -->
-  <nav class="space-x-6 hidden md:block">
+  <nav aria-label="ページ内の移動" class="space-x-6 hidden md:block">
     <a href="#home" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="home">Home</a>
     <a href="#about" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="about">About</a>
     <a href="#experience" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="experience">Experience</a>
@@ -20,7 +20,7 @@ import { Sun, Moon, X } from 'lucide-astro';
   <div class="flex items-center space-x-4">
     <!-- ダークモード,ライトモード切り替えボタン -->
     <button id="theme-toggle"
-    aria-label="Toggle Dark Mode"
+    aria-label="ダークモード" aria-pressed="false"
     class="relative w-14 h-7 rounded-full cursor-pointer transition-all duration-300 hover:scale-105 bg-yellow-500 dark:bg-blue-600">
       <div id="toggle-circle"
         class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center transition-all duration-700 overflow-hidden p-0.5 translate-x-0 dark:translate-x-7">
@@ -34,8 +34,10 @@ import { Sun, Moon, X } from 'lucide-astro';
 
     <!-- ハンバーガーメニューボタン（モバイルのみ表示） -->
     <button id="mobile-menu-button"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
             class="md:hidden relative w-8 h-8 flex flex-col justify-center items-center space-y-1 group"
-            aria-label="Toggle mobile menu">
+            aria-label="メニュー">
       <span class="hamburger-line w-6 h-0.5 bg-gray-900 dark:bg-slate-300 transition-all duration-300 origin-center"></span>
       <span class="hamburger-line w-6 h-0.5 bg-gray-900 dark:bg-slate-300 transition-all duration-300 origin-center"></span>
       <span class="hamburger-line w-6 h-0.5 bg-gray-900 dark:bg-slate-300 transition-all duration-300 origin-center"></span>
@@ -46,14 +48,14 @@ import { Sun, Moon, X } from 'lucide-astro';
   <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden opacity-0 invisible pointer-events-none transition-all duration-300"></div>
 
   <!-- モバイルナビゲーションメニュー -->
-  <nav id="mobile-menu" class="fixed top-0 right-0 h-full w-80 bg-white dark:bg-gray-900 shadow-2xl z-50 md:hidden transform translate-x-full pointer-events-none transition-transform duration-300 ease-in-out">
+  <nav id="mobile-menu" aria-label="メニュー" class="invisible fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white dark:bg-gray-900 shadow-2xl z-50 md:hidden transform translate-x-full pointer-events-none transition-transform duration-300 ease-in-out">
     <div class="flex flex-col h-full">
       <!-- モバイルメニューヘッダー -->
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
         <div class="text-xl font-bold bg-gradient-to-r from-taiga-blue to-taiga-purple bg-clip-text text-transparent">
           Menu
         </div>
-        <button id="mobile-menu-close" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <button id="mobile-menu-close" type="button" aria-label="メニューを閉じる" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
           <X class="w-5 h-5 text-gray-600 dark:text-gray-400" />
         </button>
       </div>
