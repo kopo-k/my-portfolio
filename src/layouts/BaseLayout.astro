@@ -21,8 +21,10 @@ import { X } from 'lucide-astro';
       // 既定をライトにしたいので変更
       //初期値を設定
       (function () {
-        var saved = localStorage.getItem('theme');       // 'dark' | 'light' | null
-        var mode  = saved ? saved : 'light';             // 既定は light
+        // 保存値があればそれを、なければ OS の設定に合わせる（読み込み時のちらつきを防ぐため head で判定）
+        var saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (e) {}
+        var mode = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         if (mode === 'dark') {
           document.documentElement.classList.add('dark');
         } else {

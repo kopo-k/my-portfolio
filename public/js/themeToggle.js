@@ -7,19 +7,19 @@ export function initThemeToggle() {
   const toggleCircle = document.getElementById('toggle-circle');
 
 // ライト or ダークモードの切り替え
-const setTheme = (mode) => {
+const setTheme = (mode, save = true) => {
   // 読み上げソフトにも今の状態を伝える（ボタン名は「ダークモード」、押されている＝ダーク）
   toggleButton?.setAttribute('aria-pressed', String(mode === 'dark'));
   if (mode === 'dark') {
     document.documentElement.classList.add('dark');
-    localStorage.theme = 'dark';
+    if (save) { try { localStorage.theme = 'dark'; } catch (e) {} }
     if (toggleCircle) {
       toggleCircle.classList.remove('translate-x-0');
       toggleCircle.classList.add('translate-x-7');
     }
   } else {
     document.documentElement.classList.remove('dark');
-    localStorage.theme = 'light';
+    if (save) { try { localStorage.theme = 'light'; } catch (e) {} }
     if (toggleCircle) {
       toggleCircle.classList.remove('translate-x-7');
       toggleCircle.classList.add('translate-x-0');
@@ -32,13 +32,6 @@ const setTheme = (mode) => {
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  //初期テーマの判定
-  if (
-    localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    setTheme('dark');
-  } else {
-    setTheme('light');
-  }
+  // 初期テーマは head のスクリプトで決まっているので、それに表示をそろえるだけ（保存はしない）
+  setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light', false);
 }

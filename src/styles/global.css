@@ -6,6 +6,12 @@ body {
   @apply font-sans;
 }
 
+/* キーボード操作のフォーカス枠を、どの部品でもはっきり見せる */
+:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
 /* ページ内リンクで移動したとき、見出しが固定ヘッダーの下に隠れないようにする */
 html {
   scroll-padding-top: 6rem;

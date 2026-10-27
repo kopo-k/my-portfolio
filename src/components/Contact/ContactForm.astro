@@ -9,27 +9,33 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
 <div class="relative h-full">
   <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10 rounded-2xl blur-xl"></div>
   <div class="relative dark:bg-gray-800/50 dark:backdrop-blur-sm p-8 rounded-2xl dark:border border-gray-700/50 shadow-2xl bg-[#f7f8f9] h-full flex flex-col">
-    <h3 class="text-3xl font-semibold mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Send a Message</h3>
+    <h3 class="text-3xl font-semibold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">Send a Message</h3>
     <p class="dark:text-gray-300 text-[#4c5664] mb-6">下記のフォームにご記入いただければ、すぐにご返信いたします</p>
-    <form id="contact-form" class="space-y-4 flex-grow flex flex-col relative" novalidate>
+    <form id="contact-form" method="post" action="#contact" class="space-y-4 flex-grow flex flex-col relative" novalidate>
       <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-white/70 dark:bg-gray-900/70 z-50" aria-hidden="true">
         <DualCircleLoader />
       </div>
 
+      <!-- 迷惑送信よけ：人には見えない欄。ここに入力があったら送らない -->
+      <div class="hidden" aria-hidden="true">
+        <label for="cf-website">ウェブサイト</label>
+        <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
       <div>
         <label for="cf-name" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">お名前</label>
-        <input id="cf-name" name="user_name" type="text" autocomplete="name" required class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-500 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-700" />
+        <input id="cf-name" name="user_name" type="text" autocomplete="name" maxlength="100" required class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-500 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-700" />
       </div>
 
       <div>
         <label for="cf-email" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">メールアドレス</label>
-        <input id="cf-email" name="user_email" type="email" autocomplete="email" required aria-describedby="cf-email-error" class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-500 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-700" />
+        <input id="cf-email" name="user_email" type="email" autocomplete="email" maxlength="254" required aria-describedby="cf-email-error" class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-500 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-700" />
         <p id="cf-email-error" class="hidden mt-1 text-sm text-red-600 dark:text-red-400">メールアドレスの形式で入力してください（例：name@example.com）</p>
       </div>
 
       <div class="flex-grow flex flex-col">
         <label for="cf-message" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">メッセージ</label>
-        <textarea id="cf-message" name="message" rows="4" required class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-500 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-700 flex-grow"></textarea>
+        <textarea id="cf-message" name="message" rows="4" maxlength="3000" required class="w-full p-3 rounded-md text-black dark:text-white placeholder-gray-500 outline-none dark:bg-gray-700 bg-white border border-gray-400 focus:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-700 flex-grow"></textarea>
       </div>
 
       <button id="cf-submit" type="submit"
@@ -39,10 +45,12 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
   </div>
 
   <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js" defer></script>
   <script define:vars={{ serviceId, templateId, publicKey }} is:inline>
-    window.addEventListener("DOMContentLoaded", () => {
-      emailjs.init(publicKey);
+    // defer の外部スクリプトより後に動くよう load で待つ
+    window.addEventListener("load", () => {
+      const ready = typeof emailjs !== "undefined";
+      if (ready) emailjs.init(publicKey);
       const form = document.getElementById("contact-form");
       const loader = document.getElementById("loader");
       const submit = document.getElementById("cf-submit");
@@ -57,6 +65,11 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         status.textContent = "";
+        if (form.website.value) return; // 迷惑送信（人には見えない欄が埋まっている）
+        if (!ready) {
+          say("送信の仕組みを読み込めませんでした（広告ブロッカーなどが原因の可能性があります）。左のリンクからご連絡ください。", false);
+          return;
+        }
 
         // 空欄チェック（最初の空欄にフォーカスを移す）
         const empty = [...form.querySelectorAll("[required]")].find((el) => !el.value.trim());

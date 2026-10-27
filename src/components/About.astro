@@ -2,7 +2,7 @@
 // About.astro
 import { Star, User } from "lucide-astro";
 ---
-<section id="about" class="animate-fade-in-up bg-gradient-to-b from-white via-indigo-50 to-white
+<section id="about" class="animate-fade-in-up py-20 px-4 bg-gradient-to-b from-white via-indigo-50 to-white
          dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-gray-900
          text-gray-900 dark:text-white
          transition-colors duration-300">
@@ -20,7 +20,7 @@ import { Star, User } from "lucide-astro";
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
             <Star class="w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-            <p class="group-hover:text-blue-600 transition-colors duration-300">現在学習中</p>
+            <span class="group-hover:text-blue-600 transition-colors duration-300">現在学習中</span>
           </h3>
           <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
             個人開発で「tamado」というWebアプリを開発中です。現在はGCP（Cloud Run）にデプロイしており、今後Fastify + Prismaによるバックエンド追加とCloud SQL（PostgreSQL）の導入を予定しています。リソース管理にはTerraformを導入し、インフラをコードで管理する手法を学んでいます。フロントエンドだけでなく、バックエンドやインフラまで一貫して構築できるエンジニアを目指しています。
@@ -31,9 +31,9 @@ import { Star, User } from "lucide-astro";
         <div>
           <h3 class="text-2xl font-semibold flex items-center text-gray-900 dark:text-white mb-3 group">
             <Star class="w-6 h-6 text-blue-600 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-            <p class="group-hover:text-blue-600 transition-colors duration-300">
+            <span class="group-hover:text-blue-600 transition-colors duration-300">
               将来の目標
-            </p>
+            </span>
           </h3>
           <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
             私が目指すのは、チームの生産性を仕組みで支えるSREエンジニアです。Dockerでチーム全員の環境構築を一発化したときや、設計図を共有してメンバーの迷いをなくしたときなど、「他人の詰まりを取り除いた瞬間」に最もやりがいを感じてきました。将来的にはAWS・Kubernetes・Terraformといったクラウドの標準技術を深く理解した上で、「あの人に頼めば解決する」と開発チームから自然に頼られる存在を目指しています。
