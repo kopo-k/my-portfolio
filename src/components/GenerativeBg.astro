@@ -2,6 +2,7 @@
 // ヒーローの背景に描くジェネラティブアート（お試し）。右下のボタンで4種類を切り替える。
 // URL に ?bg=flow / particles / voronoi / fractal を付けても選べる。
 const MODES = [
+  { key: 'sketch', label: 'スケッチ' },
   { key: 'flow', label: 'ノイズ' },
   { key: 'particles', label: 'パーティクル' },
   { key: 'voronoi', label: 'ボロノイ' },
@@ -34,13 +35,19 @@ const MODES = [
   .gen-veil {
     background: radial-gradient(ellipse 60% 55% at 50% 52%, rgba(248, 250, 252, 0.82) 0%, rgba(248, 250, 252, 0.45) 55%, rgba(248, 250, 252, 0) 100%);
   }
+  :global(.sketch) .gen-veil {
+    background: radial-gradient(ellipse 58% 52% at 50% 52%, rgba(251, 247, 238, 0.85) 0%, rgba(251, 247, 238, 0.4) 60%, rgba(251, 247, 238, 0) 100%);
+  }
+  :global(.sketch.dark) .gen-veil {
+    background: radial-gradient(ellipse 58% 52% at 50% 52%, rgba(31, 39, 35, 0.85) 0%, rgba(31, 39, 35, 0.4) 60%, rgba(31, 39, 35, 0) 100%);
+  }
   :global(.dark) .gen-veil {
     background: radial-gradient(ellipse 60% 55% at 50% 52%, rgba(17, 24, 39, 0.8) 0%, rgba(17, 24, 39, 0.4) 55%, rgba(17, 24, 39, 0) 100%);
   }
 </style>
 
 <script>
-  type Mode = 'flow' | 'particles' | 'voronoi' | 'fractal';
+  type Mode = 'sketch' | 'flow' | 'particles' | 'voronoi' | 'fractal';
   type RGB = [number, number, number];
 
   const canvas = document.getElementById('gen-bg') as HTMLCanvasElement | null;
@@ -318,15 +325,179 @@ const MODES = [
     };
   })();
 
+  // ---- 0. 鉛筆の落書き（スケッチ） -----------------------------------------
+  // ぐるぐる・星・矢印・雲などを、鉛筆でその場で描いていき、しばらくしたら消しゴムで消して描き直す
+  const sketch = (() => {
+    type Pt = [number, number];
+    type Doodle = { lines: Pt[][]; li: number; pi: number; w: number; accent: boolean };
+    let doodles: Doodle[] = [];
+    let cur = 0;
+    let hold = 0;
+    let erase = 0;
+    const j = (a: number) => (Math.random() - 0.5) * a;
+    const ink = () => (isDark() ? '238,240,234' : '45,42,38');
+    const accent = () => (isDark() ? '255,169,77' : '232,89,12');
+
+    function place(): Pt {
+      // 文字のある中央はなるべく避ける
+      for (let k = 0; k < 20; k++) {
+        const x = Math.random() * W;
+        const y = Math.random() * H;
+        // スマホなど幅が狭い画面では、文字が横いっぱいに並ぶので、真ん中の帯をまるごと避ける
+        const narrow = W < 640;
+        const inCenter = narrow ? y > H * 0.24 && y < H * 0.9 : x > W * 0.22 && x < W * 0.78 && y > H * 0.28 && y < H * 0.82;
+        if (!inCenter) return [x, y];
+      }
+      return [Math.random() * W, Math.random() * H * 0.25];
+    }
+    function make(): Pt[][] {
+      const [cx, cy] = place();
+      const s = 22 + Math.random() * 38;
+      const kind = Math.floor(Math.random() * 7);
+      const ring = (r: number, turns: number, n: number, grow = 0): Pt[] =>
+        Array.from({ length: n }, (_, i) => {
+          const t = (i / (n - 1)) * TAU * turns;
+          const rr = r * (1 + grow * (i / n)) + j(r * 0.08);
+          return [cx + Math.cos(t) * rr, cy + Math.sin(t) * rr * 0.92];
+        });
+      switch (kind) {
+        case 0: // ぐるっと丸（少し重ねて閉じる）
+          return [ring(s, 1.1, 46)];
+        case 1: { // うずまき
+          return [Array.from({ length: 70 }, (_, i) => {
+            const t = (i / 69) * TAU * 2.6;
+            const r = 2 + (i / 69) * s;
+            return [cx + Math.cos(t) * r + j(1), cy + Math.sin(t) * r + j(1)] as Pt;
+          })];
+        }
+        case 2: { // 星
+          const pts: Pt[] = [];
+          for (let i = 0; i <= 10; i++) {
+            const r = i % 2 === 0 ? s : s * 0.45;
+            const t = -Math.PI / 2 + (i / 10) * TAU;
+            pts.push([cx + Math.cos(t) * r + j(2), cy + Math.sin(t) * r + j(2)]);
+          }
+          return [pts];
+        }
+        case 3: { // 波線
+          const len = s * 3;
+          return [Array.from({ length: 50 }, (_, i) => [cx - len / 2 + (i / 49) * len, cy + Math.sin((i / 49) * TAU * 2) * s * 0.18 + j(1)] as Pt)];
+        }
+        case 4: { // 矢印（軸＋矢じり）
+          const a = Math.random() * TAU;
+          const ex = cx + Math.cos(a) * s * 1.6;
+          const ey = cy + Math.sin(a) * s * 1.6;
+          const shaft: Pt[] = Array.from({ length: 24 }, (_, i) => {
+            const t = i / 23;
+            return [cx + (ex - cx) * t + Math.sin(t * Math.PI) * 6, cy + (ey - cy) * t + j(1)] as Pt;
+          });
+          const h = s * 0.45;
+          const head: Pt[] = [
+            [ex + Math.cos(a + 2.6) * h, ey + Math.sin(a + 2.6) * h],
+            [ex, ey],
+            [ex + Math.cos(a - 2.6) * h, ey + Math.sin(a - 2.6) * h],
+          ];
+          return [shaft, head];
+        }
+        case 5: { // 雲（もこもこ）
+          const pts: Pt[] = [];
+          const bumps = 6;
+          for (let b = 0; b < bumps; b++) {
+            const t0 = (b / bumps) * TAU;
+            const t1 = ((b + 1) / bumps) * TAU;
+            for (let i = 0; i <= 8; i++) {
+              const t = t0 + (t1 - t0) * (i / 8);
+              const r = s * (0.8 + 0.25 * Math.sin((i / 8) * Math.PI));
+              pts.push([cx + Math.cos(t) * r * 1.3, cy + Math.sin(t) * r * 0.75]);
+            }
+          }
+          return [pts];
+        }
+        default: { // 斜線のハッチング
+          const lines: Pt[][] = [];
+          for (let k = 0; k < 6; k++) {
+            const ox = cx - s + k * (s / 3);
+            lines.push([[ox + j(2), cy + s * 0.6 + j(2)], [ox + s * 0.6 + j(2), cy - s * 0.6 + j(2)]]);
+          }
+          return lines;
+        }
+      }
+    }
+    function newSet() {
+      const n = W < 640 ? 6 : Math.max(8, Math.min(16, Math.round((W * H) / 70000)));
+      doodles = Array.from({ length: n }, () => ({ lines: make(), li: 0, pi: 1, w: 1 + Math.random() * 1.2, accent: Math.random() < 0.18 }));
+      cur = 0;
+      hold = 0;
+      erase = 0;
+    }
+    function stroke(d: Doodle, a: Pt, b: Pt) {
+      const col = d.accent ? accent() : ink();
+      // 鉛筆らしく、少しずらして2回なぞる
+      for (let k = 0; k < 2; k++) {
+        ctx!.strokeStyle = `rgba(${col},${k === 0 ? 0.55 : 0.25})`;
+        ctx!.lineWidth = d.w * (k === 0 ? 1 : 0.7);
+        ctx!.beginPath();
+        ctx!.moveTo(a[0] + j(0.8), a[1] + j(0.8));
+        ctx!.lineTo(b[0] + j(0.8), b[1] + j(0.8));
+        ctx!.stroke();
+      }
+    }
+    return {
+      init() {
+        ctx!.clearRect(0, 0, W, H);
+        ctx!.lineCap = 'round';
+        newSet();
+      },
+      frame() {
+        if (erase > 0) {
+          // 消しゴム：少しずつ透明に戻す
+          ctx!.save();
+          ctx!.globalCompositeOperation = 'destination-out';
+          ctx!.fillStyle = 'rgba(0,0,0,0.07)';
+          ctx!.fillRect(0, 0, W, H);
+          ctx!.restore();
+          if (--erase === 0) {
+            ctx!.clearRect(0, 0, W, H);
+            newSet();
+          }
+          return;
+        }
+        if (cur >= doodles.length) {
+          // 描き終わったら少し眺めてから消す
+          if (++hold > 240) erase = 60;
+          return;
+        }
+        let budget = 5; // 1フレームに描く線分の数（描く速さ）
+        while (budget-- > 0 && cur < doodles.length) {
+          const d = doodles[cur];
+          const line = d.lines[d.li];
+          stroke(d, line[d.pi - 1], line[d.pi]);
+          d.pi++;
+          if (d.pi >= line.length) {
+            d.li++;
+            d.pi = 1;
+            if (d.li >= d.lines.length) cur++;
+          }
+        }
+      },
+      /** 動きを減らす設定の人向け：全部を一度に描く */
+      drawAll() {
+        for (const d of doodles) for (const line of d.lines) for (let i = 1; i < line.length; i++) stroke(d, line[i - 1], line[i]);
+        cur = doodles.length;
+      },
+    };
+  })();
+
   // ---- 切り替え・再生の制御 --------------------------------------------------
-  const MODES = { flow, particles, voronoi, fractal } as const;
+  const MODES = { sketch, flow, particles, voronoi, fractal } as const;
   const isMode = (m: string | null): m is Mode => !!m && m in MODES;
-  let mode: Mode = 'flow';
+  // スケッチ風テーマのときは鉛筆の落書きを標準に
+  let mode: Mode = document.documentElement.classList.contains('sketch') ? 'sketch' : 'flow';
   {
     const fromUrl = new URLSearchParams(location.search).get('bg');
     let saved: string | null = null;
     try {
-      saved = localStorage.getItem('bg-mode');
+      saved = localStorage.getItem('bg-mode-v2');
     } catch {}
     if (isMode(fromUrl)) mode = fromUrl;
     else if (isMode(saved)) mode = saved;
@@ -355,8 +526,11 @@ const MODES = [
     MODES[mode].init();
     if (reduceMotion) {
       // 動きを減らす設定の人には、止まった1枚の絵を出す（流れ場は少し進めて線を描いておく）
-      const steps = mode === 'flow' ? 220 : 1;
-      for (let i = 0; i < steps; i++) MODES[mode].frame(i * 16);
+      if (mode === 'sketch') sketch.drawAll();
+      else {
+        const steps = mode === 'flow' ? 220 : 1;
+        for (let i = 0; i < steps; i++) MODES[mode].frame(i * 16);
+      }
       return;
     }
     if (visible && !document.hidden) raf = requestAnimationFrame(loop);
@@ -365,7 +539,7 @@ const MODES = [
     mode = m;
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.bg === m)));
     try {
-      localStorage.setItem('bg-mode', m);
+      localStorage.setItem('bg-mode-v2', m);
     } catch {}
     start();
   }

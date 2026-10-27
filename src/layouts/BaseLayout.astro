@@ -3,7 +3,7 @@ import "../styles/global.css";
 import { X } from 'lucide-astro';
 ---
 
-<html lang="ja" class="scroll-smooth">
+<html lang="ja" class="scroll-smooth sketch">
   <head>
     <meta charset="UTF-8" /> <!--文字化け対策-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,6 +17,10 @@ import { X } from 'lucide-astro';
     <meta property="og:url" content="https://kopo-k.github.io/my-portfolio/" />
     <meta property="og:type" content="website" />
     <link rel="icon" href="/my-portfolio/images/favicon.ico" />
+    <!-- 手描きスケッチ風（お試し）のフォント：見出し＝Yomogi、本文＝Klee One -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Yomogi&display=swap" />
     <!-- is:inline：描画の前にそのまま実行させる（付けないと Astro が後から動くモジュールに変換し、ちらつく） -->
     <script is:inline>
       // 既定をライトにしたいので変更
