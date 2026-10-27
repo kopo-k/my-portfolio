@@ -30,6 +30,10 @@ import { X } from 'lucide-astro';
         var saved = null;
         try { saved = localStorage.getItem('theme'); } catch (e) {}
         var mode = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        // 鉛筆で書く演出（スケッチ風のとき）：書く前の状態を描画前に作っておく
+        if (document.documentElement.classList.contains('sketch') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('pencil-intro');
+        }
         if (mode === 'dark') {
           document.documentElement.classList.add('dark');
         } else {

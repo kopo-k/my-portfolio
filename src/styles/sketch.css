@@ -193,3 +193,49 @@
   border-left-color: var(--accent) !important;
   background: transparent !important;
 }
+
+/* ---- 最初に鉛筆で書く演出（PencilIntro.astro） ---- */
+.sketch #home .pi-line {
+  display: inline-block;
+}
+/* 名前の下の手描き波線（演出では左から伸びる） */
+.sketch #home .pi-name {
+  padding-bottom: 6px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C 20 2, 32 11, 52 6 S 82 2, 98 7 S 114 10, 118 5' fill='none' stroke='%23e8590c' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left bottom / 100% 12px;
+}
+.sketch.dark #home .pi-name {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M2 7 C 20 2, 32 11, 52 6 S 82 2, 98 7 S 114 10, 118 5' fill='none' stroke='%23ffa94d' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+/* 書く前の状態 */
+.pencil-intro #home .pi-line {
+  clip-path: inset(-25% 100% -25% 0);
+}
+.pencil-intro #home .pi-name {
+  background-size: 0% 12px;
+}
+.pencil-intro #home .pi-ring {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.pencil-intro #home .pi-ring img,
+.pencil-intro #home .pi-buttons {
+  opacity: 0;
+}
+/* 保険：スクリプトが動かなくても、6秒後には全部見せる */
+.pencil-intro #home :is(.pi-line, .pi-ring img, .pi-buttons) {
+  animation: pi-show 0.3s 6s forwards;
+}
+.pencil-intro #home .pi-name {
+  animation: pi-show 0.3s 6s forwards, pi-line-show 0.3s 6s forwards;
+}
+@keyframes pi-show {
+  to {
+    clip-path: inset(-25% 0 -25% 0);
+    opacity: 1;
+  }
+}
+@keyframes pi-line-show {
+  to {
+    background-size: 100% 12px;
+  }
+}
