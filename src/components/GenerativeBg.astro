@@ -136,22 +136,65 @@ const MODES = [
   }
 
   // ---- 1. ノイズの流れ場 --------------------------------------------------
+  // 通常は色の線が流れる。スケッチ風テーマのときは、紙の上に鉛筆（黒板ならチョーク）で描いた線にする
   const flow = (() => {
-    let ps: { x: number; y: number; life: number }[] = [];
-    const spawn = () => ({ x: Math.random() * W, y: Math.random() * H, life: 60 + Math.random() * 240 });
+    let ps: { x: number; y: number; life: number; accent: boolean; w: number }[] = [];
+    const sketchy = () => document.documentElement.classList.contains('sketch');
+    const spawn = () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      life: 60 + Math.random() * 240,
+      accent: Math.random() < 0.06,
+      w: 0.5 + Math.random() * 0.9,
+    });
     return {
       init() {
-        const n = Math.min(1400, Math.round((W * H) / 900));
+        const n = sketchy() ? Math.min(700, Math.round((W * H) / 1800)) : Math.min(1400, Math.round((W * H) / 900));
         ps = Array.from({ length: n }, spawn);
-        ctx!.fillStyle = rgba(pal().bg, 1);
-        ctx!.fillRect(0, 0, W, H);
+        if (sketchy()) ctx!.clearRect(0, 0, W, H); // 紙の質感を透かす
+        else {
+          ctx!.fillStyle = rgba(pal().bg, 1);
+          ctx!.fillRect(0, 0, W, H);
+        }
       },
       frame(t: number) {
+        const s = 0.0022;
+        if (sketchy()) {
+          // 消しゴムでこするように、古い線を少しずつ薄くする（透明に戻す）
+          ctx!.save();
+          ctx!.globalCompositeOperation = 'destination-out';
+          ctx!.fillStyle = 'rgba(0,0,0,0.018)';
+          ctx!.fillRect(0, 0, W, H);
+          ctx!.restore();
+          const ink = isDark() ? '238,240,234' : '45,42,38';
+          const accent = isDark() ? '255,169,77' : '232,89,12';
+          ctx!.lineCap = 'round';
+          for (const p of ps) {
+            const ang = noise(p.x * s, p.y * s + t * 0.00006) * TAU * 1.6;
+            const nx = p.x + Math.cos(ang) * 1.8;
+            const ny = p.y + Math.sin(ang) * 1.8;
+            const col = p.accent ? accent : ink;
+            // 鉛筆らしく、少しずらして濃淡2回なぞる（粒子ごとに太さが違う）
+            for (let k = 0; k < 2; k++) {
+              const jx = (Math.random() - 0.5) * 0.9;
+              const jy = (Math.random() - 0.5) * 0.9;
+              ctx!.strokeStyle = `rgba(${col},${k === 0 ? 0.16 : 0.07})`;
+              ctx!.lineWidth = p.w * (k === 0 ? 1 : 1.8);
+              ctx!.beginPath();
+              ctx!.moveTo(p.x + jx, p.y + jy);
+              ctx!.lineTo(nx + jx, ny + jy);
+              ctx!.stroke();
+            }
+            p.x = nx;
+            p.y = ny;
+            if (--p.life < 0 || nx < 0 || nx > W || ny < 0 || ny > H) Object.assign(p, spawn());
+          }
+          return;
+        }
         const P = pal();
         ctx!.fillStyle = rgba(P.bg, 0.05); // 前の線を少しずつ消して、残像の尾にする
         ctx!.fillRect(0, 0, W, H);
         ctx!.lineWidth = 1;
-        const s = 0.0022;
         for (const p of ps) {
           const ang = noise(p.x * s, p.y * s + t * 0.00008) * TAU * 1.6;
           const nx = p.x + Math.cos(ang) * 1.4;
