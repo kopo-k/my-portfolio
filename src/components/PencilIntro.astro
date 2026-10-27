@@ -44,17 +44,18 @@
     return play(pencil, points.map((p) => ({ transform: pose(p) })), { duration, easing });
   }
 
-  /** 手描きのゆがんだ円（SVGの線）を、要素の上に重ねて描く */
+  /** 枠と同じきれいな円（SVGの線）を、要素の上に重ねて描く。描き終わったら本物の枠と入れ替わるので、位置・太さ・色をそろえる */
   function drawRing(el: Element) {
     const b = box(el);
+    const bw = parseFloat(getComputedStyle(el).borderTopWidth) || 3;
     const cx = b.width / 2 + 6;
     const cy = b.height / 2 + 6;
-    const r = b.width / 2 + 1;
+    const r = b.width / 2 - bw / 2;
     const pts: string[] = [];
-    const n = 40;
-    for (let i = 0; i <= n + 4; i++) {
+    const n = 72;
+    for (let i = 0; i <= n; i++) {
       const t = -Math.PI / 2 + (i / n) * Math.PI * 2;
-      const rr = r + Math.sin(i * 1.7) * 1.5;
+      const rr = r;
       pts.push(`${(cx + Math.cos(t) * rr).toFixed(1)},${(cy + Math.sin(t) * rr).toFixed(1)}`);
     }
     const ns = 'http://www.w3.org/2000/svg';
@@ -67,7 +68,7 @@
     path.setAttribute('points', pts.join(' '));
     path.setAttribute('fill', 'none');
     path.setAttribute('stroke', getComputedStyle(root).getPropertyValue('--pencil').trim() || '#333');
-    path.setAttribute('stroke-width', '3');
+    path.setAttribute('stroke-width', String(bw));
     path.setAttribute('stroke-linecap', 'round');
     path.setAttribute('stroke-linejoin', 'round');
     svg.appendChild(path);
