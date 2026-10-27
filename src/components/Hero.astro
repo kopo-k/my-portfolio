@@ -2,6 +2,7 @@
 import { Mail, Github } from 'lucide-astro';
 import GenerativeBg from './GenerativeBg.astro';
 import PencilIntro from './PencilIntro.astro';
+import SketchAvatar from './SketchAvatar.astro';
 ---
 <section class="animate-fade-in-up min-h-screen relative overflow-hidden flex flex-col justify-center items-center px-4 bg-gradient-to-b from-white via-indigo-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300" id="home">
   <GenerativeBg />
@@ -12,6 +13,8 @@ import PencilIntro from './PencilIntro.astro';
 
         <!-- ダークモード用画像 -->
         <img src="/my-portfolio/images/icon-dark.webp" alt="Kopo-k のアイコン" width="112" height="112" class="w-28 h-28 rounded-full object-cover hidden dark:block" />
+        <!-- スケッチ風テーマのときだけ表示する、鉛筆で描いたアイコン -->
+        <SketchAvatar />
       </div>
     <h1 class="text-4xl md:text-5xl font-bold text-center mb-4 transition-colors duration-1000">
       <span class="pi-line">こんにちは、私は</span> <span class="pi-line pi-name text-indigo-500 dark:text-purple-400">Kopo-k</span>

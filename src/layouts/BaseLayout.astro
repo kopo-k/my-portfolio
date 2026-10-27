@@ -44,6 +44,13 @@ import { X } from 'lucide-astro';
     <!-- <slot name="head" /> -->
   </head>
   <body class="bg-white text-black dark:bg-gray-900 dark:text-white">
+    <!-- スケッチ風テーマ用：アイコンの線を手描き風にゆらすフィルター（sketch.css から参照） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <filter id="sketchy" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
     <slot />
 
     <!-- Skill Modal -->

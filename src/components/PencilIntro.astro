@@ -105,6 +105,11 @@
     if (done) return;
     done = true;
     root.classList.remove('pencil-intro');
+    document.querySelectorAll<SVGElement>('.sketch-avatar, .sketch-avatar .sa-line, .sketch-avatar .sa-fill').forEach((el) => {
+      el.style.opacity = '';
+      el.style.strokeDasharray = '';
+      el.style.strokeDashoffset = '';
+    });
     anims.forEach((a) => a.cancel());
     overlays.forEach((o) => o.remove());
     if (pencil) pencil.style.display = 'none';
@@ -142,7 +147,35 @@
         movePencil(rg.follow, 700, 'ease-in-out'),
       ]);
       if (done) return;
-      ring.querySelectorAll('img').forEach((img) => play(img, [{ opacity: 0 }, { opacity: 1 }], { duration: 350 }));
+      const art = ring.querySelector<SVGSVGElement>('.sketch-avatar');
+      if (art && getComputedStyle(art).display !== 'none') {
+        // スケッチ版のアイコン：輪郭を順番に描き、最後に陰影と目を入れる
+        art.style.opacity = '1';
+        const lines = Array.from(art.querySelectorAll<SVGPathElement>('.sa-line'));
+        const fills = Array.from(art.querySelectorAll<SVGElement>('.sa-fill'));
+        lines.forEach((l) => {
+          l.style.strokeDasharray = '1';
+          l.style.strokeDashoffset = '1';
+        });
+        fills.forEach((f) => (f.style.opacity = '0'));
+        const ab = box(art);
+        const zig: Pt[] = Array.from({ length: 14 }, (_, i) => ({
+          x: ab.left + ab.width * (0.2 + 0.6 * ((i * 0.37) % 1)),
+          y: ab.top + ab.height * (0.2 + (0.65 * i) / 13),
+        }));
+        await Promise.all([
+          ...lines.map((l, i) => play(l, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 260, delay: (i % 11) * 55, easing: 'ease-out' })),
+          movePencil(zig, 900),
+        ]);
+        if (done) return;
+        fills.forEach((f) => play(f, [{ opacity: 0 }, { opacity: 1 }], { duration: 300 }));
+        lines.forEach((l) => {
+          l.style.strokeDasharray = '';
+          l.style.strokeDashoffset = '';
+        });
+      } else {
+        ring.querySelectorAll('img').forEach((img) => play(img, [{ opacity: 0 }, { opacity: 1 }], { duration: 350 }));
+      }
     }
     // 2. 見出しと名前、説明文を左から書く
     for (const el of lines) {

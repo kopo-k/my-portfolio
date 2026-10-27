@@ -1,0 +1,51 @@
+---
+// アイコンのタコ（目元の帯・6本の足・体の </> マーク）を、鉛筆で描いたスケッチ版にしたもの。
+// スケッチ風テーマのときだけ、元の画像の代わりに表示する（sketch.css 参照）。
+// 線は pathLength=1 にしてあるので、鉛筆の演出で「描いていく」アニメーションができる。
+const head = "M52 112 C 46 64, 76 30, 100 29 C 125 28, 155 60, 149 112";
+const band = "M57 90 C 80 83, 121 83, 143 90 C 147 100, 147 112, 141 121 C 119 127, 81 127, 59 121 C 53 112, 53 100, 57 90 Z";
+const legs = [
+  "M55 119 C 39 127, 29 140, 33 153 C 36 161, 46 159, 44 150",
+  "M66 127 C 56 145, 52 163, 62 174 C 70 181, 79 172, 71 166",
+  "M85 131 C 81 151, 83 171, 93 181",
+  "M115 131 C 119 151, 117 171, 107 181",
+  "M134 127 C 144 145, 148 163, 138 174 C 130 181, 121 172, 129 166",
+  "M145 119 C 161 127, 171 140, 167 153 C 164 161, 154 159, 156 150",
+];
+const under = "M55 119 C 72 131, 128 131, 145 119";
+const code = ["M93 139 L 85 148 L 93 157", "M107 139 L 115 148 L 107 157"];
+// 頭の陰影（斜線のハッチング）：頭の形で切り抜く
+const hatch = Array.from({ length: 22 }, (_, i) => {
+  const x = 30 + i * 7;
+  return `M${x} 120 L ${x + 40} 20`;
+});
+const strokes = [head, band, under, ...legs];
+---
+
+<svg class="sketch-avatar w-28 h-28" viewBox="24 20 152 168" role="img" aria-label="Kopo-k のアイコン（タコ）">
+  <defs>
+    <clipPath id="sa-head">
+      <path d={`${head} C 128 126, 72 126, 52 112 Z`} />
+    </clipPath>
+  </defs>
+  <!-- 頭の陰影 -->
+  <g class="sa-fill" clip-path="url(#sa-head)" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.42">
+    {hatch.map((d) => <path d={d} />)}
+  </g>
+  <!-- 目元の帯は紙の色で塗って、陰影を消す -->
+  <path class="sa-fill" d={band} fill="var(--paper)" />
+  <!-- 輪郭：少しずらして薄くもう一度なぞる（鉛筆らしさ） -->
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    {strokes.map((d) => <path class="sa-line" d={d} pathLength="1" stroke-width="3.2" />)}
+    <g transform="translate(1.2 0.8)" opacity="0.35">
+      {strokes.map((d) => <path class="sa-line" d={d} pathLength="1" stroke-width="1.6" />)}
+    </g>
+  </g>
+  <!-- 目 -->
+  <ellipse class="sa-fill" cx="84" cy="104" rx="5.5" ry="8.5" fill="currentColor" />
+  <ellipse class="sa-fill" cx="116" cy="104" rx="5.5" ry="8.5" fill="currentColor" />
+  <!-- 体の </> マーク（アクセント色） -->
+  <g fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    {code.map((d) => <path class="sa-line" d={d} pathLength="1" />)}
+  </g>
+</svg>

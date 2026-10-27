@@ -155,8 +155,9 @@
 }
 .sketch #exp-list > li > span:first-child {
   background: var(--accent) !important;
-  border-color: var(--paper) !important;
-  border-radius: 50% 45% 55% 40%;
+  border: 2px solid var(--pencil) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 3px var(--paper);
 }
 
 /* トップのアイコン：手描きの丸い枠 */
@@ -238,4 +239,62 @@
   to {
     background-size: 100% 12px;
   }
+}
+
+/* ---- アイコン：スケッチ風のときは鉛筆で描いた版に差し替え（SketchAvatar.astro） ---- */
+.sketch-avatar {
+  display: none;
+}
+.sketch .sketch-avatar {
+  display: block;
+  color: var(--ink);
+}
+.sketch #home .pi-ring img {
+  display: none !important;
+}
+.sketch #home .pi-ring {
+  background: var(--paper) !important;
+}
+/* 鉛筆の演出の前は隠しておく（保険のアニメーションで6秒後には出る） */
+.pencil-intro #home .sketch-avatar {
+  opacity: 0;
+  animation: pi-show 0.3s 6s forwards;
+}
+
+/* ---- アイコン（星・メール・GitHub など）も手描き風に ---- */
+.sketch svg.lucide {
+  filter: url(#sketchy);
+  stroke-width: 1.8;
+}
+/* About の見出しの星はアクセント色、ほかのアイコンはインクの色 */
+.sketch #about h3 svg.lucide {
+  color: var(--accent) !important;
+}
+.sketch #about .about-card svg.lucide,
+.sketch #contact svg.lucide,
+.sketch .project-card svg.lucide {
+  color: var(--ink) !important;
+}
+/* About カードの、グラデーションの四角いアイコン枠 → 鉛筆の枠 */
+.sketch #about .about-card > div:first-child {
+  background: transparent !important;
+  border: 2px solid var(--pencil);
+  border-radius: 14px 6px 16px 8px / 8px 16px 6px 14px !important;
+}
+/* 連絡先カードのアイコン枠（色付きの四角）も鉛筆の枠に */
+.sketch #contact [class*="bg-gradient-to-br"][class*="rounded-xl"] {
+  background: transparent !important;
+  border: 2px solid var(--pencil);
+  box-shadow: none !important;
+}
+/* 箇条書きの点・会社名の青をアクセント色に */
+.sketch :is(#exp-list, #projects) ul {
+  --tw-marker: var(--accent);
+}
+.sketch #exp-list li li::marker {
+  color: var(--accent);
+}
+.sketch #exp-list .text-blue-700,
+.sketch #exp-list .dark\:text-blue-300 {
+  color: var(--accent) !important;
 }
