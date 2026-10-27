@@ -1,5 +1,5 @@
 ---
-// スケッチ風テーマのアイコン。黄色い丸の中で、アンテナのある白いキャラクターが寝そべって手を振っている。
+// スケッチ風テーマのアイコン。黄色い丸の中で、アンテナのある白いキャラクターが寝そべって手を振っている（よだれ付き）。
 // 表情はわざと間の抜けた感じ：左右の高さがずれた点の目＋右を向いた三角の口。アンテナもへにゃっと曲がっている。
 // 塗り（.sa-fill）と線（.sa-line, pathLength=1）を分けてあるので、鉛筆の演出で「線を描いてから塗る」ができる。
 const CREAM = '#fffaf0';
@@ -7,27 +7,29 @@ const YELLOW = '#fce588';
 const INK = '#1f1d1a';
 
 // 体の各パーツ（奥から順に）：塗りの形と、輪郭の線は同じパス
+// 振っている手：体の後ろから、ひょこっと出ている小さな丸い手（塗りも線も体より先に描いて、根元を体で隠す）
+const hand = 'M150 104 C 150 88, 170 80, 179 90 C 187 100, 176 114, 160 116 Z';
 const parts = [
-  // 後ろの足（左に少しはみ出したふくらみ）
-  'M58 124 C 40 122, 28 136, 31 150 C 33 160, 44 166, 58 163',
   // 体
   'M50 150 C 44 112, 64 82, 100 76 C 139 70, 167 96, 166 130 C 166 151, 152 162, 130 164 L 74 166 C 60 166, 52 161, 50 150 Z',
-  // 床についた手（左）
-  'M79 168 C 74 146, 111 143, 114 165 C 115 175, 82 177, 79 168 Z',
-  // 挙げて振っている手（右）
-  'M144 106 C 150 93, 154 82, 157 72 C 160 60, 177 62, 175 75 C 173 88, 167 101, 158 113 Z',
+  // 床についた前足（左右）：体の下からちょこんと出す
+  'M68 170 C 62 146, 100 142, 99 168 C 98 175, 70 176, 68 170 Z',
+  'M113 168 C 109 144, 146 141, 146 166 C 146 173, 115 174, 113 168 Z',
 ];
 // へにゃっと曲がったアンテナの茎
 const stalk = 'M92 78 C 89 65, 97 55, 108 54';
 // 指の線・ほっぺ・手を振る「ぶんぶん」の弧
 const details = [
-  'M92 163 L 92 168', 'M100 163 L 100 168', // 床の手の指
+  'M79 164 L 79 170', 'M88 164 L 88 170', // 前足の指
+  'M125 162 L 125 168', 'M134 162 L 134 168',
   'M123 135 L 126 141', 'M129 133 L 132 139', // ほっぺ
-  'M180 60 C 185 66, 187 74, 185 82', // ぶんぶん
-  'M186 50 C 192 58, 194 68, 191 78',
+  'M186 80 C 191 86, 192 94, 189 101', // ぶんぶん
+  'M193 72 C 199 81, 200 92, 196 102',
 ];
 // 右を向いた三角の口（大きく開けている）
 const mouth = 'M80 109 L 80 140 L 107 124.5 Z';
+// 口の端からたれる、よだれ1滴
+const drool = 'M84 139 C 85 145, 90 149, 89 153 C 88 158, 81 158, 80 153 C 79 149, 83 145, 84 139 Z';
 ---
 
 <svg class="sketch-avatar w-28 h-28" viewBox="0 0 200 200" role="img" aria-label="Kopo-k のアイコン（手を振る、アンテナのある白いキャラクター）">
@@ -36,12 +38,17 @@ const mouth = 'M80 109 L 80 140 L 107 124.5 Z';
   <!-- 床の影 -->
   <ellipse class="sa-fill" cx="104" cy="168" rx="66" ry="7" fill="#000" opacity="0.08" />
 
+  <!-- 体の後ろの手 -->
+  <path class="sa-fill" d={hand} fill={CREAM} />
+  <path class="sa-line" d={hand} pathLength="1" fill="none" stroke={INK} stroke-width="5" stroke-linejoin="round" style="filter: url(#sketchy)" />
+
   <!-- 塗り（クリーム色） -->
   <g class="sa-fill" fill={CREAM}>
     {parts.map((d) => <path d={d} />)}
     <circle cx="117" cy="51" r="10" />
     <path d={mouth} />
   </g>
+  <path class="sa-fill" d={drool} fill="#bfe3ff" />
 
   <!-- 輪郭の線（手描き風に少しゆらす） -->
   <g fill="none" stroke={INK} stroke-width="5" stroke-linecap="round" stroke-linejoin="round" style="filter: url(#sketchy)">
@@ -49,6 +56,7 @@ const mouth = 'M80 109 L 80 140 L 107 124.5 Z';
     <path class="sa-line" d={stalk} pathLength="1" />
     <circle class="sa-line" cx="117" cy="51" r="10" pathLength="1" />
     <path class="sa-line" d={mouth} pathLength="1" stroke-width="4.6" />
+    <path class="sa-line" d={drool} pathLength="1" stroke-width="3" />
     {details.map((d) => <path class="sa-line" d={d} pathLength="1" stroke-width="3.4" />)}
   </g>
 
