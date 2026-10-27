@@ -17,7 +17,8 @@ import { X } from 'lucide-astro';
     <meta property="og:url" content="https://kopo-k.github.io/my-portfolio/" />
     <meta property="og:type" content="website" />
     <link rel="icon" href="/my-portfolio/images/favicon.ico" />
-    <script>
+    <!-- is:inline：描画の前にそのまま実行させる（付けないと Astro が後から動くモジュールに変換し、ちらつく） -->
+    <script is:inline>
       // 既定をライトにしたいので変更
       //初期値を設定
       (function () {
