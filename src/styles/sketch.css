@@ -326,3 +326,8 @@
 .sketch #contact :is(p, label) {
   font-family: "Klee One", system-ui, sans-serif;
 }
+/* アイコンは丸い枠いっぱいに描く（黄色い丸の背景が枠の内側を満たす） */
+.sketch #home .pi-ring .sketch-avatar {
+  width: 100%;
+  height: 100%;
+}

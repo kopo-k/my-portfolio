@@ -1,51 +1,62 @@
 ---
-// アイコンのタコ（目元の帯・6本の足・体の </> マーク）を、鉛筆で描いたスケッチ版にしたもの。
-// スケッチ風テーマのときだけ、元の画像の代わりに表示する（sketch.css 参照）。
-// 線は pathLength=1 にしてあるので、鉛筆の演出で「描いていく」アニメーションができる。
-const head = "M52 112 C 46 64, 76 30, 100 29 C 125 28, 155 60, 149 112";
-const band = "M57 90 C 80 83, 121 83, 143 90 C 147 100, 147 112, 141 121 C 119 127, 81 127, 59 121 C 53 112, 53 100, 57 90 Z";
-const legs = [
-  "M55 119 C 39 127, 29 140, 33 153 C 36 161, 46 159, 44 150",
-  "M66 127 C 56 145, 52 163, 62 174 C 70 181, 79 172, 71 166",
-  "M85 131 C 81 151, 83 171, 93 181",
-  "M115 131 C 119 151, 117 171, 107 181",
-  "M134 127 C 144 145, 148 163, 138 174 C 130 181, 121 172, 129 166",
-  "M145 119 C 161 127, 171 140, 167 153 C 164 161, 154 159, 156 150",
+// スケッチ風テーマのアイコン。黄色い丸の中で、アンテナのある白いキャラクターが寝そべっている絵。
+// 太い黒の線（インク）＋クリーム色の体。元の画像の代わりに表示する（sketch.css 参照）。
+// 塗り（.sa-fill）と線（.sa-line, pathLength=1）を分けてあるので、鉛筆の演出で「線を描いてから塗る」ができる。
+const CREAM = '#fffaf0';
+const YELLOW = '#fce588';
+
+// 体の各パーツ（奥から順に）：塗りの形と、輪郭の線は同じパス
+const parts = [
+  // 後ろの足（左に少しはみ出したふくらみ）
+  'M58 124 C 40 122, 28 136, 31 150 C 33 160, 44 166, 58 163',
+  // 体
+  'M50 150 C 44 112, 64 82, 100 76 C 139 70, 167 96, 166 130 C 166 151, 152 162, 130 164 L 74 166 C 60 166, 52 161, 50 150 Z',
+  // 前の手（左）
+  'M79 168 C 74 146, 111 143, 114 165 C 115 175, 82 177, 79 168 Z',
+  // 前の手（右）
+  'M127 164 C 123 143, 159 140, 163 159 C 165 170, 130 173, 127 164 Z',
 ];
-const under = "M55 119 C 72 131, 128 131, 145 119";
-const code = ["M93 139 L 85 148 L 93 157", "M107 139 L 115 148 L 107 157"];
-// 頭の陰影（斜線のハッチング）：頭の形で切り抜く
-const hatch = Array.from({ length: 22 }, (_, i) => {
-  const x = 30 + i * 7;
-  return `M${x} 120 L ${x + 40} 20`;
-});
-const strokes = [head, band, under, ...legs];
+// アンテナ（茎）は線だけ
+const stalk = 'M90 79 C 88 70, 84 64, 77 60';
+// 指の線・ほっぺの斜線・勢いの線
+const details = [
+  'M92 163 L 92 168', 'M100 163 L 100 168', // 左手の指
+  'M140 159 L 140 164', 'M148 158 L 148 163', // 右手の指
+  'M74 133 L 71 141', 'M80 133 L 77 141', // 左のほっぺ
+  'M126 118 L 131 124', 'M132 115 L 137 121', // 右のほっぺ
+  'M30 78 L 41 89', 'M22 99 L 37 104', 'M24 121 L 37 116', // 左の勢いの線
+  'M168 102 L 181 95', 'M170 118 L 184 117', // 右の勢いの線
+];
+// キラッ（4つ角の星）
+const sparkle = 'M161 52 Q 163 61, 172 63 Q 163 65, 161 74 Q 159 65, 150 63 Q 159 61, 161 52 Z';
+// 三角の口
+const mouth = 'M96 111 L 117 109 L 103 128 Z';
 ---
 
-<svg class="sketch-avatar w-28 h-28" viewBox="24 20 152 168" role="img" aria-label="Kopo-k のアイコン（タコ）">
-  <defs>
-    <clipPath id="sa-head">
-      <path d={`${head} C 128 126, 72 126, 52 112 Z`} />
-    </clipPath>
-  </defs>
-  <!-- 頭の陰影 -->
-  <g class="sa-fill" clip-path="url(#sa-head)" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.42">
-    {hatch.map((d) => <path d={d} />)}
+<svg class="sketch-avatar w-28 h-28" viewBox="0 0 200 200" role="img" aria-label="Kopo-k のアイコン（アンテナのある白いキャラクター）">
+  <!-- 背景の黄色い丸 -->
+  <circle class="sa-fill" cx="100" cy="100" r="100" fill={YELLOW} />
+  <!-- 床の影 -->
+  <ellipse class="sa-fill" cx="104" cy="168" rx="66" ry="7" fill="#000" opacity="0.08" />
+
+  <!-- 塗り（クリーム色） -->
+  <g class="sa-fill" fill={CREAM}>
+    {parts.map((d) => <path d={d} />)}
+    <circle cx="70" cy="50" r="11" />
+    <path d={mouth} />
   </g>
-  <!-- 目元の帯は紙の色で塗って、陰影を消す -->
-  <path class="sa-fill" d={band} fill="var(--paper)" />
-  <!-- 輪郭：少しずらして薄くもう一度なぞる（鉛筆らしさ） -->
-  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-    {strokes.map((d) => <path class="sa-line" d={d} pathLength="1" stroke-width="3.2" />)}
-    <g transform="translate(1.2 0.8)" opacity="0.35">
-      {strokes.map((d) => <path class="sa-line" d={d} pathLength="1" stroke-width="1.6" />)}
-    </g>
+
+  <!-- 輪郭の線（手描き風に少しゆらす） -->
+  <g fill="none" stroke="#1f1d1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" style="filter: url(#sketchy)">
+    {parts.map((d) => <path class="sa-line" d={d} pathLength="1" />)}
+    <path class="sa-line" d={stalk} pathLength="1" />
+    <circle class="sa-line" cx="70" cy="50" r="11" pathLength="1" />
+    <path class="sa-line" d={mouth} pathLength="1" stroke-width="4.2" />
+    <path class="sa-line" d={sparkle} pathLength="1" stroke-width="3.6" />
+    {details.map((d) => <path class="sa-line" d={d} pathLength="1" stroke-width="3.4" />)}
   </g>
+
   <!-- 目 -->
-  <ellipse class="sa-fill" cx="84" cy="104" rx="5.5" ry="8.5" fill="currentColor" />
-  <ellipse class="sa-fill" cx="116" cy="104" rx="5.5" ry="8.5" fill="currentColor" />
-  <!-- 体の </> マーク（アクセント色） -->
-  <g fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-    {code.map((d) => <path class="sa-line" d={d} pathLength="1" />)}
-  </g>
+  <circle class="sa-fill" cx="81" cy="119" r="6.5" fill="#1f1d1a" />
+  <circle class="sa-fill" cx="128" cy="105" r="6.5" fill="#1f1d1a" />
 </svg>
