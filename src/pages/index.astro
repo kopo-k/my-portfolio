@@ -8,6 +8,7 @@ import ProjectsSection from "../components/Projects.astro";
 // スキル欄は非表示（コメントアウト中）。戻すときはこの行と下の <SkillsSection /> のコメントを外す
 // import SkillsSection from "../components/Skills.astro";
 import ContactSection from "../components/ContactSection.astro";
+import NightSpotlight from "../components/NightSpotlight.astro";
 ---
 <Layout title="kopo-k's Portfolio" description="Welcome to my portfolio site!" image="/my-portfolio/images/opg.webp" url="https://kopo-k.github.io/my-portfolio/">
 	<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:rounded focus:bg-white focus:text-black focus:shadow">本文へスキップ</a>
@@ -20,4 +21,5 @@ import ContactSection from "../components/ContactSection.astro";
 	{/* <SkillsSection /> */}
 	<ContactSection />
 	</main>
+	<NightSpotlight />
 </Layout>
