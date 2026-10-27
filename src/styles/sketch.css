@@ -298,3 +298,31 @@
 .sketch #exp-list .dark\:text-blue-300 {
   color: var(--accent) !important;
 }
+
+/* ---- Contact の「Let's Connect」：リンクカードも紙＋鉛筆の手描き枠に ---- */
+.sketch #contact a > .group {
+  background: transparent !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: 14px 6px 16px 7px / 7px 15px 6px 14px !important;
+  box-shadow: 2px 3px 0 var(--pencil) !important;
+  font-family: "Klee One", system-ui, sans-serif;
+}
+.sketch #contact a > .group:hover {
+  transform: translate(-1px, -2px) rotate(-0.4deg) !important;
+  box-shadow: 4px 5px 0 var(--pencil) !important;
+}
+.sketch #contact a > .group p:first-child {
+  color: var(--ink) !important;
+  font-weight: 600;
+}
+.sketch #contact a > .group p + p {
+  color: var(--ink) !important;
+  opacity: 0.7;
+}
+.sketch #contact a > .group:hover p:first-child,
+.sketch #contact a > .group:hover svg.lucide {
+  color: var(--accent) !important;
+}
+.sketch #contact :is(p, label) {
+  font-family: "Klee One", system-ui, sans-serif;
+}
