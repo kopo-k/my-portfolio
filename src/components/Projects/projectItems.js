@@ -2,6 +2,19 @@
 
 const projectItems = [
   {
+    image: "/my-portfolio/images/mensetsu-fantasia.webp",
+    gradientFrom: "from-slate-700",
+    gradientTo: "to-indigo-900",
+    title: "面接ファンタジア",
+    tag: "ゲーム",
+    role: "プログラミング（5人チーム・ゲームジャム高梁2026）",
+    description: "ゴブリン・オーク・魔王・神の会社を受けるファンタジー面接ゲーム。面接官の心の声に合う答えを選んで好感度を上げ、★を3つ集めると採用。ゲームジャムで2日間で制作し、unityroomで公開。",
+    techStack: ["Unity", "C#"],
+    liveDemoUrl: "https://unityroom.com/games/mensetsufantasia",
+    // チーム制作でソースは非公開のため、GitHub のボタンは出さない
+    githubUrl: "",
+  },
+  {
     image: "/my-portfolio/images/music.webp",
     gradientFrom: "from-blue-100",
     gradientTo: "to-purple-100",

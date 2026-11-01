@@ -2,11 +2,12 @@
 // projects.astro
 
 import projectItems from './Projects/projectItems';
-import { ExternalLink, Github, PlayCircle, Smartphone } from 'lucide-astro';
+import { ExternalLink, Gamepad2, Github, PlayCircle, Smartphone } from 'lucide-astro';
 
 // リンク先に合わせてボタンの文字を変える（押す前に行き先が分かるように）
 function linkKind(url) {
   if (/youtu\.?be/.test(url)) return { label: '動画を見る', icon: PlayCircle };
+  if (/unityroom\.com/.test(url)) return { label: 'ブラウザで遊ぶ', icon: Gamepad2 };
   if (/apps\.apple\.com/.test(url)) return { label: 'App Storeで見る', icon: Smartphone };
   return { label: 'サイトを開く', icon: ExternalLink };
 }
