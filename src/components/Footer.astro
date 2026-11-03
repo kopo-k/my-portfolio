@@ -1,0 +1,22 @@
+---
+// ページ下のフッター。最終更新日は「最後のコミットの日時」をビルド時に入れる
+// （ビルドし直しただけでは日付が変わらない。git が使えないときはビルドした日にする）
+import { execSync } from 'node:child_process';
+
+let updated = new Date();
+try {
+  const iso = execSync('git log -1 --format=%cI', { encoding: 'utf8' }).trim();
+  if (iso) updated = new Date(iso);
+} catch {}
+
+// 見る人の場所に関係なく、日本時間の日付で表示する
+const tokyo = { timeZone: 'Asia/Tokyo' };
+const label = updated.toLocaleDateString('ja-JP', { ...tokyo, year: 'numeric', month: 'long', day: 'numeric' });
+const datetime = updated.toLocaleDateString('sv-SE', tokyo); // YYYY-MM-DD
+const year = updated.toLocaleDateString('ja-JP', { ...tokyo, year: 'numeric' }).replace('年', '');
+---
+
+<footer class="py-8 px-4 text-center text-sm text-gray-600 dark:text-gray-400">
+  <p>最終更新：<time datetime={datetime}>{label}</time></p>
+  <p class="mt-1">© {year} Kopo-k</p>
+</footer>
