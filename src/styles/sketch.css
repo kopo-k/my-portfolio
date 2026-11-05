@@ -333,41 +333,47 @@
   height: 100%;
 }
 
-/* 昼/夜の切り替えスイッチ：他のボタンと同じ鉛筆の枠＋ずらした影 */
+/* 昼/夜の切り替えスイッチ：元の丸いスイッチの形のまま、鉛筆の枠＋ずらした影をのせる */
 .sketch #theme-toggle {
-  background: var(--paper) !important;
+  background: var(--marker) !important;
   border: 2px solid var(--pencil);
-  border-radius: var(--wobble2);
+  border-radius: 9999px;
   box-shadow: 2px 3px 0 var(--pencil);
   width: 3.75rem;
   height: 2rem;
 }
 .sketch #theme-toggle:hover {
-  transform: translate(-1px, -1px) rotate(-1deg);
+  transform: translate(-1px, -1px) scale(1.04);
   box-shadow: 3px 4px 0 var(--pencil);
+}
+.sketch #theme-toggle:active {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 1px 0 var(--pencil);
 }
 .sketch #theme-toggle:focus-visible {
   outline: 2px dashed var(--accent);
   outline-offset: 3px;
 }
-/* つまみはマーカーで塗った丸 */
+/* つまみは白い丸（紙の色）を鉛筆でなぞったもの */
 .sketch #toggle-circle {
   top: 2px;
   left: 2px;
   width: 1.5rem;
   height: 1.5rem;
-  background: var(--marker) !important;
+  background: #fffdf7 !important;
   border: 2px solid var(--pencil);
-  border-radius: 52% 48% 55% 45% / 48% 55% 45% 52%;
+  border-radius: 9999px;
   box-shadow: none;
 }
 .sketch #toggle-circle.translate-x-7 {
   --tw-translate-x: 1.75rem;
 }
 .sketch #theme-icon svg {
-  color: var(--ink) !important;
   stroke-width: 2.4;
 }
-.sketch.dark #theme-icon svg {
-  color: #fff !important;
+.sketch #theme-icon svg:first-child {
+  color: #e8590c !important;
+}
+.sketch.dark #theme-icon svg:last-child {
+  color: #4263eb !important;
 }

@@ -11,6 +11,9 @@ const projectItems = [
     description: "構図が身につく撮影ガイドアプリ。カメラに三分割・対角線などの構図の線を重ね、被写体の位置を見て「いい感じ。撮ってみよう」と教えてくれる。7種類のお手本と撮り方の説明つきで、構図を練習できる。App Storeで公開中。",
     techStack: ["Swift", "SwiftUI", "AVFoundation", "Vision"],
     liveDemoUrl: "https://apps.apple.com/jp/app/id6829276082",
+    // 紹介動画（20秒・縦型）。ボタンを押すとページ内で再生する
+    videoUrl: "/my-portfolio/videos/torinavi.mp4",
+    videoPoster: "/my-portfolio/videos/torinavi-poster.webp",
     // ソースは非公開のため、GitHub のボタンは出さない
     githubUrl: "",
   },
