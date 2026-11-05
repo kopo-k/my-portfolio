@@ -77,6 +77,18 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
               <LinkIcon class="w-4 h-4" aria-hidden="true" /> <span>{link.label}</span>
               <span class="sr-only">（{project.title}・新しいタブで開きます）</span>
             </a>
+            {project.videoUrl && (
+              <a
+                href={project.videoUrl}
+                data-video={project.videoUrl}
+                data-poster={project.videoPoster}
+                data-title={project.title}
+                class="video-open flex items-center gap-2 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 px-3 py-2 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300"
+              >
+                <PlayCircle class="w-4 h-4" aria-hidden="true" /> <span>紹介動画</span>
+                <span class="sr-only">（{project.title}）</span>
+              </a>
+            )}
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
@@ -96,7 +108,35 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
   })}
 </div>
 
+<dialog id="video-dialog" aria-label="紹介動画" class="video-dialog p-0 bg-transparent backdrop:bg-black/70">
+  <div class="relative">
+    <video id="video-player" controls playsinline preload="none" class="block max-h-[85vh] w-auto max-w-[92vw] rounded-xl bg-black"></video>
+    <button id="video-close" type="button" aria-label="動画を閉じる" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-white text-gray-900 shadow-md flex items-center justify-center text-xl leading-none">×</button>
+  </div>
+</dialog>
+
 </section>
+
+<script>
+  // 紹介動画：ボタンでページ内のダイアログを開いて再生する（JSが無ければ mp4 を直接開く）
+  const vDialog = document.getElementById('video-dialog') as HTMLDialogElement | null;
+  const vPlayer = document.getElementById('video-player') as HTMLVideoElement | null;
+  document.querySelectorAll<HTMLAnchorElement>('.video-open').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      if (!vDialog || !vPlayer || typeof vDialog.showModal !== 'function') return;
+      e.preventDefault();
+      vPlayer.src = a.dataset.video || a.href;
+      if (a.dataset.poster) vPlayer.poster = a.dataset.poster;
+      vDialog.setAttribute('aria-label', `${a.dataset.title ?? ''} の紹介動画`);
+      vDialog.showModal();
+      vPlayer.play().catch(() => {});
+    });
+  });
+  document.getElementById('video-close')?.addEventListener('click', () => vDialog?.close());
+  // 背景（動画の外）を押しても閉じる
+  vDialog?.addEventListener('click', (e) => { if (e.target === vDialog) vDialog.close(); });
+  vDialog?.addEventListener('close', () => { vPlayer?.pause(); });
+</script>
 
 <script>
   const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
