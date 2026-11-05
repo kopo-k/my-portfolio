@@ -2,6 +2,19 @@
 
 const projectItems = [
   {
+    image: "/my-portfolio/images/torinavi.webp",
+    gradientFrom: "from-emerald-100",
+    gradientTo: "to-sky-100",
+    title: "トリナビ",
+    tag: "モバイルアプリ",
+    role: "個人開発（企画・デザイン・実装・App Store公開まで全て）",
+    description: "構図が身につく撮影ガイドアプリ。カメラに三分割・対角線などの構図の線を重ね、被写体の位置を見て「いい感じ。撮ってみよう」と教えてくれる。7種類のお手本と撮り方の説明つきで、構図を練習できる。App Storeで公開中。",
+    techStack: ["Swift", "SwiftUI", "AVFoundation", "Vision"],
+    liveDemoUrl: "https://apps.apple.com/jp/app/id6829276082",
+    // ソースは非公開のため、GitHub のボタンは出さない
+    githubUrl: "",
+  },
+  {
     image: "/my-portfolio/images/mensetsu-fantasia.webp",
     gradientFrom: "from-slate-700",
     gradientTo: "to-indigo-900",
