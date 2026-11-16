@@ -37,17 +37,14 @@ const hiddenCount = Math.max(0, items.length - VISIBLE);
 
   {hiddenCount > 0 && (
     <div class="text-center mt-10">
-      <button
+      <sakuga-button
         id="exp-toggle"
-        type="button"
+        variant="secondary"
         aria-expanded="false"
         aria-controls="exp-list"
         data-more={`すべて表示（あと${hiddenCount}件）`}
         data-less="最新の5件だけ表示"
-        class="px-6 py-2 rounded-full border border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 font-semibold hover:bg-indigo-50 dark:hover:bg-gray-800 transition-colors"
-      >
-        すべて表示（あと{hiddenCount}件）
-      </button>
+      >すべて表示（あと{hiddenCount}件）</sakuga-button>
     </div>
   )}
 </section>

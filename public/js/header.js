@@ -3,18 +3,28 @@
 
 window.addEventListener("DOMContentLoaded", () => {
   // ナビゲーションのアクティブ状態管理
-  const links = document.querySelectorAll(".nav-link");
+  // デスクトップは sakuga-vfx のタブ、モバイルは今まで通りのリンク
+  const tabs = document.getElementById("nav-tabs");
+  const ids = tabs ? [...tabs.querySelectorAll("option")].map((o) => o.value) : [];
   const mobileLinks = document.querySelectorAll(".mobile-nav-link");
-  const allLinks = [...links, ...mobileLinks];
-  const sections = Array.from(links).map(link =>
-    document.querySelector(`#${link.dataset.section}`)
-  );
+  const sections = ids.map((id) => document.getElementById(id));
+
+  // タブを選んだらそのセクションへ送る
+  tabs?.addEventListener("change", (e) => {
+    document.getElementById(e.detail.value)?.scrollIntoView({ behavior: "smooth" });
+  });
 
   // 画面の縦方向の中央付近にあるセクションを「今いる場所」とする。
   // （threshold で割合を見る方式だと、画面より何倍も長いセクションで一度も条件を満たさず、
   //   ハイライトが前のセクションのまま止まってしまうため）
+  let current = null;
   const setActive = (id) => {
-    allLinks.forEach(link => {
+    if (id === current) return;
+    current = id;
+    // タブは selected で動かす（この代入では着地のエフェクトは出ない）
+    const n = ids.indexOf(id);
+    if (tabs && n >= 0 && tabs.selected !== n) tabs.selected = n;
+    mobileLinks.forEach((link) => {
       const on = link.dataset.section === id;
       link.classList.toggle("active", on);
       if (on) link.setAttribute("aria-current", "location");

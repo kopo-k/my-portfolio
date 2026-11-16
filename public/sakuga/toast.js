@@ -66,7 +66,17 @@ class Spring {
 
 // ───────── the palette ─────────
 // P is for the effects; the CSS variables below are for the controls.
-const P = { fill: '#ffffff', shade: '#b8b3ff', line: '#5a4fd8', accent: '#ff5fa8', ink: '#1d1a4a', sfx: ['#1d1a4a', '#ffffff'] };
+// [改修] エフェクトの色をページの CSS 変数から読む（昼/夜で塗りを変えるため、描くたびに読み直す）。
+const _pcs = getComputedStyle(document.documentElement);
+const _pv = (n, d) => { const v = _pcs.getPropertyValue(n); return v ? v.trim() : d; };
+const P = {
+  get fill()   { return _pv('--sk-fx-fill', '#ffffff'); },
+  get shade()  { return _pv('--sk-fx-shade', '#b8b3ff'); },
+  get line()   { return _pv('--sk-fx-line', '#5a4fd8'); },
+  get accent() { return _pv('--sk-fx-accent', '#ff5fa8'); },
+  get ink()    { return _pv('--sk-fx-ink', '#1d1a4a'); },
+  get sfx()    { return [_pv('--sk-fx-sfx-fill', '#1d1a4a'), _pv('--sk-fx-sfx-edge', '#ffffff')]; },
+};
 const VARS = '--sk-card:#fff;--sk-ink:#1d1a4a;--sk-dim:#8580b0;--sk-soft:#b8b3ff;--sk-pri:#8f8df7;--sk-pri-ink:#1d1a4a;--sk-acc:#ff5fa8;--sk-track:#c9cbe0;--sk-r:15px;--sk-bw:3.2px;--sk-sh:6px 7px 0 var(--sk-soft);--sk-btn-sh:var(--sk-sh);--sk-btn-line:var(--sk-ink);--sk-alt-sh:var(--sk-sh);--sk-alt-line:var(--sk-ink);--sk-tick:var(--sk-ink);--sk-fill:var(--sk-acc);--sk-on-pri:#fff;';
 // :where() keeps these at no specificity, so a page's own :root { --sk-acc: ... } wins.
 const pageCss = `:where(:root){${VARS}}

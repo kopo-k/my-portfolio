@@ -2,16 +2,22 @@
 // projects.astro
 
 import projectItems from './Projects/projectItems';
-import { ExternalLink, Gamepad2, Github, PlayCircle, Smartphone } from 'lucide-astro';
-
 // リンク先に合わせてボタンの文字を変える（押す前に行き先が分かるように）
+// sakuga-button は文字だけなので、アイコンは使わない
 function linkKind(url) {
-  if (/youtu\.?be/.test(url)) return { label: '動画を見る', icon: PlayCircle };
-  if (/unityroom\.com/.test(url)) return { label: 'ブラウザで遊ぶ', icon: Gamepad2 };
-  if (/apps\.apple\.com/.test(url)) return { label: 'App Storeで見る', icon: Smartphone };
-  return { label: 'サイトを開く', icon: ExternalLink };
+  if (/youtu\.?be/.test(url)) return { label: '動画を見る' };
+  if (/unityroom\.com/.test(url)) return { label: 'ブラウザで遊ぶ' };
+  if (/apps\.apple\.com/.test(url)) return { label: 'App Storeで見る' };
+  return { label: 'サイトを開く' };
 }
-const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップアプリ', 'モバイルアプリ'];
+// タブは横に並ぶだけで折り返さないので、表示は短くする（値は作品の tag と同じ）
+const filters = [
+  { value: 'all', label: 'すべて' },
+  { value: 'Webアプリ', label: 'Web' },
+  { value: 'ゲーム', label: 'ゲーム' },
+  { value: 'デスクトップアプリ', label: 'デスクトップ' },
+  { value: 'モバイルアプリ', label: 'モバイル' },
+];
 ---
 
 <section
@@ -27,25 +33,17 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
   <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mt-2 rounded-full"></div>
 </div>
 
-<!-- フィルターボタン -->
-<div class="flex justify-center gap-2 sm:gap-3 mb-8 flex-wrap" role="group" aria-label="作品の種類で絞り込む">
-  {filters.map((f, i) => (
-    <button
-      type="button"
-      class:list={["filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300", i === 0 ? "bg-blue-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900"]}
-      data-filter={i === 0 ? 'all' : f}
-      aria-pressed={i === 0 ? 'true' : 'false'}
-    >
-      {f}
-    </button>
-  ))}
+<!-- 絞り込み（sakuga-vfx のタブ） -->
+<div class="flex justify-center mb-8 px-4 sk-tabs-scroll">
+  <sakuga-tabs id="project-filter" label="作品の種類で絞り込む">
+    {filters.map((f) => <option value={f.value}>{f.label}</option>)}
+  </sakuga-tabs>
 </div>
 <p id="project-count" class="sr-only" aria-live="polite"></p>
 
 <div class="max-w-6xl mx-auto grid gap-6 md:grid-cols-2">
   {projectItems.map((project) => {
     const link = linkKind(project.liveDemoUrl);
-    const LinkIcon = link.icon;
     return (
     <article class="project-item project-card rounded-2xl overflow-hidden transition-all duration-300 bg-white dark:bg-gray-800 flex flex-col" data-tag={project.tag}>
       <div class={`w-full h-52 sm:h-60 flex-shrink-0 bg-gradient-to-br ${project.gradientFrom} ${project.gradientTo} dark:from-gray-700 dark:to-gray-600 flex items-center justify-center overflow-hidden`}>
@@ -67,38 +65,29 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
             ))}
           </ul>
 
-          <div class="flex flex-wrap items-center gap-3">
-            <a
-              href={project.liveDemoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition-all duration-300"
-            >
-              <LinkIcon class="w-4 h-4" aria-hidden="true" /> <span>{link.label}</span>
-              <span class="sr-only">（{project.title}・新しいタブで開きます）</span>
-            </a>
+          <div class="flex flex-wrap items-center gap-4 gap-y-5">
+            <sakuga-button
+              class="card-link"
+              data-href={project.liveDemoUrl}
+              data-new-tab="1"
+            >{link.label}<span class="sr-only">（{project.title}・新しいタブで開きます）</span></sakuga-button>
+
             {project.videoUrl && (
-              <a
-                href={project.videoUrl}
+              <sakuga-button
+                variant="secondary"
+                class="video-open"
                 data-video={project.videoUrl}
                 data-poster={project.videoPoster}
                 data-title={project.title}
-                class="video-open flex items-center gap-2 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 px-3 py-2 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300"
-              >
-                <PlayCircle class="w-4 h-4" aria-hidden="true" /> <span>紹介動画</span>
-                <span class="sr-only">（{project.title}）</span>
-              </a>
+              >紹介動画<span class="sr-only">（{project.title}）</span></sakuga-button>
             )}
             {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-2 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 px-3 py-2 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300"
-              >
-                <Github class="w-4 h-4 dark:text-white text-black" aria-hidden="true" /> <span>コード</span>
-                <span class="sr-only">（{project.title} の GitHub・新しいタブで開きます）</span>
-              </a>
+              <sakuga-button
+                variant="secondary"
+                class="card-link"
+                data-href={project.githubUrl}
+                data-new-tab="1"
+              >コード<span class="sr-only">（{project.title} の GitHub・新しいタブで開きます）</span></sakuga-button>
             )}
           </div>
         </div>
@@ -111,23 +100,25 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
 <dialog id="video-dialog" aria-label="紹介動画" class="video-dialog p-0 bg-transparent backdrop:bg-black/70">
   <div class="relative">
     <video id="video-player" controls playsinline preload="none" class="block max-h-[85vh] w-auto max-w-[92vw] rounded-xl bg-black"></video>
-    <button id="video-close" type="button" aria-label="動画を閉じる" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-white text-gray-900 shadow-md flex items-center justify-center text-xl leading-none">×</button>
+    <sakuga-button id="video-close" variant="secondary" class="absolute -top-5 -right-4">閉じる</sakuga-button>
   </div>
 </dialog>
 
 </section>
 
 <script>
-  // 紹介動画：ボタンでページ内のダイアログを開いて再生する（JSが無ければ mp4 を直接開く）
+  // 紹介動画：ボタンでページ内のダイアログを開いて再生する
   const vDialog = document.getElementById('video-dialog') as HTMLDialogElement | null;
   const vPlayer = document.getElementById('video-player') as HTMLVideoElement | null;
-  document.querySelectorAll<HTMLAnchorElement>('.video-open').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      if (!vDialog || !vPlayer || typeof vDialog.showModal !== 'function') return;
-      e.preventDefault();
-      vPlayer.src = a.dataset.video || a.href;
-      if (a.dataset.poster) vPlayer.poster = a.dataset.poster;
-      vDialog.setAttribute('aria-label', `${a.dataset.title ?? ''} の紹介動画`);
+  document.querySelectorAll<HTMLElement>('.video-open').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const src = btn.dataset.video;
+      if (!src) return;
+      // ダイアログが使えないブラウザでは mp4 をそのまま開く
+      if (!vDialog || !vPlayer || typeof vDialog.showModal !== 'function') { window.open(src, '_blank', 'noopener'); return; }
+      vPlayer.src = src;
+      if (btn.dataset.poster) vPlayer.poster = btn.dataset.poster;
+      vDialog.setAttribute('aria-label', `${btn.dataset.title ?? ''} の紹介動画`);
       vDialog.showModal();
       vPlayer.play().catch(() => {});
     });
@@ -136,32 +127,33 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
   // 背景（動画の外）を押しても閉じる
   vDialog?.addEventListener('click', (e) => { if (e.target === vDialog) vDialog.close(); });
   vDialog?.addEventListener('close', () => { vPlayer?.pause(); });
+
+  // 作品のリンクボタン：エフェクトを見せてから開く
+  document.querySelectorAll<HTMLElement>('.card-link').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const href = btn.dataset.href;
+      if (!href) return;
+      (btn as any).done?.();
+      setTimeout(() => window.open(href, '_blank', 'noopener'), 560);
+    });
+  });
 </script>
 
 <script>
-  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  // 絞り込み：sakuga-vfx のタブで切り替える
+  const filterTabs = document.getElementById('project-filter');
   const allItems = document.querySelectorAll<HTMLElement>('.project-item');
   const count = document.getElementById('project-count');
-  const ON = ['bg-blue-600', 'text-white'];
-  const OFF = ['bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300'];
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-      filterBtns.forEach(b => {
-        const on = b === btn;
-        b.classList.remove(...(on ? OFF : ON));
-        b.classList.add(...(on ? ON : OFF));
-        b.setAttribute('aria-pressed', String(on));
-      });
-      let shown = 0;
-      allItems.forEach(item => {
-        const hit = filter === 'all' || item.dataset.tag === filter;
-        item.classList.toggle('hidden', !hit);
-        if (hit) shown++;
-      });
-      if (count) count.textContent = `${shown}件の作品を表示しています`;
+  filterTabs?.addEventListener('change', (e) => {
+    const filter = (e as CustomEvent).detail.value as string;
+    let shown = 0;
+    allItems.forEach(item => {
+      const hit = filter === 'all' || item.dataset.tag === filter;
+      item.classList.toggle('hidden', !hit);
+      if (hit) shown++;
     });
+    if (count) count.textContent = `${shown}件の作品を表示しています`;
   });
 </script>
 

@@ -1,0 +1,78 @@
+/* =====================================================================
+   sakuga-vfx の部品を、このサイトの手描きスケッチ風に合わせる。
+   - 部品の色は --sk-* （sakuga 側は :where(:root) で置いているのでこちらが勝つ）
+   - エフェクト（雲・爆発・擬音）の色は --sk-fx-* （public/sakuga/*.js を改修して読ませている）
+   値は sketch.css の --paper / --ink / --pencil / --marker / --accent から取る。
+   ===================================================================== */
+
+.sketch {
+  /* ---- 部品そのもの ---- */
+  --sk-card: var(--paper);
+  --sk-ink: var(--ink);
+  --sk-dim: color-mix(in srgb, var(--ink) 52%, var(--paper));
+  --sk-soft: var(--pencil);
+  --sk-pri: var(--marker);
+  --sk-pri-ink: var(--ink);
+  --sk-on-pri: var(--ink);
+  --sk-acc: var(--accent);
+  --sk-fill: var(--accent);
+  --sk-tick: var(--accent);
+  --sk-track: color-mix(in srgb, var(--ink) 16%, var(--paper));
+  /* 角は鉛筆で描いたようにゆがませる（sketch.css の --wobble-card と同じ） */
+  --sk-r: 22px 8px 26px 10px / 10px 24px 8px 22px;
+  --sk-bw: 2px;
+  /* 影はスケッチ風の「ずらした実線」 */
+  --sk-sh: 2px 3px 0 var(--pencil);
+  --sk-btn-sh: 3px 4px 0 var(--pencil);
+  --sk-btn-line: var(--ink);
+  --sk-alt-sh: 2px 3px 0 var(--pencil);
+  --sk-alt-line: var(--ink);
+
+  /* ---- エフェクトの色 ---- */
+  --sk-fx-fill: var(--paper);          /* 雲・結晶の塗り＝紙 */
+  --sk-fx-shade: #e3d9c4;              /* その影＝日に焼けた紙 */
+  --sk-fx-line: var(--ink);            /* 輪郭＝鉛筆 */
+  --sk-fx-accent: var(--accent);       /* 差し色＝オレンジ */
+  --sk-fx-ink: var(--ink);
+  --sk-fx-sfx-fill: var(--ink);        /* 擬音の文字＝鉛筆 */
+  --sk-fx-sfx-edge: var(--paper);      /* そのふち＝紙 */
+}
+
+.sketch.dark {
+  --sk-fx-shade: #384238;              /* 黒板の影 */
+}
+
+/* 文字は本文と同じ手描きフォントに。見出し用の Yomogi は使わない（小さい字がつぶれる） */
+sakuga-button,
+sakuga-input,
+sakuga-tabs,
+sakuga-toast,
+sakuga-toggle {
+  font-family: "Klee One", "Hiragino Maru Gothic ProN", system-ui, sans-serif !important;
+  font-weight: 600;
+}
+
+/* 入力欄は置き場所の幅いっぱいに */
+sakuga-input.sk-wide {
+  --sk-input-width: 100%;
+  display: block;
+  width: 100%;
+}
+
+/* 昼/夜スイッチだけは 43 枚の描き込み済み画像なので色を差し替えられない。
+   紙と鉛筆に近づくよう、上から色味をずらす。 */
+.sketch #theme-toggle {
+  filter: sepia(0.55) saturate(0.75) hue-rotate(-18deg) contrast(1.05);
+}
+.sketch.dark #theme-toggle {
+  filter: grayscale(0.85) brightness(0.82) contrast(1.1);
+}
+
+/* タブは折り返さず横に並ぶだけなので、狭い画面では見た目を縮めて収める。
+   （transform は場所を取らないので、親の中央寄せのまま中心から縮む） */
+@media (max-width: 480px) {
+  .sk-tabs-scroll sakuga-tabs { transform: scale(0.86); }
+}
+@media (max-width: 360px) {
+  .sk-tabs-scroll sakuga-tabs { transform: scale(0.72); }
+}

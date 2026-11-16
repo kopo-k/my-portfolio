@@ -6,15 +6,15 @@ import { X } from 'lucide-astro';
     Kopo-k
   </a>
 
-  <!-- デスクトップナビゲーション -->
-  <nav aria-label="ページ内の移動" class="space-x-6 hidden md:block">
-    <a href="#home" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="home">Home</a>
-    <a href="#about" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="about">About</a>
-    <a href="#experience" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="experience">Experience</a>
-    <a href="#projects" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="projects">Projects</a>
-    <!-- スキル欄は非表示中 <a href="#skills" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="skills">Skills</a> -->
-    <a href="#contact" class="nav-link hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 text-base" data-section="contact">Contact</a>
-  </nav>
+  <!-- デスクトップナビゲーション（sakuga-vfx のタブ：選んだ札が滑って着地する） -->
+  <sakuga-tabs id="nav-tabs" label="ページ内の移動" class="hidden md:block">
+    <option value="home">Home</option>
+    <option value="about">About</option>
+    <option value="experience">Experience</option>
+    <option value="projects">Projects</option>
+    <!-- スキル欄は非表示中 <option value="skills">Skills</option> -->
+    <option value="contact">Contact</option>
+  </sakuga-tabs>
 
   <!-- 右側のコントロールエリア -->
   <div class="flex items-center space-x-4 pr-3 sm:pr-5">
@@ -76,14 +76,19 @@ import { X } from 'lucide-astro';
   <script src="/my-portfolio/js/header.js" type="module"></script>
 
 <style>
-  .nav-link, .mobile-nav-link {
+  .mobile-nav-link {
     position: relative;
     padding-bottom: 4px;
     @apply text-gray-900 dark:text-slate-300;
     transition: all 0.3s;
   }
 
-  .nav-link.active, .mobile-nav-link.active {
+  .mobile-nav-link.active {
+    color: #3b82f6; /* text-blue-500 */
+    font-weight: 600;
+  }
+
+  .mobile-nav-link.active {
     color: #3b82f6; /* text-blue-500 */
     font-weight: 600;
   }

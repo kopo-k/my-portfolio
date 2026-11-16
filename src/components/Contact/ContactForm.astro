@@ -52,9 +52,6 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
   <sakuga-toast id="cf-toast" duration="3.2" style="position:fixed; right:24px; bottom:24px; z-index:60"></sakuga-toast>
 
   <style is:global>
-    /* 入力欄は既定で 230px。フォームの幅いっぱいに広げる */
-    sakuga-input.sk-wide { --sk-input-width: 100%; display: block; width: 100%; }
-
     /* メッセージ欄だけ素のままだと浮くので、sakuga の入力欄に見た目をそろえる
        （sakuga には textarea がないため、こちらで真似る） */
     .sketch #contact textarea#cf-message,
