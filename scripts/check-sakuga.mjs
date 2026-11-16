@@ -1,15 +1,27 @@
 // sakuga-vfx に置き換えたあとの動作確認。
 //   npm run preview を立ち上げてから  node scripts/check-sakuga.mjs
+//   Safari は  CHECK_BROWSER=webkit node scripts/check-sakuga.mjs （firefox も同じ）
 // 横スクロールの有無、ナビ・テーマ・絞り込み・経歴・動画・フォーム・モバイルメニューを順に触る。
-import { chromium } from 'playwright';
+//
+// playwright はこのリポジトリの依存には入れていない（確認用だけに 50MB 載せたくないため）。
+// 動かないときは  npm i -D playwright && npx playwright install chromium webkit firefox
+import * as pw from 'playwright';
 
 const URL = process.env.CHECK_URL || 'http://localhost:4321/my-portfolio/';
-const b = await chromium.launch();
+const NAME = process.env.CHECK_BROWSER || 'chromium';
+if (!pw[NAME]) { console.error(`知らないブラウザ: ${NAME}（chromium / webkit / firefox）`); process.exit(1); }
+console.log(`=== ${NAME} ===`);
+const b = await pw[NAME].launch();
 const errs = [];
 const mk = async (o) => {
   const p = await b.newPage(o);
   p.on('pageerror', (e) => errs.push('pageerror: ' + e.message));
-  p.on('console', (m) => { if (m.type() === 'error') errs.push('console: ' + m.text()); });
+  p.on('console', (m) => {
+    const t = m.text();
+    // WebKit が動画プレイヤーの内蔵アイコンを読めないという警告。自前のコードとは無関係なので除く。
+    if (/placard|layoutTraits/.test(t)) return;
+    if (m.type() === 'error') errs.push('console: ' + t);
+  });
   return p;
 };
 
