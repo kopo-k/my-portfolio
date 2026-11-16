@@ -41,6 +41,27 @@ await p.mouse.click(fb.x + fb.width * 0.88, fb.y + fb.height / 2); await p.waitF
 console.log('絞り込み', await p.evaluate(() => document.getElementById('project-filter').value),
   '表示', await p.evaluate(() => [...document.querySelectorAll('.project-item')].filter((e) => !e.classList.contains('hidden')).length), '件');
 
+// 作品のリンクが本物の <a href> になっているか
+console.log('作品リンク', await p.evaluate(() => {
+  const as = [...document.querySelectorAll('a.card-link')];
+  return `${as.length}本 / href あり ${as.filter((a) => a.href && a.target === '_blank').length}本`
+    + ` / Tab停止 ${as.filter((a) => a.querySelector('sakuga-button')?.shadowRoot?.querySelector('button')?.tabIndex === -1).length}本`;
+}));
+// ふつうの左クリックは横取り（エフェクト）、⌘クリックはブラウザに任せる
+console.log('クリックの扱い', await p.evaluate(() => {
+  const a = document.querySelector('a.card-link');
+  const probe = (meta) => {
+    let taken = null;
+    // 本体のハンドラ（target フェーズ）のあとに読む。ここで必ず止めて実際には開かせない。
+    const spy = (e) => { taken = e.defaultPrevented; e.preventDefault(); e.stopPropagation(); };
+    document.addEventListener('click', spy, { once: true });
+    a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, metaKey: meta }));
+    document.removeEventListener('click', spy);
+    return taken;
+  };
+  return `ふつう=${probe(false) ? '横取り' : '素通り'} / ⌘=${probe(true) ? '横取り' : '素通り'}`;
+}));
+
 const ex = p.locator('#exp-toggle'); await ex.scrollIntoViewIfNeeded(); await p.waitForTimeout(400);
 const eb = await ex.boundingBox();
 await p.mouse.click(eb.x + eb.width / 2, eb.y + eb.height / 2); await p.waitForTimeout(900);

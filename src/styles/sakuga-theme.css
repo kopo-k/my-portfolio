@@ -76,3 +76,17 @@ sakuga-input.sk-wide {
 @media (max-width: 360px) {
   .sk-tabs-scroll sakuga-tabs { transform: scale(0.72); }
 }
+
+/* 作品カードのリンクは <a> で包んで、中身は見た目だけの sakuga-button。
+   <a> 自体は下線も枠も出さず、キーボードで来たときだけ枠を出す。 */
+a.card-link {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--sk-r);
+}
+a.card-link:focus { outline: none; }
+a.card-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

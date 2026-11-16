@@ -66,11 +66,13 @@ const filters = [
           </ul>
 
           <div class="flex flex-wrap items-center gap-4 gap-y-5">
-            <sakuga-button
+            <a
               class="card-link"
-              data-href={project.liveDemoUrl}
-              data-new-tab="1"
-            >{link.label}<span class="sr-only">（{project.title}・新しいタブで開きます）</span></sakuga-button>
+              href={project.liveDemoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${link.label}（${project.title}・新しいタブで開きます）`}
+            ><sakuga-button aria-hidden="true">{link.label}</sakuga-button></a>
 
             {project.videoUrl && (
               <sakuga-button
@@ -82,12 +84,13 @@ const filters = [
               >紹介動画<span class="sr-only">（{project.title}）</span></sakuga-button>
             )}
             {project.githubUrl && (
-              <sakuga-button
-                variant="secondary"
+              <a
                 class="card-link"
-                data-href={project.githubUrl}
-                data-new-tab="1"
-              >コード<span class="sr-only">（{project.title} の GitHub・新しいタブで開きます）</span></sakuga-button>
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`コード（${project.title} の GitHub・新しいタブで開きます）`}
+              ><sakuga-button variant="secondary" aria-hidden="true">コード</sakuga-button></a>
             )}
           </div>
         </div>
@@ -128,13 +131,22 @@ const filters = [
   vDialog?.addEventListener('click', (e) => { if (e.target === vDialog) vDialog.close(); });
   vDialog?.addEventListener('close', () => { vPlayer?.pause(); });
 
-  // 作品のリンクボタン：エフェクトを見せてから開く
-  document.querySelectorAll<HTMLElement>('.card-link').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const href = btn.dataset.href;
-      if (!href) return;
-      (btn as any).done?.();
-      setTimeout(() => window.open(href, '_blank', 'noopener'), 560);
+  // 作品のリンク：中身は見た目だけの sakuga-button で、外側は本物の <a>。
+  // 右クリック・中クリック・⌘クリック・検索エンジンのたどりは <a> のまま効く。
+  // ふつうの左クリックのときだけ、エフェクトを見せてから開く。
+  document.querySelectorAll<HTMLAnchorElement>('a.card-link').forEach((a) => {
+    const btn = a.querySelector('sakuga-button') as HTMLElement | null;
+    // 中のボタンは Tab で止まらないようにする（<a> とで二重に止まるのを防ぐ）
+    customElements.whenDefined('sakuga-button').then(() => {
+      const inner = (btn as any)?.shadowRoot?.querySelector('button');
+      if (inner) inner.tabIndex = -1;
+    });
+    a.addEventListener('click', (e) => {
+      // 新しいタブで開く操作はブラウザに任せる
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || (e as MouseEvent).button !== 0) return;
+      e.preventDefault();
+      (btn as any)?.done?.();
+      setTimeout(() => window.open(a.href, '_blank', 'noopener'), 560);
     });
   });
 </script>
