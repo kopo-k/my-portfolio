@@ -36,8 +36,12 @@ for (const w of [320, 390, 430, 768, 1024, 1280, 1920]) {
 const p = await mk({ viewport: { width: 1280, height: 900 } });
 await p.goto(URL, { waitUntil: 'networkidle' }); await p.waitForTimeout(3000);
 
-await p.locator('#nav-tabs').click({ position: { x: 400, y: 20 } }); await p.waitForTimeout(1600);
-console.log('ナビ値', await p.evaluate(() => document.getElementById('nav-tabs').value));
+// ヘッダーは元のまま（素の <a href="#...">）。押して飛んで、現在地が付くか見る。
+await p.locator('.nav-link[data-section="contact"]').click(); await p.waitForTimeout(1800);
+console.log('ナビ', await p.evaluate(() => {
+  const act = [...document.querySelectorAll('.nav-link.active')].map((a) => a.dataset.section);
+  return `現在地 ${act.join(',') || 'なし'} / 位置 ${location.hash || '(なし)'}`;
+}));
 
 await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(400);
 const tb = await p.locator('#theme-toggle').boundingBox();

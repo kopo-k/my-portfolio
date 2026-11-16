@@ -46,8 +46,7 @@
 sakuga-button,
 sakuga-input,
 sakuga-tabs,
-sakuga-toast,
-sakuga-toggle {
+sakuga-toast {
   font-family: "Klee One", "Hiragino Maru Gothic ProN", system-ui, sans-serif !important;
   font-weight: 600;
 }
@@ -57,15 +56,6 @@ sakuga-input.sk-wide {
   --sk-input-width: 100%;
   display: block;
   width: 100%;
-}
-
-/* 昼/夜スイッチだけは 43 枚の描き込み済み画像なので色を差し替えられない。
-   紙と鉛筆に近づくよう、上から色味をずらす。 */
-.sketch #theme-toggle {
-  filter: sepia(0.55) saturate(0.75) hue-rotate(-18deg) contrast(1.05);
-}
-.sketch.dark #theme-toggle {
-  filter: grayscale(0.85) brightness(0.82) contrast(1.1);
 }
 
 /* タブは折り返さず横に並ぶだけなので、狭い画面では見た目を縮めて収める。
