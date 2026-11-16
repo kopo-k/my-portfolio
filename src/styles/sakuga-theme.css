@@ -89,16 +89,39 @@ sakuga-input.sk-wide {
   gap: 0.5rem;
 }
 
-/* 作品カードのリンクは <a> で包んで、中身は見た目だけの sakuga-button。
+/* Hero の2つも同じやり方。元の丸い大きめのボタンに戻す。 */
+.sketch sakuga-button.hero-btn::part(button) {
+  padding: 8px 24px;
+  font: 600 1rem/1.5 "Klee One", "Hiragino Maru Gothic ProN", system-ui, sans-serif;
+  letter-spacing: normal;
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--pencil);
+  border-radius: var(--wobble);
+  box-shadow: none;
+}
+.sketch sakuga-button.hero-btn.is-primary::part(button) {
+  background: var(--marker);
+  border-radius: var(--wobble2);
+  box-shadow: 2px 3px 0 var(--pencil);
+}
+.sketch.dark sakuga-button.hero-btn.is-primary::part(button) {
+  color: #fff;
+}
+
+/* 作品カードと Hero のリンクは <a> で包んで、中身は見た目だけの sakuga-button。
    <a> 自体は下線も枠も出さず、キーボードで来たときだけ枠を出す。 */
-a.card-link {
+a.card-link,
+a.hero-link {
   display: inline-block;
   text-decoration: none;
   color: inherit;
   border-radius: var(--sk-r);
 }
-a.card-link:focus { outline: none; }
-a.card-link:focus-visible {
+a.card-link:focus,
+a.hero-link:focus { outline: none; }
+a.card-link:focus-visible,
+a.hero-link:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }

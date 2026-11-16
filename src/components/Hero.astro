@@ -1,4 +1,5 @@
 ---
+import { Github, Mail } from 'lucide-astro';
 
 import GenerativeBg from './GenerativeBg.astro';
 import PencilIntro from './PencilIntro.astro';
@@ -22,9 +23,17 @@ import SketchAvatar from './SketchAvatar.astro';
     <p class="pi-line pi-fast text-lg md:text-xl text-center text-gray-700 dark:text-gray-300 mb-8 max-w-xl">
       愛知県の大学生で、プログラミングを学んでいます。
     </p>
-    <div class="pi-buttons flex flex-wrap justify-center items-center gap-5 sm:gap-7 mb-10">
-      <sakuga-button id="hero-contact">お問い合わせ</sakuga-button>
-      <sakuga-button id="hero-github" variant="secondary">GitHub を見る</sakuga-button>
+    <div class="pi-buttons flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
+      <a href="#contact" class="hero-link">
+        <sakuga-button id="hero-contact" class="hero-btn is-primary" aria-hidden="true"
+          ><span class="btn-inner"><Mail class="w-5 h-5" aria-hidden="true" />お問い合わせ</span></sakuga-button>
+      </a>
+
+      <a href="https://github.com/kopo-k" target="_blank" rel="noopener noreferrer" class="hero-link"
+         aria-label="GitHub を見る（新しいタブで開きます）">
+        <sakuga-button id="hero-github" variant="secondary" class="hero-btn" aria-hidden="true"
+          ><span class="btn-inner"><Github class="w-5 h-5" aria-hidden="true" />GitHub を見る</span></sakuga-button>
+      </a>
     </div>
 
     <div class="pi-buttons animate-bounce mt-8">
@@ -39,15 +48,26 @@ import SketchAvatar from './SketchAvatar.astro';
   <PencilIntro />
 
   <script is:inline>
-    // sakuga-button は <a> ではないので、押したあとの移動は自分で行う。
-    // エフェクトを見せたいので少し待ってから飛ぶ。
+    // 外側は本物の <a>。右クリック・中クリック・⌘クリックはブラウザに任せる。
+    // ふつうの左クリックのときだけ横取りして、エフェクトを見せてから飛ぶ。
     document.addEventListener('DOMContentLoaded', () => {
-      const go = (id, run) => {
-        const el = document.getElementById(id);
-        el?.addEventListener('click', () => { el.done(); setTimeout(run, 620); });
-      };
-      go('hero-contact', () => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); });
-      go('hero-github', () => { window.open('https://github.com/kopo-k', '_blank', 'noopener'); });
+      document.querySelectorAll('#home a.hero-link').forEach((a) => {
+        const btn = a.querySelector('sakuga-button');
+        // 中のボタンは Tab で止まらないようにする（<a> とで二重に止まるのを防ぐ）
+        customElements.whenDefined('sakuga-button').then(() => {
+          const inner = btn && btn.shadowRoot && btn.shadowRoot.querySelector('button');
+          if (inner) inner.tabIndex = -1;
+        });
+        a.addEventListener('click', (e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+          e.preventDefault();
+          if (btn && btn.done) btn.done();
+          setTimeout(() => {
+            if (a.target === '_blank') window.open(a.href, '_blank', 'noopener');
+            else document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          }, 620);
+        });
+      });
     });
   </script>
 </section>
