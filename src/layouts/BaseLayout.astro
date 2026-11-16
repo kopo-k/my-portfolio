@@ -42,6 +42,9 @@ import { X } from 'lucide-astro';
       })();
     </script>
     <!-- sakuga-vfx（お試し）：アニメ風の反応をする UI 部品。素のスクリプトとして読み込む -->
+    <!-- 昼/夜スイッチの絵（43コマ）は toggle.js の外に出してある。
+         スイッチは画面の上のほうに出るので、JS を待たずに先に取りに行かせる。 -->
+    <link rel="preload" as="image" type="image/webp" href="/my-portfolio/sakuga/toggle-sheet.webp" />
     <script is:inline defer src="/my-portfolio/sakuga/button.js"></script>
     <script is:inline defer src="/my-portfolio/sakuga/toggle.js"></script>
     <script is:inline defer src="/my-portfolio/sakuga/input.js"></script>
