@@ -1,37 +1,22 @@
-// public/js/themeToggle.js に保存（拡張子は .js に）
+// 昼/夜の切り替え。スイッチは sakuga-vfx の <sakuga-toggle>（click ではなく change で拾う）
 export function initThemeToggle() {
-  //デバッグ用
-  // console.log("✅ initThemeToggle loaded");
+  const toggle = document.getElementById('theme-toggle');
 
-  const toggleButton = document.getElementById('theme-toggle');
-  const toggleCircle = document.getElementById('toggle-circle');
+  const setTheme = (mode, save = true) => {
+    const dark = mode === 'dark';
+    document.documentElement.classList.toggle('dark', dark);
+    if (save) { try { localStorage.theme = mode; } catch (e) {} }
+    // スイッチの見た目を今の状態にそろえる（change を呼び戻さないよう直接 checked を入れる）
+    if (toggle && toggle.checked !== dark) toggle.checked = dark;
+  };
 
-// ライト or ダークモードの切り替え
-const setTheme = (mode, save = true) => {
-  // 読み上げソフトにも今の状態を伝える（ボタン名は「ダークモード」、押されている＝ダーク）
-  toggleButton?.setAttribute('aria-pressed', String(mode === 'dark'));
-  if (mode === 'dark') {
-    document.documentElement.classList.add('dark');
-    if (save) { try { localStorage.theme = 'dark'; } catch (e) {} }
-    if (toggleCircle) {
-      toggleCircle.classList.remove('translate-x-0');
-      toggleCircle.classList.add('translate-x-7');
-    }
-  } else {
-    document.documentElement.classList.remove('dark');
-    if (save) { try { localStorage.theme = 'light'; } catch (e) {} }
-    if (toggleCircle) {
-      toggleCircle.classList.remove('translate-x-7');
-      toggleCircle.classList.add('translate-x-0');
-    }
-  }
-};
-  // ダークモードかどうか
-  toggleButton?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'light' : 'dark');
+  toggle?.addEventListener('change', () => {
+    setTheme(toggle.checked ? 'dark' : 'light');
   });
 
-  // 初期テーマは head のスクリプトで決まっているので、それに表示をそろえるだけ（保存はしない）
-  setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light', false);
+  // 初期テーマは head のスクリプトで決まっている。表示をそろえるだけ（保存はしない）
+  const dark = document.documentElement.classList.contains('dark');
+  // カスタム要素の定義が届く前に checked を入れても消えないよう、定義を待ってから合わせる
+  customElements.whenDefined('sakuga-toggle').then(() => setTheme(dark ? 'dark' : 'light', false));
+  setTheme(dark ? 'dark' : 'light', false);
 }
