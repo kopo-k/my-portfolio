@@ -69,36 +69,32 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
 
           <div class="flex flex-wrap items-center gap-3">
             <a
+              class="card-link"
               href={project.liveDemoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded text-sm hover:shadow-md transition-all duration-300"
-            >
-              <LinkIcon class="w-4 h-4" aria-hidden="true" /> <span>{link.label}</span>
-              <span class="sr-only">（{project.title}・新しいタブで開きます）</span>
-            </a>
+              aria-label={`${link.label}（${project.title}・新しいタブで開きます）`}
+            ><sakuga-button class="card-btn is-primary" aria-hidden="true"
+              ><span class="btn-inner"><LinkIcon class="w-4 h-4" aria-hidden="true" />{link.label}</span></sakuga-button></a>
+
             {project.videoUrl && (
-              <a
-                href={project.videoUrl}
+              <sakuga-button
+                variant="secondary"
+                class="card-btn video-open"
                 data-video={project.videoUrl}
                 data-poster={project.videoPoster}
                 data-title={project.title}
-                class="video-open flex items-center gap-2 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 px-3 py-2 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300"
-              >
-                <PlayCircle class="w-4 h-4" aria-hidden="true" /> <span>紹介動画</span>
-                <span class="sr-only">（{project.title}）</span>
-              </a>
+              ><span class="btn-inner"><PlayCircle class="w-4 h-4" aria-hidden="true" />紹介動画</span><span class="sr-only">（{project.title}）</span></sakuga-button>
             )}
             {project.githubUrl && (
               <a
+                class="card-link"
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-2 bg-white dark:bg-black border border-gray-300 dark:border-gray-600 px-3 py-2 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-300"
-              >
-                <Github class="w-4 h-4 dark:text-white text-black" aria-hidden="true" /> <span>コード</span>
-                <span class="sr-only">（{project.title} の GitHub・新しいタブで開きます）</span>
-              </a>
+                aria-label={`コード（${project.title} の GitHub・新しいタブで開きます）`}
+              ><sakuga-button variant="secondary" class="card-btn" aria-hidden="true"
+                ><span class="btn-inner"><Github class="w-4 h-4" aria-hidden="true" />コード</span></sakuga-button></a>
             )}
           </div>
         </div>
@@ -111,23 +107,25 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
 <dialog id="video-dialog" aria-label="紹介動画" class="video-dialog p-0 bg-transparent backdrop:bg-black/70">
   <div class="relative">
     <video id="video-player" controls playsinline preload="none" class="block max-h-[85vh] w-auto max-w-[92vw] rounded-xl bg-black"></video>
-    <button id="video-close" type="button" aria-label="動画を閉じる" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-white text-gray-900 shadow-md flex items-center justify-center text-xl leading-none">×</button>
+    <sakuga-button id="video-close" variant="secondary" class="absolute -top-5 -right-4">閉じる</sakuga-button>
   </div>
 </dialog>
 
 </section>
 
 <script>
-  // 紹介動画：ボタンでページ内のダイアログを開いて再生する（JSが無ければ mp4 を直接開く）
+  // 紹介動画：ボタンでページ内のダイアログを開いて再生する
   const vDialog = document.getElementById('video-dialog') as HTMLDialogElement | null;
   const vPlayer = document.getElementById('video-player') as HTMLVideoElement | null;
-  document.querySelectorAll<HTMLAnchorElement>('.video-open').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      if (!vDialog || !vPlayer || typeof vDialog.showModal !== 'function') return;
-      e.preventDefault();
-      vPlayer.src = a.dataset.video || a.href;
-      if (a.dataset.poster) vPlayer.poster = a.dataset.poster;
-      vDialog.setAttribute('aria-label', `${a.dataset.title ?? ''} の紹介動画`);
+  document.querySelectorAll<HTMLElement>('.video-open').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const src = btn.dataset.video;
+      if (!src) return;
+      // ダイアログが使えないブラウザでは mp4 をそのまま開く
+      if (!vDialog || !vPlayer || typeof vDialog.showModal !== 'function') { window.open(src, '_blank', 'noopener'); return; }
+      vPlayer.src = src;
+      if (btn.dataset.poster) vPlayer.poster = btn.dataset.poster;
+      vDialog.setAttribute('aria-label', `${btn.dataset.title ?? ''} の紹介動画`);
       vDialog.showModal();
       vPlayer.play().catch(() => {});
     });
@@ -136,26 +134,48 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
   // 背景（動画の外）を押しても閉じる
   vDialog?.addEventListener('click', (e) => { if (e.target === vDialog) vDialog.close(); });
   vDialog?.addEventListener('close', () => { vPlayer?.pause(); });
+
+  // 作品のリンク：中身は見た目だけの sakuga-button で、外側は本物の <a>。
+  // 右クリック・中クリック・⌘クリック・検索エンジンのたどりは <a> のまま効く。
+  // ふつうの左クリックのときだけ、エフェクトを見せてから開く。
+  document.querySelectorAll<HTMLAnchorElement>('a.card-link').forEach((a) => {
+    const btn = a.querySelector('sakuga-button') as HTMLElement | null;
+    // 中のボタンは Tab で止まらないようにする（<a> とで二重に止まるのを防ぐ）
+    customElements.whenDefined('sakuga-button').then(() => {
+      const inner = (btn as any)?.shadowRoot?.querySelector('button');
+      if (inner) inner.tabIndex = -1;
+    });
+    a.addEventListener('click', (e) => {
+      // 新しいタブで開く操作はブラウザに任せる
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || (e as MouseEvent).button !== 0) return;
+      e.preventDefault();
+      (btn as any)?.done?.();
+      setTimeout(() => window.open(a.href, '_blank', 'noopener'), 560);
+    });
+  });
 </script>
 
 <script>
+  // 絞り込み：押したボタンの種類だけ残す
   const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
   const allItems = document.querySelectorAll<HTMLElement>('.project-item');
   const count = document.getElementById('project-count');
-  const ON = ['bg-blue-600', 'text-white'];
-  const OFF = ['bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300'];
 
-  filterBtns.forEach(btn => {
+  filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-      filterBtns.forEach(b => {
+      filterBtns.forEach((b) => {
         const on = b === btn;
-        b.classList.remove(...(on ? OFF : ON));
-        b.classList.add(...(on ? ON : OFF));
         b.setAttribute('aria-pressed', String(on));
+        b.classList.toggle('bg-blue-600', on);
+        b.classList.toggle('text-white', on);
+        b.classList.toggle('bg-gray-200', !on);
+        b.classList.toggle('dark:bg-gray-700', !on);
+        b.classList.toggle('text-gray-700', !on);
+        b.classList.toggle('dark:text-gray-300', !on);
       });
+      const filter = btn.dataset.filter;
       let shown = 0;
-      allItems.forEach(item => {
+      allItems.forEach((item) => {
         const hit = filter === 'all' || item.dataset.tag === filter;
         item.classList.toggle('hidden', !hit);
         if (hit) shown++;

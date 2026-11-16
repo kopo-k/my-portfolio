@@ -104,9 +104,8 @@
   display: none;
 }
 
-/* ボタン：マーカーで塗ったような色＋鉛筆の枠 */
-.sketch :is(a, button)[class*="bg-gradient-to-r"]:not(.bg-clip-text),
-.sketch #home a[href="#contact"],
+/* ボタン：マーカーで塗ったような色＋鉛筆の枠
+   （Hero と経歴は <sakuga-button> に置き換わったので、ここは絞り込みと素のリンク用） */
 .sketch .filter-btn[aria-pressed="true"] {
   background: var(--marker) !important;
   color: var(--ink) !important;
@@ -114,18 +113,10 @@
   border-radius: var(--wobble2) !important;
   box-shadow: 2px 3px 0 var(--pencil) !important;
 }
-.sketch.dark :is(a, button)[class*="bg-gradient-to-r"]:not(.bg-clip-text),
-.sketch.dark #home a[href="#contact"],
 .sketch.dark .filter-btn[aria-pressed="true"] {
   color: #fff !important;
 }
-.sketch #home a[href="#contact"] :is(svg) {
-  color: currentColor !important;
-}
-.sketch #home a[href*="github.com"],
-.sketch .filter-btn,
-.sketch .project-card a:not([class*="bg-gradient-to-r"]),
-.sketch #exp-toggle {
+.sketch .filter-btn {
   background: transparent !important;
   border: 2px solid var(--pencil) !important;
   border-radius: var(--wobble) !important;

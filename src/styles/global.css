@@ -1,4 +1,5 @@
 @import "./sketch.css";
+@import "./sakuga-theme.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -201,3 +202,8 @@ html {
   }
 }
 
+
+/* sakuga-vfx の部品はエフェクト用のキャンバスが本体より左右 160px 大きい。
+   そのままだと横スクロールが出るので、横だけ切る（clip なのでスクロール枠は作らない。
+   画面いっぱいのエフェクト用キャンバスは position:fixed なのでここでは切られない）。 */
+body { overflow-x: clip; }
