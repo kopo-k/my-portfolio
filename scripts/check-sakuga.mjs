@@ -51,10 +51,12 @@ console.log('夜に切替', await p.evaluate(() => document.documentElement.clas
 await p.mouse.click(tb.x + tb.width / 2, tb.y + tb.height / 2); await p.waitForTimeout(1100);
 console.log('昼に戻す', await p.evaluate(() => !document.documentElement.classList.contains('dark')));
 
-const f = p.locator('#project-filter'); await f.scrollIntoViewIfNeeded(); await p.waitForTimeout(500);
-const fb = await f.boundingBox();
-await p.mouse.click(fb.x + fb.width * 0.88, fb.y + fb.height / 2); await p.waitForTimeout(1200);
-console.log('絞り込み', await p.evaluate(() => document.getElementById('project-filter').value),
+// 絞り込みは元のボタンに戻してある（押したものだけ aria-pressed=true）
+const fb = p.locator('.filter-btn[data-filter="モバイルアプリ"]');
+await fb.scrollIntoViewIfNeeded(); await p.waitForTimeout(500);
+await fb.click(); await p.waitForTimeout(1200);
+console.log('絞り込み',
+  await p.evaluate(() => [...document.querySelectorAll('.filter-btn')].filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.filter).join(',')),
   '表示', await p.evaluate(() => [...document.querySelectorAll('.project-item')].filter((e) => !e.classList.contains('hidden')).length), '件');
 
 // 作品のリンクが本物の <a href> になっているか

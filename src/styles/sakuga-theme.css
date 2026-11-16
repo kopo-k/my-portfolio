@@ -45,7 +45,6 @@
 /* 文字は本文と同じ手描きフォントに。見出し用の Yomogi は使わない（小さい字がつぶれる） */
 sakuga-button,
 sakuga-input,
-sakuga-tabs,
 sakuga-toast {
   font-family: "Klee One", "Hiragino Maru Gothic ProN", system-ui, sans-serif !important;
   font-weight: 600;
@@ -58,13 +57,36 @@ sakuga-input.sk-wide {
   width: 100%;
 }
 
-/* タブは折り返さず横に並ぶだけなので、狭い画面では見た目を縮めて収める。
-   （transform は場所を取らないので、親の中央寄せのまま中心から縮む） */
-@media (max-width: 480px) {
-  .sk-tabs-scroll sakuga-tabs { transform: scale(0.86); }
+
+/* ---------------------------------------------------------------
+   作品集のボタンは「見た目は元のまま・押した時の効果だけ sakuga」。
+   中身は <sakuga-button> のままなので雲と「ドン!」はそのまま出る。
+   見た目は ::part(button) で元の小さめのボタンに戻す。
+   --------------------------------------------------------------- */
+.sketch sakuga-button.card-btn::part(button) {
+  padding: 8px 14px;
+  font: 500 0.875rem/1.4 "Klee One", "Hiragino Maru Gothic ProN", system-ui, sans-serif;
+  letter-spacing: normal;
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--pencil);
+  border-radius: var(--wobble);
+  box-shadow: none;
 }
-@media (max-width: 360px) {
-  .sk-tabs-scroll sakuga-tabs { transform: scale(0.72); }
+/* 一番押してほしいボタン（App Storeで見る など）はマーカーで塗る */
+.sketch sakuga-button.card-btn.is-primary::part(button) {
+  background: var(--marker);
+  border-radius: var(--wobble2);
+  box-shadow: 2px 3px 0 var(--pencil);
+}
+.sketch.dark sakuga-button.card-btn.is-primary::part(button) {
+  color: #fff;
+}
+/* アイコンと文字を横に並べる（slot に入れた中身は light DOM なので普通に効く） */
+.btn-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* 作品カードのリンクは <a> で包んで、中身は見た目だけの sakuga-button。

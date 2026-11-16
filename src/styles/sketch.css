@@ -104,9 +104,24 @@
   display: none;
 }
 
-/* ボタン類はすべて sakuga-vfx の <sakuga-button> に置き換えた。
-   色は sakuga-theme.css の --sk-* 側で紙と鉛筆に合わせている。
-   ここに残すのは、まだ素のままのリンク（Contact の3つのカードなど）だけ。 */
+/* ボタン：マーカーで塗ったような色＋鉛筆の枠
+   （Hero と経歴は <sakuga-button> に置き換わったので、ここは絞り込みと素のリンク用） */
+.sketch .filter-btn[aria-pressed="true"] {
+  background: var(--marker) !important;
+  color: var(--ink) !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: var(--wobble2) !important;
+  box-shadow: 2px 3px 0 var(--pencil) !important;
+}
+.sketch.dark .filter-btn[aria-pressed="true"] {
+  color: #fff !important;
+}
+.sketch .filter-btn {
+  background: transparent !important;
+  border: 2px solid var(--pencil) !important;
+  border-radius: var(--wobble) !important;
+  color: var(--ink) !important;
+}
 
 /* 小さなタグ：点線の枠 */
 .sketch .project-card ul li,
