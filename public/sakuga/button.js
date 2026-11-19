@@ -151,7 +151,10 @@ function advance(dt) {
 }
 function loop(ms) {
   if (!running) return;
-  const dt = clamp((ms - last) / 1000, 0, 0.034); last = ms;   // a frame's timestamp can be earlier than the moment the loop started
+  // [改修] 1フレームで進める上限を 0.034 秒（約30fps）から 0.1 秒（10fps）に緩めた。
+  // 元は「コマを絶対に飛ばさない」設計で、画面が重いとアニメがスローモーションになっていた。
+  // 上限を上げるとコマは飛ぶが、重いときでも演出がだいたい同じ時間で終わる。
+  const dt = clamp((ms - last) / 1000, 0, 0.1); last = ms;   // a frame's timestamp can be earlier than the moment the loop started
   if (!api.paused) advance(dt);
   if (!frames.size && !timers.length && layers.every((L) => !L.live.length && !L.dirty)) { running = false; return; }
   requestAnimationFrame(loop);
