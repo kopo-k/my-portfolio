@@ -57,6 +57,11 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
           <h3 class="text-xl font-bold">{project.title}</h3>
           <span class="px-2 py-0.5 rounded-full text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">{project.tag}</span>
         </div>
+        {(project.date || project.venue) && (
+          <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">
+            {[project.date, project.venue].filter(Boolean).join(" ・ ")}
+          </p>
+        )}
         <p class="text-xs text-gray-600 dark:text-gray-400 mb-3">担当：{project.role}</p>
         <p class="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{project.description}</p>
 

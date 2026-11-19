@@ -6,6 +6,9 @@ const projectItems = [
     gradientFrom: "from-emerald-100",
     gradientTo: "to-sky-100",
     title: "トリナビ",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2026.11",
+    venue: "個人開発",
     tag: "モバイルアプリ",
     role: "個人開発（企画・デザイン・実装・App Store公開まで全て）",
     description: "構図が身につく撮影ガイドアプリ。カメラに三分割・対角線などの構図の線を重ね、被写体の位置を見て「いい感じ。撮ってみよう」と教えてくれる。7種類のお手本と撮り方の説明つきで、構図を練習できる。App Storeで公開中。",
@@ -22,6 +25,9 @@ const projectItems = [
     gradientFrom: "from-slate-700",
     gradientTo: "to-indigo-900",
     title: "面接ファンタジア",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2026.10",
+    venue: "ゲームジャム高梁2026",
     tag: "ゲーム",
     role: "プログラミング（5人チーム・ゲームジャム高梁2026）",
     description: "ゴブリン・オーク・魔王・神の会社を受けるファンタジー面接ゲーム。面接官の心の声に合う答えを選んで好感度を上げ、★を3つ集めると採用。ゲームジャムで2日間で制作し、unityroomで公開。",
@@ -35,6 +41,9 @@ const projectItems = [
     gradientFrom: "from-blue-100",
     gradientTo: "to-purple-100",
     title: "音楽共有アプリ",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2024.12",
+    venue: "技育CAMP ハッカソン Vol.19",
     tag: "Webアプリ",
     role: "フロントエンド",
     description: "気分や状況、歌詞の種類で曲にタグを付け、他の人が共有した曲を検索できる音楽共有アプリ。",
@@ -47,6 +56,9 @@ const projectItems = [
     gradientFrom: "from-purple-100",
     gradientTo: "to-pink-100",
     title: "MultiClip",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2025.6-8",
+    venue: "U-22 プログラミングコンテスト",
     tag: "デスクトップアプリ",
     role: "個人開発（設計・実装・テスト全て）",
     description: "macOS用のクリップボード履歴管理アプリ",
@@ -59,6 +71,9 @@ const projectItems = [
     gradientFrom: "from-green-100",
     gradientTo: "to-teal-100",
     title: "追憶（ついおく）",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2025.11",
+    venue: "技育CAMP2025 ハッカソン Vol.14",
     tag: "ゲーム",
     role: "Docker環境構築 / CI/CD / タイトル画面・ステージ選択画面 / 白線渡り",
     description: "小さい頃の習慣を追体験するブラウザゲーム。ねり消し作り、消しピン、白線の上だけ歩く、スープに浮いている油をつなげるなどの遊びを楽しめます。",
@@ -71,6 +86,9 @@ const projectItems = [
     gradientFrom: "from-orange-100",
     gradientTo: "to-amber-100",
     title: "就活進捗管理アプリ",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2025.9-10",
+    venue: "HRクラウド インターン",
     tag: "Webアプリ",
     role: "個人開発（設計・実装・テスト全て）",
     description: "就活の進捗をカンバン形式で管理できるアプリ",
@@ -83,6 +101,9 @@ const projectItems = [
     gradientFrom: "from-teal-100",
     gradientTo: "to-cyan-100",
     title: "dai-job（だいじょぶ）",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2025.12",
+    venue: "技育CAMP2025 ハッカソン Vol.16",
     tag: "Webアプリ",
     role: "バックエンド / Gmail連携 / 通知機能",
     description: "日程や企業ごとのタスク・書類を一括管理できるアプリ",
@@ -95,6 +116,9 @@ const projectItems = [
     gradientFrom: "from-indigo-100",
     gradientTo: "to-violet-100",
     title: "プログラム特区",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2026.1",
+    venue: "技育CAMP2025 ハッカソン Vol.18",
     tag: "Webアプリ",
     role: "UI設計 / 環境構築（Docker） / 認証認可 / RLSポリシー / フロントエンド（一部） / Vercelデプロイ",
     description: "プログラミングの疑問を解決するQ&Aプラットフォーム。Next.js、Supabase Auth、Dockerで構築。",
@@ -107,6 +131,9 @@ const projectItems = [
     gradientFrom: "from-rose-100",
     gradientTo: "to-pink-100",
     title: "VRMアスレチック",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2025.11-2026.2",
+    venue: "TECH STADIUM Unityコース",
     tag: "ゲーム",
     role: "個人開発（設計・実装・テスト全て）",
     description: "VRMアバターを操作してアスレチックコースを攻略するタイムアタックゲーム。クリアタイムをランキングで競えます。",
@@ -119,6 +146,9 @@ const projectItems = [
     gradientFrom: "from-gray-900",
     gradientTo: "to-gray-800",
     title: "StreamBoard",
+    // いつ・何で作ったか（カードの題名の下に出る）
+    date: "2026.2",
+    venue: "Progateハッカソン powered by AWS",
     tag: "Webアプリ",
     role: "フロントエンド / バックエンド / インフラ",
     description: "YouTube・Twitchの配信を1画面で複数同時に視聴できるマルチストリームビューアー。ドラッグ&ドロップでレイアウトをカスタマイズでき、リアルタイムでチャットの翻訳・盛り上がり分析機能を搭載。",
