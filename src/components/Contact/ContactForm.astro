@@ -11,7 +11,7 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
   <div class="relative dark:bg-gray-800/50 dark:backdrop-blur-sm p-8 rounded-2xl dark:border border-gray-700/50 shadow-2xl bg-[#f7f8f9] h-full flex flex-col">
     <h3 class="text-3xl font-semibold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">Send a Message</h3>
     <p class="dark:text-gray-300 text-[#4c5664] mb-6">下記のフォームにご記入いただければ、すぐにご返信いたします</p>
-    <form id="contact-form" method="post" action="#contact" class="space-y-4 flex-grow flex flex-col relative" novalidate>
+    <form id="contact-form" action="#contact" class="space-y-4 flex-grow flex flex-col relative" novalidate>
       <div id="loader" class="hidden absolute inset-0 flex items-center justify-center bg-white/70 dark:bg-gray-900/70 z-50" aria-hidden="true">
         <DualCircleLoader />
       </div>
@@ -71,11 +71,12 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
   <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js" defer></script>
   <script define:vars={{ serviceId, templateId, publicKey }} is:inline>
-    // defer の外部スクリプトより後に動くよう load で待つ
-    window.addEventListener("load", () => {
-      const ready = typeof emailjs !== "undefined";
-      if (ready) emailjs.init(publicKey);
+    // [改修] 以前は window の load を待っていたため、画像を読み終わるまで送信ボタンが効かず、
+    // その間に押すとブラウザが素の送信をしてページが読み込み直されていた（1回目が無反応に見える原因）。
+    // この script は form の直後に置かれているので、読み込み時点でそのまま登録する。
+    (() => {
       const form = document.getElementById("contact-form");
+      if (!form) return;
       const loader = document.getElementById("loader");
       const submit = document.getElementById("cf-submit");
       const status = document.getElementById("cf-status");
@@ -85,34 +86,38 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
       const emailNative = document.getElementById("cf-email-native");
       const toast = document.getElementById("cf-toast");
       const emailError = document.getElementById("cf-email-error");
+      const val = (el) => String(el && el.value || "").trim();
       const say = (text, ok) => {
         status.textContent = text;
         status.className = "min-h-6 text-sm " + (ok ? "text-green-700 dark:text-green-400" : "text-red-600 dark:text-red-400");
-        toast?.show(text);
+        toast && toast.show && toast.show(text);
+      };
+
+      // [改修] EmailJS は defer で後から読まれる。読み込み時に1回だけ見るのではなく、押されるたびに見る
+      let inited = false;
+      const ready = () => {
+        if (typeof emailjs === "undefined") return false;
+        if (!inited) { emailjs.init(publicKey); inited = true; }
+        return true;
       };
 
       form.addEventListener("submit", (e) => {
-        e.preventDefault();
+        e.preventDefault();   // ブラウザの素の送信は、どの段階でも起こさせない
         status.textContent = "";
         if (form.website.value) return; // 迷惑送信（人には見えない欄が埋まっている）
-        if (!ready) {
-          say("送信の仕組みを読み込めませんでした（広告ブロッカーなどが原因の可能性があります）。左のリンクからご連絡ください。", false);
-          return;
-        }
 
         // 入力を本物の input に写す（EmailJS はカスタム要素を読めない）
-        nameNative.value = (nameInput.value || "").trim();
-        emailNative.value = (emailInput.value || "").trim();
+        nameNative.value = val(nameInput);
+        emailNative.value = val(emailInput);
 
         // 空欄チェック（最初の空欄にフォーカスを移す）
-        const empty = [nameInput, emailInput, form.message].find((el) => !String(el.value || "").trim());
+        const empty = [nameInput, emailInput, form.message].find((el) => !val(el));
         if (empty) {
           say("未入力の項目があります。", false);
           empty.focus();
           return;
         }
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const emailOk = emailPattern.test(String(emailInput.value || "").trim());
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailNative.value);
         emailError.classList.toggle("hidden", emailOk);
         emailInput.setAttribute("aria-invalid", String(!emailOk));
         if (!emailOk) {
@@ -120,11 +125,19 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
           return;
         }
 
+        // [改修] 読み込み失敗の案内は、入力の確認を終えたあとに出す（先に出ると未入力に気づけない）
+        if (!ready()) {
+          say("送信の仕組みを読み込めませんでした（広告ブロッカーなどが原因の可能性があります）。左のリンクからご連絡ください。", false);
+          return;
+        }
+
         loader.classList.remove("hidden");
         submit.disabled = true;
-        emailjs.sendForm(serviceId, templateId, form).then(() => {
+        // [改修] sendForm がその場で例外を投げると catch に入らず、ローダーが回ったまま
+        // ボタンが押せなくなっていた。Promise に包んで、どんな失敗でも必ず finally を通す。
+        Promise.resolve().then(() => emailjs.sendForm(serviceId, templateId, form)).then(() => {
           say("送信しました。ありがとうございます", true);
-          submit.done();
+          submit.done && submit.done();
           form.reset();
           nameInput.value = ""; emailInput.value = "";
         }).catch(() => {
@@ -135,6 +148,6 @@ const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
           submit.disabled = false;
         });
       });
-    });
+    })();
   </script>
 </div>
