@@ -12,6 +12,8 @@ const projectItems = [
     tag: "モバイルアプリ",
     role: "個人開発（企画・デザイン・実装・App Store公開まで全て）",
     description: "構図が身につく撮影ガイドアプリ。カメラに三分割・対角線などの構図の線を重ね、被写体の位置を見て「いい感じ。撮ってみよう」と教えてくれる。7種類のお手本と撮り方の説明つきで、構図を練習できる。App Storeで公開中。",
+    // なぜ作ったか（本人の言葉から）
+    why: "自分がいい写真を撮れるようになりたくて作った。せっかくなので App Store に出し、審査から公開まで一人で通した。",
     techStack: ["Swift", "SwiftUI", "AVFoundation", "Vision"],
     liveDemoUrl: "https://apps.apple.com/jp/app/id6829276082",
     // 紹介動画（20秒・縦型）。ボタンを押すとページ内で再生する
@@ -31,6 +33,8 @@ const projectItems = [
     tag: "ゲーム",
     role: "プログラミング（5人チーム・ゲームジャム高梁2026）",
     description: "ゴブリン・オーク・魔王・神の会社を受けるファンタジー面接ゲーム。面接官の心の声に合う答えを選んで好感度を上げ、★を3つ集めると採用。ゲームジャムで2日間で制作し、unityroomで公開。",
+    // なぜ作ったか（本人の言葉から）
+    why: "ゲームジャムで2日間で制作。参加者に共感してもらえる題材を優先して「面接」を選んだが、アプリを作る感覚で臨んでしまった。ゲームは面白いかどうかが全てで、それは作って動かすまで分からないと、この2日で知った。",
     techStack: ["Unity", "C#"],
     liveDemoUrl: "https://unityroom.com/games/mensetsufantasia",
     // チーム制作でソースは非公開のため、GitHub のボタンは出さない
@@ -137,6 +141,8 @@ const projectItems = [
     tag: "ゲーム",
     role: "個人開発（設計・実装・テスト全て）",
     description: "VRMアバターを操作してアスレチックコースを攻略するタイムアタックゲーム。クリアタイムをランキングで競えます。",
+    // なぜ作ったか（本人の言葉から）
+    why: "Unity でゲームを最後まで作り切る経験がしたくて作った。アバターの読み込みからタイムの保存・ランキング表示まで、一人で通した。",
     techStack: ["Unity", "C#", "UniVRM", "Supabase"],
     liveDemoUrl: "https://kopo-k.github.io/vrm-athletic/",
     githubUrl: "https://github.com/kopo-k/vrm-athletic",

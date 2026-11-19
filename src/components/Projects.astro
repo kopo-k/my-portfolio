@@ -63,7 +63,14 @@ const filters = ['すべて', 'Webアプリ', 'ゲーム', 'デスクトップ�
           </p>
         )}
         <p class="text-xs text-gray-600 dark:text-gray-400 mb-3">担当：{project.role}</p>
-        <p class="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{project.description}</p>
+        <p class="text-sm text-gray-700 dark:text-gray-300 mb-3 leading-relaxed">{project.description}</p>
+
+        {project.why && (
+          <div class="mb-4 pl-3 border-l-[3px] border-orange-400/80">
+            <p class="text-[11px] font-bold tracking-wide text-orange-700 dark:text-orange-400 mb-0.5">なぜ作ったか</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{project.why}</p>
+          </div>
+        )}
 
         <div class="mt-auto">
           <ul class="flex flex-wrap gap-2 mb-4" aria-label="使用技術">
