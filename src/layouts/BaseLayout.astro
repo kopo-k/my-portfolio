@@ -1,6 +1,18 @@
 ---
 import "../styles/global.css";
 import { X } from 'lucide-astro';
+
+// OGP（SNSにリンクを貼ったときの見た目）
+// 画像の指定は必ず絶対URLにする。相対パスだと X・Slack・Discord のどれも読み込めない。
+const SITE = "https://kopo-k.github.io/my-portfolio/";
+const {
+  title = "kopo-k's Portfolio",
+  description = "愛知県の大学生 Kopo-k の作品集。ゲーム・モバイルアプリ・Webアプリを作っています。",
+  image = "images/ogp.webp",
+  url = SITE,
+} = Astro.props;
+const ogImage = new URL(image.replace(/^\/my-portfolio\//, ""), SITE).href;
+const ogUrl = new URL(url, SITE).href;
 ---
 
 <html lang="ja" class="scroll-smooth sketch">
@@ -8,14 +20,24 @@ import { X } from 'lucide-astro';
     <meta charset="UTF-8" /> <!--文字化け対策-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="WWKIOqBo6JZo_lG7GiyG9Q5Ix8DwIIV220iNbyJPvHA" />
-    <title>{Astro.props.title || "kopo-k's Portfolio"}</title>
-    <meta name="description" content={Astro.props.description || "Welcome to my portfolio site!"} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <!-- OGP -->
-    <meta property="og:title" content={Astro.props.title || "kopo-k's Portfolio"} />
-    <meta property="og:description" content={Astro.props.description || "Welcome to my portfolio site!"} />
-    <meta property="og:image" content="/my-portfolio/images/opg.webp" />
-    <meta property="og:url" content="https://kopo-k.github.io/my-portfolio/" />
+    <meta property="og:site_name" content="kopo-k's Portfolio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Kopo-k のポートフォリオ" />
+    <meta property="og:url" content={ogUrl} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- X（Twitter）で大きい画像にする。これが無いと小さなサムネイルになる -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/my-portfolio/images/favicon.ico" />
     <!-- 手描きスケッチ風（お試し）のフォント：見出し＝Yomogi、本文＝Klee One -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
